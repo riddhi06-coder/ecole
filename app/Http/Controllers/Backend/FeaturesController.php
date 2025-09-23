@@ -159,7 +159,6 @@ class FeaturesController extends Controller
         return redirect()->route('manage-home-features.index')->with('message', 'Features updated successfully!');
     }
 
-
     public function destroy(string $id)
     {
         $data['deleted_by'] =  Auth::user()->id;

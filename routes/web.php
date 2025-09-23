@@ -8,6 +8,10 @@ use App\Http\Controllers\Backend\BannerDetailsController;
 use App\Http\Controllers\Backend\ProgramOfferedController;
 use App\Http\Controllers\Backend\FestivitiesController;
 use App\Http\Controllers\Backend\FeaturesController;
+use App\Http\Controllers\Backend\BulletinBoardController;
+
+
+
 
 // =========================================================================== Backend Routes
 
@@ -49,3 +53,6 @@ Route::resource('manage-home-festivities', FestivitiesController::class);
 
 // ==== Manage Home Features
 Route::resource('manage-home-features', FeaturesController::class);
+
+// ==== Manage Bulletin Board
+Route::resource('manage-bulletin-board', BulletinBoardController::class);
