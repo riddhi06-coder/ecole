@@ -32,7 +32,7 @@
                 </li>
 
                 
-                <li class="sidebar-list {{ request()->routeIs('manage-banner-details.index', 'manage-programme-offered.index', 'manage-home-festivities.index','manage-vision.index') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-banner-details.index', 'manage-programme-offered.index', 'manage-home-festivities.index','manage-home-features.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -47,6 +47,7 @@
                     <li><a href="{{ route('manage-banner-details.index') }}" class="{{ request()->routeIs('manage-banner-details.index') ? 'active' : '' }}">Banner Details</a></li>
                     <li><a href="{{ route('manage-programme-offered.index') }}" class="{{ request()->routeIs('manage-programme-offered.index') ? 'active' : '' }}">Programs Offered</a></li>
                     <li><a href="{{ route('manage-home-festivities.index') }}" class="{{ request()->routeIs('manage-home-festivities.index') ? 'active' : '' }}">Festivities</a></li>
+                    <li><a href="{{ route('manage-home-features.index') }}" class="{{ request()->routeIs('manage-home-features.index') ? 'active' : '' }}">Features</a></li>
                   </ul>
                 </li>
 

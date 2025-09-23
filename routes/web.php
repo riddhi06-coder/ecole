@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Backend\BannerDetailsController;
 use App\Http\Controllers\Backend\ProgramOfferedController;
 use App\Http\Controllers\Backend\FestivitiesController;
+use App\Http\Controllers\Backend\FeaturesController;
 
 // =========================================================================== Backend Routes
 
@@ -45,3 +46,6 @@ Route::resource('manage-programme-offered', ProgramOfferedController::class);
 
 // ==== Manage Home Festivities
 Route::resource('manage-home-festivities', FestivitiesController::class);
+
+// ==== Manage Home Features
+Route::resource('manage-home-features', FeaturesController::class);
