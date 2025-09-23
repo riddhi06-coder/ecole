@@ -32,7 +32,7 @@
                 </li>
 
                 
-                <li class="sidebar-list {{ request()->routeIs('manage-home-banner-details.index', 'manage-intro-details.index', 'manage-social-home.index','manage-vision.index') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-banner-details.index', 'manage-intro-details.index', 'manage-social-home.index','manage-vision.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -44,7 +44,7 @@
                     <span>Home</span>
                   </a>
                   <ul class="sidebar-submenu">
-                    <li></li>
+                    <li><a href="{{ route('manage-banner-details.index') }}" class="{{ request()->routeIs('manage-banner-details.index') ? 'active' : '' }}">Banner Details</a></li>
                   </ul>
                 </li>
 

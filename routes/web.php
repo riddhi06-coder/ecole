@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 
 
+use App\Http\Controllers\Backend\BannerDetailsController;
+
 // =========================================================================== Backend Routes
 
 // Route::get('/', function () {
@@ -31,3 +33,7 @@ Route::group(['middleware' => ['auth:web', \App\Http\Middleware\PreventBackHisto
 // Route::group(['middleware' => ['auth:web', \App\Http\Middleware\PreventBackHistoryMiddleware::class]], function () {
 //     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
 // });
+
+
+// ==== Manage Banner Details
+Route::resource('manage-banner-details', BannerDetailsController::class);
