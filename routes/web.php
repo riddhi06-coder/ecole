@@ -10,7 +10,7 @@ use App\Http\Controllers\Backend\FestivitiesController;
 use App\Http\Controllers\Backend\FeaturesController;
 use App\Http\Controllers\Backend\BulletinBoardController;
 use App\Http\Controllers\Backend\TestimonialsController;
-
+use App\Http\Controllers\Backend\ClientsController;
 
 
 
@@ -60,3 +60,6 @@ Route::resource('manage-bulletin-board', BulletinBoardController::class);
 
 // ==== Manage Testimonials
 Route::resource('manage-testimonials', TestimonialsController::class);
+
+// ==== Manage Clients
+Route::resource('manage-clients', ClientsController::class);
