@@ -1,14 +1,25 @@
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DKT India</title>
-  <link rel="icon" type="image/x-icon" href="{{ asset('frontend/assets/img/logo/DKT.png') }}">
-  <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/aos.css') }}">
-  <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/fontawesome.css') }}">
-  <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/magnific-popup.css') }}">
-  <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/slick-slider.css') }}">
-  <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/nice-select.css') }}">
-  <link rel="stylesheet" href="{{ asset('frontend/assets/css/main-normal.css') }}">
-  <link rel="stylesheet" href="{{ asset('frontend/assets/css/main-responsive-combined.css') }}">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Best International School in Juhu - Mumbai - Ecole Mondiale World School</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+ <link rel="icon" type="image/x-icon" href="{{ asset('frontend/assets/img/emws-logo.png') }}">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ asset('frontend/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('frontend/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <!-- Main CSS File -->
+  <link href="{{ asset('frontend/assets/css/main.css') }}" rel="stylesheet">
 </head>
+

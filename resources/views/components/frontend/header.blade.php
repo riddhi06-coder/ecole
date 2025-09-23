@@ -1,154 +1,110 @@
-<div class="preloader">
-    <div class="loading-container">
-      <div class="loading"></div>
-      <div id="loading-icon"><img src="{{ asset('frontend/assets/img/logo/dkt-white.webp') }}" alt=""></div>
-    </div>
-  </div>
-  <div class="paginacontainer">
-    <div class="progress-wrap">
-      <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-      </svg>
-    </div>
-  </div>
-
-
-    <!--=====HEADER START=======-->
-  <header class="homepage5-body">
-    <div id="vl-header-sticky" class="vl-header-area vl-transparent-header">
-      <div class="container-fluid">
-        <div class="row align-items-center row-bg1">
-          <div class="col-lg-1 col-md-6 col-6">
-            <div class="vl-logo">
-              <a href="{{ route('frontend.index') }}"><img src="{{ asset('frontend/assets/img/logo/DKT.png') }}" alt=""></a>
-            </div>
-          </div>
-
-              <div class="col-lg-10 d-none d-lg-block">
-                <div class="vl-main-menu text-center">
-                  <nav class="vl-mobile-menu-active">
-                    <ul>
-                      <li><a href="{{ route('frontend.index') }}">Home</a></li>
-                      <li><a href="{{ route('frontend.about_us') }}">About Us</a></li>
-
-                      <li>
-                          <a href="{{ route('frontend.product_list') }}">Products <span><i class="fa-solid fa-angle-down d-lg-inline d-none"></i></span></a>
-                          <ul class="sub-menu">
-
-                              @php
-                                  $categories = \App\Models\ProductCategory::with([
-                                      'products' => function($q) {
-                                          $q->whereNull('deleted_by');
-                                      },
-                                      'details'
-                                  ])
-                                  ->whereNull('deleted_by')
-                                  ->get();
-                              @endphp
-
-
-                              @foreach($categories as $category)
-                                  <li>
-                                      <a href="{{ route('frontend.category_details', $category->slug) }}" class="span-arrow">
-                                          {{ $category->category_name }}
-                                          @if($category->products->count() > 0)
-                                              <span><i class="fa-solid fa-angle-right d-lg-block d-none"></i></span>
-                                          @endif
-                                      </a>
-
-                                      @if($category->products->count() > 0)
-                                          <ul class="sub-menu menu1">
-                                              @foreach($category->products as $product)
-                                                  <li>
-                                                      <a href="{{ route('frontend.product_details', $product->slug ?? '#') }}">
-                                                          {{ $product->product_name }}
-                                                      </a>
-                                                  </li>
-                                              @endforeach
-                                          </ul>
-                                      @endif
-                                  </li>
-                              @endforeach
-
-                          </ul>
-                      </li>
-
-                      <li><a href="#">HerKare Academy</a></li>
-
-                      <li class="has-dropdown">
-                        <a href="#">News & Media <span><i class="fa-solid fa-angle-down d-lg-inline d-none"></i></span></a>
-                        <ul class="sub-menu">
-                          <li><a href="#">Press Releases</a></li>
-                          <li><a href="#">Blogs</a></li>
-                        </ul>
-                      </li>
-
-                      <li class="has-dropdown">
-                        <a href="#">Partner With Us <span><i
-                              class="fa-solid fa-angle-down d-lg-inline d-none"></i></span></a>
-                        <ul class="sub-menu">
-                          <li><a href="{{ route('frontend.i_am_doctor') }}">I am a Doctor</a></li>
-                          <li><a href="{{ route('frontend.i_am_chemist') }}">I am a Chemist</a></li>
-                          <li><a href="{{ route('frontend.i_am_distributor') }}">I am a Distributor</a></li>
-                        </ul>
-                      </li>
-
-                      <li><a href="{{ route('frontend.join_us') }}">Join Us</a></li>
-                      <li><a href="{{ route('frontend.contact_us') }}">Contact Us</a></li>
-                    </ul>
-                  </nav>
-                </div>
-              </div>
-
-              <div class="col-lg-1 col-md-6 col-6">
-                <div class="vl-logo-right">
-                      <a href="{{ route('frontend.index') }}"><img src="{{ asset('frontend/assets/img/logo/Healthcare-Logo.png') }}" alt=""></a>
-                  </div>
-                  <div class="vl-header-action-item d-block d-lg-none">
-                      <button type="button" class="vl-offcanvas-toggle">
-                        <i class="fa-solid fa-bars-staggered"></i>
-                      </button>
-                   </div>
-              </div>
+   <div class="top_announcement">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <marquee scrollamount="8" behavior="scroll" direction="left" onmouseover="this.stop();"
+            onmouseout="this.start();">
+            Admissions open for the academic year 2025-2026
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+            IB Continuum School
+          </marquee>
         </div>
       </div>
     </div>
-  </header>
-    <!--===== MOBILE HEADER STARTS =======-->
-    <div class="homepage1-body">
-    <div class="vl-offcanvas">
-        <div class="vl-offcanvas-wrapper">
-            <div class="vl-offcanvas-header d-flex justify-content-between align-items-center mb-90">
-                <div class="vl-offcanvas-logo">
-                    <a href="{{ route('frontend.index') }}"><img src="{{ asset('frontend/assets/img/logo/dkt-white.webp') }}" alt=""></a>
-                </div>
-                <div class="vl-offcanvas-close">
-                <button class="vl-offcanvas-close-toggle"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-            </div>
+  </div>
+ 
+ <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-            <div class="vl-offcanvas-menu d-lg-none mb-40">
-                <nav></nav>
-            </div>
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <img src="{{ asset('frontend/assets/img/emws-logo.png') }}" alt="">
+      </a>
 
-            <div class="space20"></div>
-            <div class="vl-offcanvas-info">
-                <h3 class="vl-offcanvas-sm-title">Contact Us</h3>
-                <div class="space20"></div>
-                <span><a href="#"> <i class="fa-regular fa-envelope"></i> customercare@dktindia.org</a></span>
-                <span><a href="#"><i class="fa-solid fa-location-dot"></i> Hem-Dil, 67 A, Linking Road, Opp. St. Lawrence High School, Santacruz (W), Mumbai – 400 054</a></span>
-            </div>
-            <div class="space20"></div>
-            <div class="vl-offcanvas-social">
-                <h3 class="vl-offcanvas-sm-title">Follow Us</h3>
-                <div class="space20"></div>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-            </div>
-
-        </div>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li class="dropdown"><a href="#"><span>About Us</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="what-sets-us-apart.html">What sets us apart?</a></li>
+              <li><a href="vision-mission-values.html">Vision, Mission & Values</a></li>
+              <li><a href="message-from-the-head-of-school.html">Message From The Principal</a></li>
+              <li><a href="governance.html">Governance</a></li>
+              <li><a href="https://www.rsicollege.org/" target="_blank">Russell Square International College</a></li>
+              <li><a href="faculty-staff.html">Faculty & Staff</a></li>
+              <li><a href="school-calendar.html">School Calendar</a></li>
+              <li><a href="accreditation-and-associations.html">Accreditation & Associations</a></li>
+              <li><a href="testimonials.html">Testimonials</a></li>
+              <li><a href="child-protection-policy.html">Child Protection Policy</a></li>
+              <li><a href="alumni.html">Alumni</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>Admissions</span> <i
+                class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#">Apply for admission</a></li>
+              <li><a href="#">Schedule a Visit</a></li>
+              <li><a href="#">Enquire about admission</a></li>
+              <li><a href="#">Admission Criteria & Process</a></li>
+              <li><a href="#">FAQs</a></li>
+              <li><a href="#">Fee Structure</a></li>
+              <li><a href="#">Merit Scholarship</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>Academics</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li class="dropdown"><a href="#"><span>Curriculum Overview</span> <i
+                    class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="#">Primary Years</a></li>
+                  <li><a href="#">Middle Years</a></li>
+                  <li><a href="#">Diploma</a></li>
+                  <li><a href="#">Creativity, Activity, Service</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Policies</a></li>
+              <li><a href="#">IB Early Years & Primary Years Programme</a></li>
+              <li><a href="#">IB Middle Years Programme</a></li>
+              <li><a href="#">IB Diploma Programme</a></li>
+              <li><a href="#">Student Support Services</a></li>
+              <li><a href="#">University & College Counselling Programme</a></li>
+              <li><a href="#">IB Learner Profile</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>Campus Life</span> <i
+                class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#">Virtual Tour</a></li>
+              <li><a href="#">Media Centre</a></li>
+              <li><a href="#">IB Visual & Performing Arts</a></li>
+              <li><a href="#">Technology</a></li>
+              <li><a href="#">Sports and Extra Curricular Activities</a></li>
+              <li><a href="#">Gallery</a></li>
+              <li><a href="#">STUCO</a></li>
+              <li><a href="#">Service Learning</a></li>
+              <li><a href="#">Cafeteria</a></li>
+              <li><a href="#">Safety and Security</a></li>
+              <li><a href="#">Bus Service</a></li>
+              <li><a href="#">Other Facilities</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>Bulletin Board</span> <i
+                class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#">Announcements</a></li>
+              <li><a href="#">News</a></li>
+              <li><a href="#">Events</a></li>
+              <li><a href="#">Blogs</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>Careers</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#">Career Opportunities</a></li>
+              <li><a href="#">University of Bath</a></li>
+            </ul>
+          </li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <a class="cus-menu-contact-us-btn" href="#">Contact Us</a>
+      <a class="cus-menu-talk-to-us-btn" href="#">Talk To Us</a>
     </div>
-    <div class="vl-offcanvas-overlay"></div>
-</div>
-    <!--===== MOBILE HEADER STARTS =======-->
-    <!--=====HEADER END =======-->
+  </header>

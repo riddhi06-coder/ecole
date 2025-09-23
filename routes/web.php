@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\TestimonialsController;
 use App\Http\Controllers\Backend\ClientsController;
 
 
+use App\Http\Controllers\Frontend\HomeController;;
 
 // =========================================================================== Backend Routes
 
@@ -63,3 +64,18 @@ Route::resource('manage-testimonials', TestimonialsController::class);
 
 // ==== Manage Clients
 Route::resource('manage-clients', ClientsController::class);
+
+
+
+
+
+
+// ======================= Frontend =========================================
+
+Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHistoryMiddleware::class]],function(){
+
+    // ==== Home
+    Route::get('/', [HomeController::class, 'home'])->name('frontend.index');
+
+
+});
