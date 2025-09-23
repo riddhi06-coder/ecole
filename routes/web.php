@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\ProgramOfferedController;
 use App\Http\Controllers\Backend\FestivitiesController;
 use App\Http\Controllers\Backend\FeaturesController;
 use App\Http\Controllers\Backend\BulletinBoardController;
+use App\Http\Controllers\Backend\TestimonialsController;
 
 
 
@@ -56,3 +57,6 @@ Route::resource('manage-home-features', FeaturesController::class);
 
 // ==== Manage Bulletin Board
 Route::resource('manage-bulletin-board', BulletinBoardController::class);
+
+// ==== Manage Testimonials
+Route::resource('manage-testimonials', TestimonialsController::class);

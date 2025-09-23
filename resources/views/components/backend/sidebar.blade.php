@@ -32,7 +32,7 @@
                 </li>
 
                 
-                <li class="sidebar-list {{ request()->routeIs('manage-banner-details.index', 'manage-programme-offered.index', 'manage-home-festivities.index','manage-home-features.index','manage-bulletin-board') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-banner-details.index', 'manage-programme-offered.index', 'manage-home-festivities.index','manage-home-features.index','manage-bulletin-board.index','manage-testimonials.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -49,6 +49,7 @@
                     <li><a href="{{ route('manage-home-festivities.index') }}" class="{{ request()->routeIs('manage-home-festivities.index') ? 'active' : '' }}">Festivities</a></li>
                     <li><a href="{{ route('manage-home-features.index') }}" class="{{ request()->routeIs('manage-home-features.index') ? 'active' : '' }}">Features</a></li>
                     <li><a href="{{ route('manage-bulletin-board.index') }}" class="{{ request()->routeIs('manage-bulletin-board.index') ? 'active' : '' }}">Bulletin Board</a></li>
+                    <li><a href="{{ route('manage-testimonials.index') }}" class="{{ request()->routeIs('manage-testimonials.index') ? 'active' : '' }}">Testimonials</a></li>
                   </ul>
                 </li>
 
