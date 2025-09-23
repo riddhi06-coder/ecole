@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\Backend\BannerDetailsController;
 use App\Http\Controllers\Backend\ProgramOfferedController;
+use App\Http\Controllers\Backend\FestivitiesController;
 
 // =========================================================================== Backend Routes
 
@@ -41,3 +42,6 @@ Route::resource('manage-banner-details', BannerDetailsController::class);
 
 // ==== Manage Programme Offered
 Route::resource('manage-programme-offered', ProgramOfferedController::class);
+
+// ==== Manage Home Festivities
+Route::resource('manage-home-festivities', FestivitiesController::class);
