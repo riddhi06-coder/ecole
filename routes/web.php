@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 
 
 use App\Http\Controllers\Backend\BannerDetailsController;
+use App\Http\Controllers\Backend\ProgramOfferedController;
 
 // =========================================================================== Backend Routes
 
@@ -37,3 +38,6 @@ Route::group(['middleware' => ['auth:web', \App\Http\Middleware\PreventBackHisto
 
 // ==== Manage Banner Details
 Route::resource('manage-banner-details', BannerDetailsController::class);
+
+// ==== Manage Programme Offered
+Route::resource('manage-programme-offered', ProgramOfferedController::class);
