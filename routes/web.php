@@ -16,7 +16,7 @@ use App\Http\Controllers\Backend\VisionMissionController;
 use App\Http\Controllers\Backend\MessagePrincipalController;
 use App\Http\Controllers\Backend\GovernanceController;
 use App\Http\Controllers\Backend\FacultyStaffController;
-
+use App\Http\Controllers\Backend\SchoolCalendarController;
 
 
 
@@ -86,6 +86,9 @@ Route::resource('manage-governance', GovernanceController::class);
 
 // ==== Manage Faculty & Staff
 Route::resource('manage-faculty-and-staff', FacultyStaffController::class);
+
+// ==== Manage School Calendar
+Route::resource('manage-school-calendar', SchoolCalendarController::class);
 
 
 

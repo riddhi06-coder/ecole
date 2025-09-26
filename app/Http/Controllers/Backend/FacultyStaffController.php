@@ -81,6 +81,8 @@ class FacultyStaffController extends Controller
         $facultyStaff->section_description = $validatedData['section_description'];
         $facultyStaff->extra_image         = $extraImage;
         $facultyStaff->extra_description   = $validatedData['extra_description'];
+        $facultyStaff->inserted_by = Auth::id();
+        $facultyStaff->inserted_at = Carbon::now();
         $facultyStaff->save();
 
         return redirect()->route('manage-faculty-and-staff.index')->with('message', 'Faculty & Staff details added successfully.');
