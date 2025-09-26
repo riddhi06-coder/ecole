@@ -56,7 +56,7 @@
 
               
               
-                <li class="sidebar-list {{ request()->routeIs('manage-what-sets-us-apart.index', 'manage-programme-offered.index', 'manage-home-festivities.index','manage-home-features.index','manage-bulletin-board.index','manage-testimonials.index','manage-clients') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-what-sets-us-apart.index', 'manage-vision-mission.index', 'manage-home-festivities.index','manage-home-features.index','manage-bulletin-board.index','manage-testimonials.index','manage-clients') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -69,6 +69,7 @@
                   </a>
                   <ul class="sidebar-submenu">
                     <li><a href="{{ route('manage-what-sets-us-apart.index') }}" class="{{ request()->routeIs('manage-what-sets-us-apart.index') ? 'active' : '' }}">What sets us apart?</a></li>
+                    <li><a href="{{ route('manage-vision-mission.index') }}" class="{{ request()->routeIs('manage-vision-mission.index') ? 'active' : '' }}">Vision & Mission</a></li>
                   </ul>
                 </li>
 

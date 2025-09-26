@@ -12,7 +12,7 @@ use App\Http\Controllers\Backend\BulletinBoardController;
 use App\Http\Controllers\Backend\TestimonialsController;
 use App\Http\Controllers\Backend\ClientsController;
 use App\Http\Controllers\Backend\WhatsetsusapartController;
-
+use App\Http\Controllers\Backend\VisionMissionController;
 
 
 
@@ -71,6 +71,9 @@ Route::resource('manage-clients', ClientsController::class);
 
 // ==== Manage What sets us apart?
 Route::resource('manage-what-sets-us-apart', WhatsetsusapartController::class);
+
+// ==== Manage Vision, Mission & Values
+Route::resource('manage-vision-mission', VisionMissionController::class);
 
 
 
