@@ -24,7 +24,6 @@ class WhatsetsusapartController extends Controller
         return view('backend.about.set_apart.index', compact('records'));
     }
 
-
     public function create(Request $request)
     {
         return view('backend.about.set_apart.create');
@@ -76,7 +75,6 @@ class WhatsetsusapartController extends Controller
         return redirect()->route('manage-what-sets-us-apart.index')->with('message', 'Details successfully added.');
     }
 
-    
     public function edit($id)
     {
         $set_apart = WhatSetsUsApart::findOrFail($id);
