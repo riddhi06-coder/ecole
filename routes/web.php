@@ -15,6 +15,9 @@ use App\Http\Controllers\Backend\WhatsetsusapartController;
 use App\Http\Controllers\Backend\VisionMissionController;
 use App\Http\Controllers\Backend\MessagePrincipalController;
 use App\Http\Controllers\Backend\GovernanceController;
+use App\Http\Controllers\Backend\FacultyStaffController;
+
+
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -80,6 +83,9 @@ Route::resource('manage-message-from-principal', MessagePrincipalController::cla
 
 // ==== Manage Governance
 Route::resource('manage-governance', GovernanceController::class);
+
+// ==== Manage Faculty & Staff
+Route::resource('manage-faculty-and-staff', FacultyStaffController::class);
 
 
 

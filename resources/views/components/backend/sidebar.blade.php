@@ -56,7 +56,7 @@
 
               
               
-                <li class="sidebar-list {{ request()->routeIs('manage-what-sets-us-apart.index', 'manage-vision-mission.index', 'manage-message-from-principal.index','manage-governance.index','manage-bulletin-board.index','manage-testimonials.index','manage-clients') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-what-sets-us-apart.index', 'manage-vision-mission.index', 'manage-message-from-principal.index','manage-governance.index','manage-faculty-and-staff.index','manage-testimonials.index','manage-clients') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -71,7 +71,8 @@
                     <li><a href="{{ route('manage-what-sets-us-apart.index') }}" class="{{ request()->routeIs('manage-what-sets-us-apart.index') ? 'active' : '' }}">What sets us apart?</a></li>
                     <li><a href="{{ route('manage-vision-mission.index') }}" class="{{ request()->routeIs('manage-vision-mission.index') ? 'active' : '' }}">Vision & Mission</a></li>
                     <li><a href="{{ route('manage-message-from-principal.index') }}" class="{{ request()->routeIs('manage-message-from-principal.index') ? 'active' : '' }}">Message From Principal</a></li>
-                     <li><a href="{{ route('manage-governance.index') }}" class="{{ request()->routeIs('manage-governance.index') ? 'active' : '' }}">Governance</a></li>
+                    <li><a href="{{ route('manage-governance.index') }}" class="{{ request()->routeIs('manage-governance.index') ? 'active' : '' }}">Governance</a></li>
+                    <li><a href="{{ route('manage-faculty-and-staff.index') }}" class="{{ request()->routeIs('manage-faculty-and-staff.index') ? 'active' : '' }}">Faculty & Staff</a></li>
                   </ul>
                 </li>
 
