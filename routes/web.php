@@ -14,7 +14,7 @@ use App\Http\Controllers\Backend\ClientsController;
 use App\Http\Controllers\Backend\WhatsetsusapartController;
 use App\Http\Controllers\Backend\VisionMissionController;
 use App\Http\Controllers\Backend\MessagePrincipalController;
-
+use App\Http\Controllers\Backend\GovernanceController;
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -77,6 +77,9 @@ Route::resource('manage-vision-mission', VisionMissionController::class);
 
 // ==== Manage Message From The Principal
 Route::resource('manage-message-from-principal', MessagePrincipalController::class);
+
+// ==== Manage Governance
+Route::resource('manage-governance', GovernanceController::class);
 
 
 
