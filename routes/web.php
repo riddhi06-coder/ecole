@@ -13,7 +13,7 @@ use App\Http\Controllers\Backend\TestimonialsController;
 use App\Http\Controllers\Backend\ClientsController;
 use App\Http\Controllers\Backend\WhatsetsusapartController;
 use App\Http\Controllers\Backend\VisionMissionController;
-
+use App\Http\Controllers\Backend\MessagePrincipalController;
 
 
 
@@ -74,6 +74,9 @@ Route::resource('manage-what-sets-us-apart', WhatsetsusapartController::class);
 
 // ==== Manage Vision, Mission & Values
 Route::resource('manage-vision-mission', VisionMissionController::class);
+
+// ==== Manage Message From The Principal
+Route::resource('manage-message-from-principal', MessagePrincipalController::class);
 
 
 
