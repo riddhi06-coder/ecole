@@ -354,16 +354,16 @@
                             <input type="file" onchange="previewPrintImage(this, ${rowIndex})" 
                                 accept=".png, .jpg, .jpeg, .webp, .svg" 
                                 name="icon[]" id="icon_${rowIndex}" class="form-control" required>
-                                <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small>
-                                    <br>
-                                    <small class="text-secondary"><b>Note: Only files in .jpg, .jpeg, .png, .webp format can be uploaded.</b></small>
+                            <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small>
+                            <br>
+                            <small class="text-secondary"><b>Note: Only files in .jpg, .jpeg, .png, .webp format can be uploaded.</b></small>
                             <div class="mt-2" id="print-preview-container-${rowIndex}"></div>
                         </td>
                         <td>
                             <input type="text" name="heading[]" class="form-control" placeholder="Enter Heading" required>
                         </td>
                         <td>
-                            <textarea name="description[]" class="form-control" placeholder="Enter Description" rows="5" required></textarea>
+                            <textarea name="description_division[]" class="form-control" placeholder="Enter Description" rows="5" required></textarea>
                         </td>
                         <td>
                             <button type="button" class="btn btn-danger removePrintRow">Remove</button>
@@ -410,15 +410,15 @@
         <!--- Gallery Image Upload js ----->
         <script>
             $(document).ready(function () {
-                let rowId = 0;
+                let rowId = 0; // Always start at 0
 
                 // Add a new gallery image row
-                $('#addGalleryRow').click(function () {
+                $(document).on('click', '#addGalleryRow', function () {
                     rowId++;
                     const newRow = `
                         <tr>
                             <td>
-                                <input type="file" onchange="previewGalleryImage(this, ${rowId})" accept=".png, .jpg, .jpeg, .webp" name="gallery_image[]" id="gallery_image_${rowId}" class="form-control" placeholder="Upload Gallery Image">
+                                <input type="file" onchange="previewGalleryImage(this, ${rowId})" accept=".png, .jpg, .jpeg, .webp" name="gallery_image[]" id="gallery_image_${rowId}" class="form-control">
                                 <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small>
                                 <br>
                                 <small class="text-secondary"><b>Note: Only files in .jpg, .jpeg, .png, .webp format can be uploaded.</b></small>
@@ -441,6 +441,8 @@
                     $(this).closest('tr').remove();
                 });
             });
+
+
 
 
             // Preview function for gallery images

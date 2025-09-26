@@ -141,4 +141,144 @@ class VisionMissionController extends Controller
         return redirect()->route('manage-vision-mission.index')->with('message', 'Vision & Mission details successfully added.');
     }
 
+    public function edit($id)
+    {
+        $vision_mission = VisionMission::findOrFail($id);
+        return view('backend.about.vision_mission.edit', compact('vision_mission'));
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        // Validation (similar to store, but images may not be required)
+        $validatedData = $request->validate([
+            'banner_heading'       => 'required|string|max:255',
+            'banner'               => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'section_image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'section_heading'      => 'required|string|max:255',
+            'section_image1'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'table_heading.*'      => 'required|string|max:255',
+            'table_description.*'  => 'required|string',
+            'icon.*'               => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'heading.*'            => 'required|string|max:255',
+            'description_division.*' => 'required|string',
+            'gallery_image.*'      => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        $visionMission = VisionMission::findOrFail($id);
+
+        // Handle Banner Image
+        if ($request->hasFile('banner')) {
+            $image = $request->file('banner');
+            $bannerImage = time() . rand(10,999) . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/about'), $bannerImage);
+            $visionMission->banner_image = $bannerImage;
+        }
+
+        // Handle Section Images
+        if ($request->hasFile('section_image')) {
+            $image = $request->file('section_image');
+            $sectionImage1 = time() . rand(1000,9999) . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/about'), $sectionImage1);
+            $visionMission->section_image = $sectionImage1;
+        }
+        if ($request->hasFile('section_image1')) {
+            $image = $request->file('section_image1');
+            $sectionImage2 = time() . rand(1000,9999) . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/about'), $sectionImage2);
+            $visionMission->section_image1 = $sectionImage2;
+        }
+
+
+
+        $existingDivision = json_decode($visionMission->division_details, true) ?? [];
+        $divisionDetails = [];
+
+        if ($request->has('heading') && is_array($request->heading)) {
+            foreach ($request->heading as $key => $heading) {
+                $iconName = $existingDivision[$key]['icon'] ?? null; // keep existing icon
+
+                // If a new file is uploaded, replace it
+                if (isset($request->icon[$key]) && $request->icon[$key]) {
+                    $iconFile = $request->icon[$key];
+                    $iconName = time() . rand(1000,9999) . '.' . $iconFile->getClientOriginalExtension();
+                    $iconFile->move(public_path('uploads/about'), $iconName);
+                }
+
+                $divisionDetails[] = [
+                    'icon' => $iconName,
+                    'heading' => $heading,
+                    'description' => $request->description_division[$key] ?? '',
+                ];
+            }
+        }
+
+        $visionMission->division_details = json_encode($divisionDetails);
+
+
+
+        // Handle Gallery Images
+        $existingGallery = json_decode($visionMission->gallery_images, true) ?? [];
+        $galleryData = [];
+
+        // Loop over submitted gallery_features to ensure all rows (existing + new) are preserved
+        foreach ($request->gallery_features as $key => $feature) {
+
+            $galleryName = $existingGallery[$key]['image'] ?? null; // default to existing image
+
+            // If a new file is uploaded for this row, replace the existing image
+            if (isset($request->gallery_image[$key]) && $request->gallery_image[$key]) {
+                $galleryFile = $request->gallery_image[$key];
+                $galleryName = time() . rand(1000,9999) . '.' . $galleryFile->getClientOriginalExtension();
+                $galleryFile->move(public_path('uploads/about'), $galleryName);
+            }
+
+            $galleryData[] = [
+                'image' => $galleryName,
+                'features' => $feature,
+            ];
+        }
+
+        // Save updated gallery
+        $visionMission->gallery_images = json_encode($galleryData);
+
+
+        // Handle Features Table
+        $featuresData = [];
+        if ($request->has('table_heading')) {
+            foreach ($request->table_heading as $key => $heading) {
+                $featuresData[] = [
+                    'heading' => $heading,
+                    'description' => $request->table_description[$key] ?? '',
+                ];
+            }
+        }
+
+        // Update DB
+        $visionMission->banner_heading = $request->banner_heading;
+        $visionMission->section_heading = $request->section_heading;
+        $visionMission->features_table = json_encode($featuresData);
+        $visionMission->modified_by = Auth::id();
+        $visionMission->modified_at = Carbon::now();
+        $visionMission->save();
+
+        return redirect()->route('manage-vision-mission.index')->with('message', 'Vision & Mission details successfully updated.');
+    }
+
+    
+    public function destroy(string $id)
+    {
+        $data['deleted_by'] =  Auth::user()->id;
+        $data['deleted_at'] =  Carbon::now();
+        try {
+            $industries = VisionMission::findOrFail($id);
+            $industries->update($data);
+
+            return redirect()->route('manage-vision-mission.index')->with('message', 'Details deleted successfully!');
+        } catch (Exception $ex) {
+            return redirect()->back()->with('error', 'Something Went Wrong - ' . $ex->getMessage());
+        }
+    }
+
+
 }
