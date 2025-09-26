@@ -56,7 +56,7 @@
 
               
               
-                <li class="sidebar-list {{ request()->routeIs('manage-what-sets-us-apart.index', 'manage-vision-mission.index', 'manage-message-from-principal.index','manage-governance.index','manage-faculty-and-staff.index','manage-school-calendar.index','manage-about-testimonials.index') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-what-sets-us-apart.index', 'manage-vision-mission.index', 'manage-message-from-principal.index','manage-governance.index','manage-faculty-and-staff.index','manage-school-calendar.index','manage-about-testimonials.index','manage-child-safeguarding-policy.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -76,6 +76,7 @@
                     <li><a href="{{ route('manage-school-calendar.index') }}" class="{{ request()->routeIs('manage-school-calendar.index') ? 'active' : '' }}">School Calendar</a></li>
                     <li><a href="{{ route('manage-school-calendar.index') }}" class="{{ request()->routeIs('manage-school-calendar.index') ? 'active' : '' }}">Accreditation and Associations</a></li>
                     <li><a href="{{ route('manage-about-testimonials.index') }}" class="{{ request()->routeIs('manage-about-testimonials.index') ? 'active' : '' }}">Testimonials</a></li>
+                    <li><a href="{{ route('manage-child-safeguarding-policy.index') }}" class="{{ request()->routeIs('manage-child-safeguarding-policy.index') ? 'active' : '' }}">Child Safeguarding Policy</a></li>
                   </ul>
                 </li>
 

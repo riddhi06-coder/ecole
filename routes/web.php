@@ -18,7 +18,7 @@ use App\Http\Controllers\Backend\GovernanceController;
 use App\Http\Controllers\Backend\FacultyStaffController;
 use App\Http\Controllers\Backend\SchoolCalendarController;
 use App\Http\Controllers\Backend\AboutTestimonialsController;
-
+use App\Http\Controllers\Backend\ChildPolicyController;
 
 
 
@@ -94,6 +94,9 @@ Route::resource('manage-school-calendar', SchoolCalendarController::class);
 
 // ==== Manage Testimonials
 Route::resource('manage-about-testimonials', AboutTestimonialsController::class);
+
+// ==== Manage Child Safeguarding Policy
+Route::resource('manage-child-safeguarding-policy', ChildPolicyController::class);
 
 
 
