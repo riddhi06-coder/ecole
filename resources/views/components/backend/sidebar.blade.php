@@ -54,8 +54,25 @@
                   </ul>
                 </li>
 
-                
+              
+              
+                <li class="sidebar-list {{ request()->routeIs('manage-what-sets-us-apart.index', 'manage-programme-offered.index', 'manage-home-festivities.index','manage-home-features.index','manage-bulletin-board.index','manage-testimonials.index','manage-clients') ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"> </i>
+                  <a class="sidebar-link sidebar-title" href="#">
+                    <svg class="stroke-icon"> 
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
+                    </svg>
+                    <span>About Us</span>
+                  </a>
+                  <ul class="sidebar-submenu">
+                    <li><a href="{{ route('manage-what-sets-us-apart.index') }}" class="{{ request()->routeIs('manage-what-sets-us-apart.index') ? 'active' : '' }}">What sets us apart?</a></li>
+                  </ul>
+                </li>
 
+                
               </ul>
               <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
             </div>

@@ -11,6 +11,10 @@ use App\Http\Controllers\Backend\FeaturesController;
 use App\Http\Controllers\Backend\BulletinBoardController;
 use App\Http\Controllers\Backend\TestimonialsController;
 use App\Http\Controllers\Backend\ClientsController;
+use App\Http\Controllers\Backend\WhatsetsusapartController;
+
+
+
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -64,6 +68,9 @@ Route::resource('manage-testimonials', TestimonialsController::class);
 
 // ==== Manage Clients
 Route::resource('manage-clients', ClientsController::class);
+
+// ==== Manage What sets us apart?
+Route::resource('manage-what-sets-us-apart', WhatsetsusapartController::class);
 
 
 
