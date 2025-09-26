@@ -17,6 +17,8 @@ use App\Http\Controllers\Backend\MessagePrincipalController;
 use App\Http\Controllers\Backend\GovernanceController;
 use App\Http\Controllers\Backend\FacultyStaffController;
 use App\Http\Controllers\Backend\SchoolCalendarController;
+use App\Http\Controllers\Backend\AboutTestimonialsController;
+
 
 
 
@@ -89,6 +91,9 @@ Route::resource('manage-faculty-and-staff', FacultyStaffController::class);
 
 // ==== Manage School Calendar
 Route::resource('manage-school-calendar', SchoolCalendarController::class);
+
+// ==== Manage Testimonials
+Route::resource('manage-about-testimonials', AboutTestimonialsController::class);
 
 
 
