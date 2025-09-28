@@ -21,6 +21,9 @@ use App\Http\Controllers\Backend\AccredationController;
 use App\Http\Controllers\Backend\AboutTestimonialsController;
 use App\Http\Controllers\Backend\ChildPolicyController;
 use App\Http\Controllers\Backend\AlumniController;
+use App\Http\Controllers\Backend\ContactUsController;
+
+
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -104,6 +107,9 @@ Route::resource('manage-child-safeguarding-policy', ChildPolicyController::class
 
 // ==== Manage About Alumni
 Route::resource('manage-about-alumni', AlumniController::class);
+
+// ==== Manage Contact Us
+Route::resource('manage-contact-us', ContactUsController::class);
 
 
 

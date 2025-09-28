@@ -3,8 +3,8 @@
     <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-4 col-md-4 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <img src="assets/img/emws-logo.png" alt="">
+          <a href="{{ route('frontend.index') }}" class="logo d-flex align-items-center">
+            <img src="{{ asset('frontend/assets/img/emws-logo.png') }}" alt="">
           </a>
           <div class="footer-contact pt-3">
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, officiis!</p>
@@ -60,7 +60,7 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© 2025 École Mondiale | Brought to Life by <a href="#">Matrix Bricks</a></p>
+      <p>© 2025 École Mondiale | Brought to Life by <a href="https://www.matrixbricks.com/">Matrix Bricks</a></p>
     </div>
 
   </footer>

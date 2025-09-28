@@ -16,7 +16,7 @@
  <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
+      <a href="{{ route('frontend.index') }}" class="logo d-flex align-items-center me-auto">
         <img src="{{ asset('frontend/assets/img/emws-logo.png') }}" alt="">
       </a>
 
