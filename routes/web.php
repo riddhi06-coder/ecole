@@ -141,5 +141,8 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Testimonials
     Route::get('/testimonials', [HomeController::class, 'testimonials'])->name('frontend.testimonials');
 
+    // ==== Child Safeguarding Policy
+    Route::get('/child-safeguarding-policy', [HomeController::class, 'child_safeguarding_policy'])->name('frontend.child_safeguarding_policy');
+
 
 });
