@@ -132,5 +132,8 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Faculty & Staff
     Route::get('/faculty-and-staff', [HomeController::class, 'faculty_and_staff'])->name('frontend.faculty_and_staff');
 
+    // ==== School Calendar
+    Route::get('/school-calendar', [HomeController::class, 'school_calendar'])->name('frontend.school_calendar');
+
 
 });

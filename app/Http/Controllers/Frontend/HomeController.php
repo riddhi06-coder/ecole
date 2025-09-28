@@ -21,7 +21,7 @@ use App\Models\VisionMission;
 use App\Models\MessagePrincipal;
 use App\Models\Governance;
 use App\Models\FacultyStaff;
-
+use App\Models\SchoolCalendar;
 
 
 
@@ -69,6 +69,12 @@ class HomeController extends Controller
     public function faculty_and_staff() {
         $faculty_and_staff = FacultyStaff::wherenull('deleted_by')->first();
         return view('frontend.faculty_and_staff', compact('faculty_and_staff'));
+    }
+
+    // ===  School Calendar
+    public function school_calendar() {
+        $school_calendar = SchoolCalendar::wherenull('deleted_by')->first();
+        return view('frontend.school_calendar', compact('school_calendar'));
     }
 
 
