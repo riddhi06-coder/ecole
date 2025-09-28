@@ -22,7 +22,7 @@ use App\Http\Controllers\Backend\AboutTestimonialsController;
 use App\Http\Controllers\Backend\ChildPolicyController;
 use App\Http\Controllers\Backend\AlumniController;
 use App\Http\Controllers\Backend\ContactUsController;
-
+use App\Http\Controllers\Backend\PrivacyController;
 
 
 
@@ -110,6 +110,9 @@ Route::resource('manage-about-alumni', AlumniController::class);
 
 // ==== Manage Contact Us
 Route::resource('manage-contact-us', ContactUsController::class);
+
+// ==== Manage Privacy Policy
+Route::resource('manage-privacy-policy', PrivacyController::class);
 
 
 
