@@ -26,6 +26,8 @@ use App\Models\AccredationAssociation;
 use App\Models\AboutTestimonial;
 use App\Models\ChildPolicy;
 use App\Models\AboutAlumni;
+use App\Models\ContactUs;
+
 
 
 class HomeController extends Controller
@@ -104,6 +106,12 @@ class HomeController extends Controller
         $alumni_banner = AboutAlumni::wherenull('deleted_by')->first();
         $alumni = AboutAlumni::wherenull('deleted_by')->get();
         return view('frontend.alumni', compact('alumni_banner','alumni'));
+    }
+
+    // ==== Contact Us
+    public function contact_us() {
+        $contact_us = ContactUs::wherenull('deleted_by')->first();
+        return view('frontend.contact_us', compact('contact_us'));
     }
 
 

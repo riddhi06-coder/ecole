@@ -26,7 +26,7 @@
               <!-- <h4>Quick Links</h4> -->
               <ul>
                 <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="{{ route('frontend.contact_us') }}">Contact Us</a></li>
                 <li><a href="#">FAQs</a></li>
                 <li><a href="#">Careers</a></li>
                 <li><a href="#">Sitemap</a></li>

@@ -153,5 +153,8 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Alumni
     Route::get('/alumni', [HomeController::class, 'alumni'])->name('frontend.alumni');
 
+    // ==== Contact Us
+    Route::get('/contact-us', [HomeController::class, 'contact_us'])->name('frontend.contact_us');
+
 
 });

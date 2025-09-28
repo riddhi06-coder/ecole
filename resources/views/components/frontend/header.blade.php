@@ -110,7 +110,7 @@
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="cus-menu-contact-us-btn" href="#">Contact Us</a>
+      <a class="cus-menu-contact-us-btn" href="{{ route('frontend.contact_us') }}">Contact Us</a>
       <a class="cus-menu-talk-to-us-btn" href="#">Talk To Us</a>
     </div>
   </header>
