@@ -19,6 +19,7 @@ use App\Models\Clients;
 use App\Models\WhatSetsUsApart;
 use App\Models\VisionMission;
 use App\Models\MessagePrincipal;
+use App\Models\Governance;
 
 class HomeController extends Controller
 {
@@ -42,7 +43,7 @@ class HomeController extends Controller
         return view('frontend.what_sets_us_apart', compact('what_sets_us_apart'));
     }
 
-     // === Vision, Mission & Values
+    // === Vision, Mission & Values
     public function vision_mission_and_values() {
         $vision_mission_and_values = VisionMission::wherenull('deleted_by')->get();
         return view('frontend.vision_mission_and_values', compact('vision_mission_and_values'));
@@ -52,6 +53,12 @@ class HomeController extends Controller
     public function message_from_the_principal() {
         $message_from_the_principal = MessagePrincipal::wherenull('deleted_by')->first();
         return view('frontend.message_from_the_principal', compact('message_from_the_principal'));
+    }
+
+    // === Governance
+    public function governance() {
+        $governance = Governance::wherenull('deleted_by')->first();
+        return view('frontend.governance', compact('governance'));
     }
 
 

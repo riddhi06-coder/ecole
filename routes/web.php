@@ -126,5 +126,8 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Message From The Principal
     Route::get('/message-from-the-principal', [HomeController::class, 'message_from_the_principal'])->name('frontend.message_from_the_principal');
 
+    // ==== Governance
+    Route::get('/governance', [HomeController::class, 'governance'])->name('frontend.governance');
+
 
 });
