@@ -24,7 +24,6 @@ class PrivacyController extends Controller
         return view('backend.privacy.index', compact('policies'));
     }
 
-
     public function create(Request $request)
     {
         return view('backend.privacy.create');

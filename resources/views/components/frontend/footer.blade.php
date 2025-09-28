@@ -50,7 +50,7 @@
                     </div>
                     <div class="col-lg-8 col-md-8 footer-links">
                         <ul>
-                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="{{ route('frontend.privacy_policy') }}">Privacy Policy</a></li>
                             <li><a href="https://sites.google.com/ecolemondiale.org/ecoleprimarylibrary" target="_blank">Primary Library</a></li>
                             <li><a href="https://ecole.managebac.com/login" target="_blank">ManageBac Login</a></li>
                             <li><a href="https://ecole-rsic.follettdestiny.com/common/welcome.jsp?context=saas38_8511046" target="_blank">Destiny Library Login</a></li>

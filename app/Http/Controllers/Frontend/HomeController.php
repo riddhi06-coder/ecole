@@ -27,7 +27,7 @@ use App\Models\AboutTestimonial;
 use App\Models\ChildPolicy;
 use App\Models\AboutAlumni;
 use App\Models\ContactUs;
-
+use App\Models\PrivacyPolicy;
 
 
 class HomeController extends Controller
@@ -114,6 +114,12 @@ class HomeController extends Controller
         return view('frontend.contact_us', compact('contact_us'));
     }
 
+    // ==== Privacy Policy
+    public function privacy_policy() {
+        $privacy_policy_banner = PrivacyPolicy::wherenull('deleted_by')->first();
+        $privacy_policy = PrivacyPolicy::wherenull('deleted_by')->get();
+        return view('frontend.privacy_policy', compact('privacy_policy_banner','privacy_policy'));
+    }
 
 
 

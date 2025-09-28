@@ -113,7 +113,7 @@
                                         <!-- Policy Textarea -->
                                         <div class="col-md-12">
                                             <label for="policy" class="form-label">Policy <span class="txt-danger">*</span></label>
-                                            <textarea name="policy" id="policy" class="form-control" rows="4" required 
+                                            <textarea name="policy" id="policy1" class="form-control" rows="4" required 
                                                     placeholder="Enter Policy">{{ old('policy', $privacy->policy) }}</textarea>
                                             <div class="invalid-feedback">Please enter a Policy.</div>
                                         </div>
@@ -143,6 +143,13 @@
         </div>
        
        @include('components.backend.main-js')
+
+       
+        <script>
+        ClassicEditor.create(document.querySelector('#policy1'))
+            .catch(error => { console.error(error); });
+        </script>
+ 
        
         <script>
             function previewThumbnail(event) {

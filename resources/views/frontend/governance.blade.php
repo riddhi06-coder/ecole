@@ -9,6 +9,7 @@
 
 
     <main class="main">
+        
         <section class="ecolemon-breadcrumb-sec" 
             style="background-image: url('{{ asset('uploads/about/'.$governance->banner_image) }}'); 
                background-size: cover; 
