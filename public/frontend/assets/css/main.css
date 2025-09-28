@@ -1001,7 +1001,7 @@ section,
 --------------------------------------------------------------*/
 .ecolemon-breadcrumb-sec {
   position: relative;
-  background: url(../img/bg/breadcrumbs-bg.webp) center/cover no-repeat;
+  /* background: url(../img/bg/breadcrumbs-bg.webp) center/cover no-repeat; */
   padding: 120px 0 60px;
   z-index: 1;
 }

@@ -24,7 +24,7 @@
         <ul>
           <li class="dropdown"><a href="#"><span>About Us</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="what-sets-us-apart.html">What sets us apart?</a></li>
+              <li><a href="{{ route('frontend.what_sets_us_apart') }}">What sets us apart?</a></li>
               <li><a href="vision-mission-values.html">Vision, Mission & Values</a></li>
               <li><a href="message-from-the-head-of-school.html">Message From The Principal</a></li>
               <li><a href="governance.html">Governance</a></li>
@@ -37,6 +37,7 @@
               <li><a href="alumni.html">Alumni</a></li>
             </ul>
           </li>
+
           <li class="dropdown"><a href="#"><span>Admissions</span> <i
                 class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
@@ -49,6 +50,7 @@
               <li><a href="#">Merit Scholarship</a></li>
             </ul>
           </li>
+
           <li class="dropdown"><a href="#"><span>Academics</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li class="dropdown"><a href="#"><span>Curriculum Overview</span> <i
@@ -69,6 +71,7 @@
               <li><a href="#">IB Learner Profile</a></li>
             </ul>
           </li>
+
           <li class="dropdown"><a href="#"><span>Campus Life</span> <i
                 class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
@@ -86,6 +89,7 @@
               <li><a href="#">Other Facilities</a></li>
             </ul>
           </li>
+
           <li class="dropdown"><a href="#"><span>Bulletin Board</span> <i
                 class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
@@ -95,12 +99,14 @@
               <li><a href="#">Blogs</a></li>
             </ul>
           </li>
+
           <li class="dropdown"><a href="#"><span>Careers</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="#">Career Opportunities</a></li>
               <li><a href="#">University of Bath</a></li>
             </ul>
           </li>
+
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>

@@ -16,6 +16,7 @@ use App\Models\HomeFeatures;
 use App\Models\BulletinBoard;
 use App\Models\Testimonial;
 use App\Models\Clients;
+use App\Models\WhatSetsUsApart;
 
 class HomeController extends Controller
 {
@@ -31,6 +32,12 @@ class HomeController extends Controller
         $clients = Clients::whereNull('deleted_by')->get();
         // dd($programmes);
         return view('frontend.home', compact('home','programmes','festivities','features','bulletin','testimonials','clients'));
+    }
+
+    // === What sets us apart?
+    public function what_sets_us_apart() {
+        $what_sets_us_apart = WhatSetsUsApart::wherenull('deleted_by')->get();
+        return view('frontend.what_sets_us_apart', compact('what_sets_us_apart'));
     }
 
 

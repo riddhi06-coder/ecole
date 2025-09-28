@@ -117,5 +117,8 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Home
     Route::get('/', [HomeController::class, 'home'])->name('frontend.index');
 
+    // ==== What sets us apart?
+    Route::get('/what-sets-us-apart', [HomeController::class, 'what_sets_us_apart'])->name('frontend.what_sets_us_apart');
+
 
 });
