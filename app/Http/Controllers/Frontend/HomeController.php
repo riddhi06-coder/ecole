@@ -25,7 +25,7 @@ use App\Models\SchoolCalendar;
 use App\Models\AccredationAssociation;
 use App\Models\AboutTestimonial;
 use App\Models\ChildPolicy;
-
+use App\Models\AboutAlumni;
 
 
 class HomeController extends Controller
@@ -92,12 +92,18 @@ class HomeController extends Controller
         $testimonial = AboutTestimonial::wherenull('deleted_by')->get();
         return view('frontend.testimonials', compact('testimonials','testimonial'));
     }
-
-    
+   
     // ===  Child Safeguarding Policy
     public function child_safeguarding_policy() {
         $child_safeguarding_policy = ChildPolicy::wherenull('deleted_by')->first();
         return view('frontend.child_safeguarding_policy', compact('child_safeguarding_policy'));
+    }
+
+    // ==== Alumni
+    public function alumni() {
+        $alumni_banner = AboutAlumni::wherenull('deleted_by')->first();
+        $alumni = AboutAlumni::wherenull('deleted_by')->get();
+        return view('frontend.alumni', compact('alumni_banner','alumni'));
     }
 
 

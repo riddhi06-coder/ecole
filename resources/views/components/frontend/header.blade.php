@@ -34,7 +34,7 @@
               <li><a href="{{ route('frontend.accreditation_and_associations') }}">Accreditation & Associations</a></li>
               <li><a href="{{ route('frontend.testimonials') }}">Testimonials</a></li>
               <li><a href="{{ route('frontend.child_safeguarding_policy') }}">Child Protection Policy</a></li>
-              <li><a href="alumni.html">Alumni</a></li>
+              <li><a href="{{ route('frontend.alumni') }}">Alumni</a></li>
             </ul>
           </li>
 
