@@ -1,19 +1,33 @@
+    @php
+        $contact_us = \App\Models\ContactUs::whereNull('deleted_by')->first();
+        $announcements = $contact_us && $contact_us->announcements ? json_decode($contact_us->announcements, true) : [];
+    @endphp
+   
    <div class="top_announcement">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <marquee scrollamount="8" behavior="scroll" direction="left" onmouseover="this.stop();"
-            onmouseout="this.start();">
-            Admissions open for the academic year 2025-2026
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
-            IB Continuum School
-          </marquee>
-        </div>
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-md-12">
+                  @if(!empty($contact_us->announcements))
+                      @php
+                          $announcements = json_decode($contact_us->announcements, true);
+                      @endphp
+                      <marquee scrollamount="8" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                          @foreach($announcements as $announcement)
+                              {{ $announcement['title'] }} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                          @endforeach
+                      </marquee>
+                  @else
+                      <marquee scrollamount="8" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                          No announcements available
+                      </marquee>
+                  @endif
+              </div>
+          </div>
       </div>
-    </div>
   </div>
+
  
- <header id="header" class="header d-flex align-items-center sticky-top">
+  <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
       <a href="{{ route('frontend.index') }}" class="logo d-flex align-items-center me-auto">
@@ -111,6 +125,9 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
       <a class="cus-menu-contact-us-btn" href="{{ route('frontend.contact_us') }}">Contact Us</a>
-      <a class="cus-menu-talk-to-us-btn" href="#">Talk To Us</a>
+      <a class="cus-menu-talk-to-us-btn"
+        href="https://api.whatsapp.com/send/?phone=9326020914&text=Hello%20%C3%89cole%20Admissions%20Team%2C%0A%0AI%E2%80%99m%20interested%20in%20admissions%202026-27.&utm_source=website&utm_medium=cta&utm"
+        target="_blank">Talk To Us
+      </a>
     </div>
   </header>
