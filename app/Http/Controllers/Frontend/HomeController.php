@@ -22,7 +22,7 @@ use App\Models\MessagePrincipal;
 use App\Models\Governance;
 use App\Models\FacultyStaff;
 use App\Models\SchoolCalendar;
-
+use App\Models\AccredationAssociation;
 
 
 class HomeController extends Controller
@@ -75,6 +75,12 @@ class HomeController extends Controller
     public function school_calendar() {
         $school_calendar = SchoolCalendar::wherenull('deleted_by')->first();
         return view('frontend.school_calendar', compact('school_calendar'));
+    }
+
+    // ===  Accreditation and associations
+    public function accreditation_and_associations() {
+        $accreditation_and_associations = AccredationAssociation::wherenull('deleted_by')->get();
+        return view('frontend.accreditation_and_associations', compact('accreditation_and_associations'));
     }
 
 
