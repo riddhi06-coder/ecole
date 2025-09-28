@@ -20,6 +20,10 @@ use App\Models\WhatSetsUsApart;
 use App\Models\VisionMission;
 use App\Models\MessagePrincipal;
 use App\Models\Governance;
+use App\Models\FacultyStaff;
+
+
+
 
 class HomeController extends Controller
 {
@@ -59,6 +63,12 @@ class HomeController extends Controller
     public function governance() {
         $governance = Governance::wherenull('deleted_by')->first();
         return view('frontend.governance', compact('governance'));
+    }
+
+    // ===  Faculty & Staff
+    public function faculty_and_staff() {
+        $faculty_and_staff = FacultyStaff::wherenull('deleted_by')->first();
+        return view('frontend.faculty_and_staff', compact('faculty_and_staff'));
     }
 
 

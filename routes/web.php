@@ -129,5 +129,8 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Governance
     Route::get('/governance', [HomeController::class, 'governance'])->name('frontend.governance');
 
+    // ==== Faculty & Staff
+    Route::get('/faculty-and-staff', [HomeController::class, 'faculty_and_staff'])->name('frontend.faculty_and_staff');
+
 
 });

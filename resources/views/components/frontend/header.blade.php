@@ -29,7 +29,7 @@
               <li><a href="{{ route('frontend.message_from_the_principal') }}">Message From The Principal</a></li>
               <li><a href="{{ route('frontend.governance') }}">Governance</a></li>
               <li><a href="https://www.rsicollege.org/" target="_blank">Russell Square International College</a></li>
-              <li><a href="faculty-staff.html">Faculty & Staff</a></li>
+              <li><a href="{{ route('frontend.faculty_and_staff') }}">Faculty & Staff</a></li>
               <li><a href="school-calendar.html">School Calendar</a></li>
               <li><a href="accreditation-and-associations.html">Accreditation & Associations</a></li>
               <li><a href="testimonials.html">Testimonials</a></li>
