@@ -1,11 +1,24 @@
+      @php
+          $contact_us = \App\Models\ContactUs::whereNull('deleted_by')->first();
+      @endphp
+   
+  
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>
-  <div class="float-container">
-    <a href="tel:+91-22-61306130" class="icon one">Call Us</a>
-    <a href="mailto:enquiry@ecolemondiale.org" class="icon two">Email Us</a>
-    <a href="https://goo.gl/maps/t6fcxBrAjKp" target="_blank" class="icon three">Reach Us</a>
-  </div>
+    <div class="float-container">
+        @if($contact_us && $contact_us->contact_number)
+            <a href="tel:{{ $contact_us->contact_number }}" class="icon one">Call Us</a>
+        @endif
+
+        @if($contact_us && $contact_us->email)
+            <a href="mailto:{{ $contact_us->email }}" class="icon two">Email Us</a>
+        @endif
+
+        @if($contact_us && $contact_us->map_url)
+            <a href="{{ $contact_us->map_url }}" target="_blank" class="icon three">Reach Us</a>
+        @endif
+    </div>
   <!-- Vendor JS Files -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="{{ asset('frontend/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
