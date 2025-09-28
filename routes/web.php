@@ -19,7 +19,7 @@ use App\Http\Controllers\Backend\FacultyStaffController;
 use App\Http\Controllers\Backend\SchoolCalendarController;
 use App\Http\Controllers\Backend\AboutTestimonialsController;
 use App\Http\Controllers\Backend\ChildPolicyController;
-
+use App\Http\Controllers\Backend\AlumniController;
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -97,6 +97,9 @@ Route::resource('manage-about-testimonials', AboutTestimonialsController::class)
 
 // ==== Manage Child Safeguarding Policy
 Route::resource('manage-child-safeguarding-policy', ChildPolicyController::class);
+
+// ==== Manage About Alumni
+Route::resource('manage-about-alumni', AlumniController::class);
 
 
 
