@@ -23,6 +23,9 @@ use App\Models\Governance;
 use App\Models\FacultyStaff;
 use App\Models\SchoolCalendar;
 use App\Models\AccredationAssociation;
+use App\Models\AboutTestimonial;
+
+
 
 
 class HomeController extends Controller
@@ -82,6 +85,14 @@ class HomeController extends Controller
         $accreditation_and_associations = AccredationAssociation::wherenull('deleted_by')->get();
         return view('frontend.accreditation_and_associations', compact('accreditation_and_associations'));
     }
+
+    // ==== Testimonials
+    public function testimonials() {
+        $testimonials = AboutTestimonial::wherenull('deleted_by')->first();
+        $testimonial = AboutTestimonial::wherenull('deleted_by')->get();
+        return view('frontend.testimonials', compact('testimonials','testimonial'));
+    }
+
 
 
 

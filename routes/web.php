@@ -138,5 +138,8 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Accreditation and associations
     Route::get('/accreditation-and-associations', [HomeController::class, 'accreditation_and_associations'])->name('frontend.accreditation_and_associations');
 
+    // ==== Testimonials
+    Route::get('/testimonials', [HomeController::class, 'testimonials'])->name('frontend.testimonials');
+
 
 });

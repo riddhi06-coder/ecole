@@ -32,7 +32,7 @@
               <li><a href="{{ route('frontend.faculty_and_staff') }}">Faculty & Staff</a></li>
               <li><a href="{{ route('frontend.school_calendar') }}">School Calendar</a></li>
               <li><a href="{{ route('frontend.accreditation_and_associations') }}">Accreditation & Associations</a></li>
-              <li><a href="testimonials.html">Testimonials</a></li>
+              <li><a href="{{ route('frontend.testimonials') }}">Testimonials</a></li>
               <li><a href="child-protection-policy.html">Child Protection Policy</a></li>
               <li><a href="alumni.html">Alumni</a></li>
             </ul>
