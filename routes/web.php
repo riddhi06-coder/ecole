@@ -123,5 +123,8 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Vision, Mission & Values
     Route::get('/vision-mission-and-values', [HomeController::class, 'vision_mission_and_values'])->name('frontend.vision_mission_and_values');
 
+    // ==== Message From The Principal
+    Route::get('/message-from-the-principal', [HomeController::class, 'message_from_the_principal'])->name('frontend.message_from_the_principal');
+
 
 });

@@ -18,6 +18,7 @@ use App\Models\Testimonial;
 use App\Models\Clients;
 use App\Models\WhatSetsUsApart;
 use App\Models\VisionMission;
+use App\Models\MessagePrincipal;
 
 class HomeController extends Controller
 {
@@ -45,6 +46,12 @@ class HomeController extends Controller
     public function vision_mission_and_values() {
         $vision_mission_and_values = VisionMission::wherenull('deleted_by')->get();
         return view('frontend.vision_mission_and_values', compact('vision_mission_and_values'));
+    }
+
+    // === Message From The Principal
+    public function message_from_the_principal() {
+        $message_from_the_principal = MessagePrincipal::wherenull('deleted_by')->first();
+        return view('frontend.message_from_the_principal', compact('message_from_the_principal'));
     }
 
 
