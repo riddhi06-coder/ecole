@@ -120,5 +120,8 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== What sets us apart?
     Route::get('/what-sets-us-apart', [HomeController::class, 'what_sets_us_apart'])->name('frontend.what_sets_us_apart');
 
+    // ==== Vision, Mission & Values
+    Route::get('/vision-mission-and-values', [HomeController::class, 'vision_mission_and_values'])->name('frontend.vision_mission_and_values');
+
 
 });

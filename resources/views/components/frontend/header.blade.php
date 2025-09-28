@@ -25,7 +25,7 @@
           <li class="dropdown"><a href="#"><span>About Us</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="{{ route('frontend.what_sets_us_apart') }}">What sets us apart?</a></li>
-              <li><a href="vision-mission-values.html">Vision, Mission & Values</a></li>
+              <li><a href="{{ route('frontend.vision_mission_and_values') }}">Vision, Mission & Values</a></li>
               <li><a href="message-from-the-head-of-school.html">Message From The Principal</a></li>
               <li><a href="governance.html">Governance</a></li>
               <li><a href="https://www.rsicollege.org/" target="_blank">Russell Square International College</a></li>

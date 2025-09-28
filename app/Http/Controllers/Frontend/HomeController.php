@@ -17,6 +17,7 @@ use App\Models\BulletinBoard;
 use App\Models\Testimonial;
 use App\Models\Clients;
 use App\Models\WhatSetsUsApart;
+use App\Models\VisionMission;
 
 class HomeController extends Controller
 {
@@ -38,6 +39,12 @@ class HomeController extends Controller
     public function what_sets_us_apart() {
         $what_sets_us_apart = WhatSetsUsApart::wherenull('deleted_by')->get();
         return view('frontend.what_sets_us_apart', compact('what_sets_us_apart'));
+    }
+
+     // === Vision, Mission & Values
+    public function vision_mission_and_values() {
+        $vision_mission_and_values = VisionMission::wherenull('deleted_by')->get();
+        return view('frontend.vision_mission_and_values', compact('vision_mission_and_values'));
     }
 
 
