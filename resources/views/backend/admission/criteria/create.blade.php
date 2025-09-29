@@ -17,14 +17,14 @@
             <div class="page-title">
               <div class="row">
                 <div class="col-6">
-                  <h4>Add Privacy Policy Form</h4>
+                  <h4>Add Admission Criteria and Process Form</h4>
                 </div>
                 <div class="col-6">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                    <a href="{{ route('manage-privacy-policy.index') }}">Home</a>
+                    <a href="{{ route('manage-admission-criteria.index') }}">Home</a>
                     </li>
-                    <li class="breadcrumb-item active">Add Privacy Policy</li>
+                    <li class="breadcrumb-item active">Add Admission Criteria and Process</li>
                 </ol>
 
                 </div>
@@ -37,7 +37,7 @@
                 <div class="col-md-12">
                     <div class="card">
                     <div class="card-header">
-                        <h4>Privacy Policy Form</h4>
+                        <h4>Admission Criteria and Process Form</h4>
                         <p class="f-m-light mt-1">Fill up your true details and submit the form.</p>
                     </div>
                     <div class="card-body">
@@ -47,7 +47,7 @@
                             <div class="col-12">
                             <div class="tab-content" id="wizard-tabContent">
                                 <div class="tab-pane fade show active" id="wizard-contact" role="tabpanel" aria-labelledby="wizard-contact-tab">
-                                    <form class="row g-3 needs-validation custom-input" novalidate action="{{ route('manage-privacy-policy.store') }}" method="POST" enctype="multipart/form-data">
+                                    <form class="row g-3 needs-validation custom-input" novalidate action="{{ route('manage-admission-criteria.store') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
 
                                         <!-- Section Title -->
@@ -97,9 +97,9 @@
 
                                         <!-- Title -->
                                         <div class="col-md-6 mt-5">
-                                            <label class="form-label" for="policy_title">Policy Title<span class="txt-danger">*</span></label>
-                                            <input class="form-control" id="policy_title" type="text" name="policy_title" placeholder="Enter Policy Title" required>
-                                            <div class="invalid-feedback">Please enter a Policy Title.</div>
+                                            <label class="form-label" for="policy_title">Process Title<span class="txt-danger">*</span></label>
+                                            <input class="form-control" id="policy_title" type="text" name="policy_title" placeholder="Enter Process Title" required>
+                                            <div class="invalid-feedback">Please enter a Process Title.</div>
                                         </div>
 
 
@@ -107,15 +107,15 @@
                                         
                                         <!-- Description Textarea -->
                                         <div class="col-md-12">
-                                            <label for="description" class="form-label">Policy <span class="txt-danger">*</span></label>
-                                            <textarea name="policy" id="editor1" class="form-control" rows="4" required placeholder="Enter Policy">{{ old('policy') }}</textarea>
-                                            <div class="invalid-feedback">Please enter a Policy.</div>
+                                            <label for="description" class="form-label">Process <span class="txt-danger">*</span></label>
+                                            <textarea name="policy" id="editor1" class="form-control" rows="4" required placeholder="Enter Process">{{ old('policy') }}</textarea>
+                                            <div class="invalid-feedback">Please enter a Process.</div>
                                         </div>
 
 
                                         <!-- Form Actions -->
                                         <div class="col-12 text-end">
-                                            <a href="{{ route('manage-admission-criteria-process.index') }}" class="btn btn-danger px-4">Cancel</a>
+                                            <a href="{{ route('manage-admission-criteria.index') }}" class="btn btn-danger px-4">Cancel</a>
                                             <button class="btn btn-primary" type="submit">Submit</button>
                                         </div>
                                     </form>
@@ -141,7 +141,7 @@
 
             
         <script>
-        ClassicEditor.create(document.querySelector('#policy1'))
+        ClassicEditor.create(document.querySelector('#editor1'))
             .catch(error => { console.error(error); });
         </script>
         

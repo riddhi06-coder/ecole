@@ -82,6 +82,23 @@
                 </li>
 
 
+                <li class="sidebar-list {{ request()->routeIs('manage-admission-criteria.index', 'manage-vision-mission.index', 'manage-message-from-principal.index','manage-governance.index','manage-faculty-and-staff.index','manage-school-calendar.index','manage-about-testimonials.index','manage-child-safeguarding-policy.index','manage-about-alumni.index','manage-accredation-association.index') ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"> </i>
+                  <a class="sidebar-link sidebar-title" href="#">
+                    <svg class="stroke-icon"> 
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-calendar') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-calendar') }}"></use>
+                    </svg>
+                    <span>Admissions</span>
+                  </a>
+                  <ul class="sidebar-submenu">
+                    <li><a href="{{ route('manage-admission-criteria.index') }}" class="{{ request()->routeIs('manage-admission-criteria.index') ? 'active' : '' }}">Admission Criteria</a></li>
+                  </ul>
+                </li>
+
+
                 <li class="sidebar-list {{ request()->routeIs('manage-contact-us.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"></i>
                   <a class="sidebar-link" href="{{ route('manage-contact-us.index') }}">
@@ -96,7 +113,7 @@
                 </li>
 
 
-                <li class="sidebar-list {{ request()->routeIs('manage-privacy-policy.index') ? 'active' : '' }}">
+                 <li class="sidebar-list {{ request()->routeIs('manage-privacy-policy.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"></i>
                   <a class="sidebar-link" href="{{ route('manage-privacy-policy.index') }}">
                     <svg class="stroke-icon"> 

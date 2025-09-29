@@ -23,6 +23,8 @@ use App\Http\Controllers\Backend\ChildPolicyController;
 use App\Http\Controllers\Backend\AlumniController;
 use App\Http\Controllers\Backend\ContactUsController;
 use App\Http\Controllers\Backend\PrivacyController;
+use App\Http\Controllers\Backend\AdmissionController;
+
 
 
 
@@ -113,6 +115,9 @@ Route::resource('manage-contact-us', ContactUsController::class);
 
 // ==== Manage Privacy Policy
 Route::resource('manage-privacy-policy', PrivacyController::class);
+
+// ==== Manage Admission Criteria and Process
+Route::resource('manage-admission-criteria', AdmissionController::class);
 
 
 
