@@ -25,7 +25,7 @@ use App\Http\Controllers\Backend\ContactUsController;
 use App\Http\Controllers\Backend\PrivacyController;
 use App\Http\Controllers\Backend\AdmissionController;
 use App\Http\Controllers\Backend\FAQController;
-
+use App\Http\Controllers\Backend\ScholarshipController;
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -121,6 +121,9 @@ Route::resource('manage-admission-criteria', AdmissionController::class);
 
 // ==== Manage FAQs
 Route::resource('manage-faqs', FAQController::class);
+
+// ==== Manage Merit Scholarship
+Route::resource('manage-merit-scholarships', ScholarshipController::class);
 
 
 
