@@ -178,5 +178,8 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Privacy Policy
     Route::get('/privacy-policy', [HomeController::class, 'privacy_policy'])->name('frontend.privacy_policy');
 
+    // ==== Admission Criteria and Process
+    Route::get('/admission-criteria-and-process', [HomeController::class, 'admission_criteria_and_process'])->name('frontend.admission_criteria_and_process');
+
 
 });

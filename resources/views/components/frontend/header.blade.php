@@ -58,7 +58,7 @@
               <li><a href="#">Apply for admission</a></li>
               <li><a href="#">Schedule a Visit</a></li>
               <li><a href="#">Enquire about admission</a></li>
-              <li><a href="#">Admission Criteria & Process</a></li>
+              <li><a href="{{ route('frontend.admission_criteria_and_process') }}">Admission Criteria & Process</a></li>
               <li><a href="#">FAQs</a></li>
               <li><a href="#">Fee Structure</a></li>
               <li><a href="#">Merit Scholarship</a></li>

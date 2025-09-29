@@ -28,6 +28,7 @@ use App\Models\ChildPolicy;
 use App\Models\AboutAlumni;
 use App\Models\ContactUs;
 use App\Models\PrivacyPolicy;
+use App\Models\AdmissionProcedure;
 
 
 class HomeController extends Controller
@@ -119,6 +120,13 @@ class HomeController extends Controller
         $privacy_policy_banner = PrivacyPolicy::wherenull('deleted_by')->first();
         $privacy_policy = PrivacyPolicy::wherenull('deleted_by')->get();
         return view('frontend.privacy_policy', compact('privacy_policy_banner','privacy_policy'));
+    }
+
+    // ==== Admission Criteria and Process
+    public function admission_criteria_and_process() {
+        $admission_criteria_and_process_banner = AdmissionProcedure::wherenull('deleted_by')->first();
+        $admission_criteria_and_process = AdmissionProcedure::wherenull('deleted_by')->get();
+        return view('frontend.admission_criteria_and_process', compact('admission_criteria_and_process_banner','admission_criteria_and_process'));
     }
 
 
