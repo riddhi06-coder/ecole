@@ -181,5 +181,11 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Admission Criteria and Process
     Route::get('/admission-criteria-and-process', [HomeController::class, 'admission_criteria_and_process'])->name('frontend.admission_criteria_and_process');
 
+    // ==== FAQs
+    Route::get('/faq', [HomeController::class, 'faq'])->name('frontend.faq');
+
+    // ==== Fee Structure
+    Route::get('/fee-structure', [HomeController::class, 'fee_structure'])->name('frontend.fee_structure');
+
 
 });

@@ -96,8 +96,9 @@
                   <ul class="sidebar-submenu">
                     <li><a href="{{ route('manage-admission-criteria.index') }}" class="{{ request()->routeIs('manage-admission-criteria.index') ? 'active' : '' }}">Admission Criteria</a></li>
                     <li><a href="{{ route('manage-faqs.index') }}" class="{{ request()->routeIs('manage-faqs.index') ? 'active' : '' }}">FAQs</a></li>
-                    <li><a href="{{ route('manage-merit-scholarships.index') }}" class="{{ request()->routeIs('manage-merit-scholarships.index') ? 'active' : '' }}">Merit Scholarship</a></li>
                     <li><a href="{{ route('manage-fee-structure.index') }}" class="{{ request()->routeIs('manage-fee-structure.index') ? 'active' : '' }}">Fee Structure</a></li>
+                    <li><a href="{{ route('manage-merit-scholarships.index') }}" class="{{ request()->routeIs('manage-merit-scholarships.index') ? 'active' : '' }}">Merit Scholarship</a></li>
+    
                   </ul>
                 </li>
 

@@ -29,6 +29,8 @@ use App\Models\AboutAlumni;
 use App\Models\ContactUs;
 use App\Models\PrivacyPolicy;
 use App\Models\AdmissionProcedure;
+use App\Models\Faqs;
+use App\Models\FeeStructure;
 
 
 class HomeController extends Controller
@@ -127,6 +129,20 @@ class HomeController extends Controller
         $admission_criteria_and_process_banner = AdmissionProcedure::wherenull('deleted_by')->first();
         $admission_criteria_and_process = AdmissionProcedure::wherenull('deleted_by')->get();
         return view('frontend.admission_criteria_and_process', compact('admission_criteria_and_process_banner','admission_criteria_and_process'));
+    }
+
+    // ==== FAQs
+    public function faq() {
+        $faq_banner = Faqs::wherenull('deleted_by')->first();
+        $faq = Faqs::wherenull('deleted_by')->get();
+        return view('frontend.faq', compact('faq_banner','faq'));
+    }
+
+    // ==== Fee Structure
+    public function fee_structure() {
+        $fee_structure_banner = FeeStructure::wherenull('deleted_by')->first();
+        $fee_structure = FeeStructure::wherenull('deleted_by')->get();
+        return view('frontend.fee_structure', compact('fee_structure_banner','fee_structure'));
     }
 
 
