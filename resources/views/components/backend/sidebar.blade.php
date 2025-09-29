@@ -82,7 +82,7 @@
                 </li>
 
 
-                <li class="sidebar-list {{ request()->routeIs('manage-admission-criteria.index', 'manage-vision-mission.index', 'manage-message-from-principal.index','manage-governance.index','manage-faculty-and-staff.index','manage-school-calendar.index','manage-about-testimonials.index','manage-child-safeguarding-policy.index','manage-about-alumni.index','manage-accredation-association.index') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-admission-criteria.index', 'manage-faqs.index', 'manage-message-from-principal.index','manage-governance.index','manage-faculty-and-staff.index','manage-school-calendar.index','manage-about-testimonials.index','manage-child-safeguarding-policy.index','manage-about-alumni.index','manage-accredation-association.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -95,6 +95,7 @@
                   </a>
                   <ul class="sidebar-submenu">
                     <li><a href="{{ route('manage-admission-criteria.index') }}" class="{{ request()->routeIs('manage-admission-criteria.index') ? 'active' : '' }}">Admission Criteria</a></li>
+                    <li><a href="{{ route('manage-faqs.index') }}" class="{{ request()->routeIs('manage-faqs.index') ? 'active' : '' }}">FAQs</a></li>
                   </ul>
                 </li>
 
