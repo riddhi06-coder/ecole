@@ -31,6 +31,9 @@ use App\Models\PrivacyPolicy;
 use App\Models\AdmissionProcedure;
 use App\Models\Faqs;
 use App\Models\FeeStructure;
+use App\Models\MeritScholarship;
+
+
 
 
 class HomeController extends Controller
@@ -143,6 +146,13 @@ class HomeController extends Controller
         $fee_structure_banner = FeeStructure::wherenull('deleted_by')->first();
         $fee_structure = FeeStructure::wherenull('deleted_by')->get();
         return view('frontend.fee_structure', compact('fee_structure_banner','fee_structure'));
+    }
+
+    // ==== Fee Structure
+    public function merit_scholarship() {
+        $merit_scholarship_banner = MeritScholarship::wherenull('deleted_by')->first();
+        $merit_scholarship = MeritScholarship::wherenull('deleted_by')->get();
+        return view('frontend.merit_scholarship', compact('merit_scholarship_banner','merit_scholarship'));
     }
 
 

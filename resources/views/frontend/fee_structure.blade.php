@@ -43,7 +43,6 @@
                                 @if($fee->fee_desc)
                                     <p>{{ $fee->fee_desc }}</p>
                                 @endif
-
                                 
 
                                 @if($fee->fees_details)

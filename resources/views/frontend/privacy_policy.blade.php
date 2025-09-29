@@ -10,7 +10,7 @@
 
     <main class="main">
 
-        <section class="ecolemon-breadcrumb-sec"    style="background-image: url('{{ asset('uploads/privacy-policy/'.$privacy_policy_banner->banner_image) }}'); 
+        <section class="ecolemon-breadcrumb-sec" style="background-image: url('{{ asset('uploads/privacy-policy/'.$privacy_policy_banner->banner_image) }}'); 
                background-size: cover; 
                background-position: center; 
                background-repeat: no-repeat;">
@@ -18,11 +18,11 @@
             <div class="container">
                 <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <h1>{{ $privacy_policy_banner->section_heading ?? 'privacy_policy_banner' }}</h1>
+                    <h1>{{ $privacy_policy_banner->banner_heading ?? 'privacy_policy_banner' }}</h1>
                     <ul class="bread-list">
                     <li><a href="{{ url('/') }}">Home<i class="fa fa-angle-right"></i></a></li>
                     <!--<li><a href="javascript:void(0)">About us<i class="fa fa-angle-right"></i></a></li>-->
-                    <li class="active"><a href="javascript:void(0)">{{ $privacy_policy_banner->section_heading ?? 'privacy_policy_banner' }}</a></li>
+                    <li class="active"><a href="javascript:void(0)">{{ $privacy_policy_banner->banner_heading ?? 'privacy_policy_banner' }}</a></li>
                     </ul>
                 </div>
                 </div>

@@ -61,7 +61,7 @@
               <li><a href="{{ route('frontend.admission_criteria_and_process') }}">Admission Criteria & Process</a></li>
               <li><a href="{{ route('frontend.faq') }}">FAQs</a></li>
               <li><a href="{{ route('frontend.fee_structure') }}">Fee Structure</a></li>
-              <li><a href="{{ route('frontend.faq') }}">Merit Scholarship</a></li>
+              <li><a href="{{ route('frontend.merit_scholarship') }}">Merit Scholarship</a></li>
             </ul>
           </li>
 

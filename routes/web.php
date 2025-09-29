@@ -187,5 +187,11 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Fee Structure
     Route::get('/fee-structure', [HomeController::class, 'fee_structure'])->name('frontend.fee_structure');
 
+    // ==== Merit Scholarship
+    Route::get('/merit-scholarship', [HomeController::class, 'merit_scholarship'])->name('frontend.merit_scholarship');
+
+    
+
+
 
 });
