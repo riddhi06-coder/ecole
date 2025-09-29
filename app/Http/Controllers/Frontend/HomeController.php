@@ -148,7 +148,7 @@ class HomeController extends Controller
         return view('frontend.fee_structure', compact('fee_structure_banner','fee_structure'));
     }
 
-    // ==== Fee Structure
+    // ====  Merit Scholarship
     public function merit_scholarship() {
         $merit_scholarship_banner = MeritScholarship::wherenull('deleted_by')->first();
         $merit_scholarship = MeritScholarship::wherenull('deleted_by')->get();
