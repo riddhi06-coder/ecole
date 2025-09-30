@@ -27,7 +27,7 @@ use App\Http\Controllers\Backend\AdmissionController;
 use App\Http\Controllers\Backend\FAQController;
 use App\Http\Controllers\Backend\ScholarshipController;
 use App\Http\Controllers\Backend\FeeStructureController;
-
+use App\Http\Controllers\Backend\VirtualController;
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -129,6 +129,9 @@ Route::resource('manage-merit-scholarships', ScholarshipController::class);
 
 // ==== Manage Fee Structure
 Route::resource('manage-fee-structure', FeeStructureController::class);
+
+// ==== Manage Virtual Tour
+Route::resource('manage-virtual-tour', VirtualController::class);
 
 
 
