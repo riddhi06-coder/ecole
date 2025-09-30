@@ -32,7 +32,7 @@ use App\Http\Controllers\Backend\MediaCenterController;
 use App\Http\Controllers\Backend\PerformingArtsController;
 use App\Http\Controllers\Backend\TechnologyController;
 use App\Http\Controllers\Backend\SportsController;
-
+use App\Http\Controllers\Backend\ServiceController;
 
 
 
@@ -151,6 +151,9 @@ Route::resource('manage-technology', TechnologyController::class);
 
 // ==== Manage Sports and Extra Curricular Activities
 Route::resource('manage-sports-activities', SportsController::class);
+
+// ==== Manage Service Learning
+Route::resource('manage-service-learning', ServiceController::class);
 
 
 
