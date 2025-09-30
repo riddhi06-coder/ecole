@@ -103,7 +103,7 @@
                 </li>
 
 
-                <li class="sidebar-list {{ request()->routeIs('manage-virtual-tour.index', 'manage-media-center.index', 'manage-ib-visual.index','manage-technology.index','manage-faculty-and-staff.index','manage-school-calendar.index','manage-about-testimonials.index','manage-child-safeguarding-policy.index','manage-about-alumni.index','manage-accredation-association.index') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-virtual-tour.index', 'manage-media-center.index', 'manage-ib-visual.index','manage-technology.index','manage-sports-activities.index','manage-school-calendar.index','manage-about-testimonials.index','manage-child-safeguarding-policy.index','manage-about-alumni.index','manage-accredation-association.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -119,6 +119,7 @@
                     <li><a href="{{ route('manage-media-center.index') }}" class="{{ request()->routeIs('manage-media-center.index') ? 'active' : '' }}">Media Centre</a></li>
                     <li><a href="{{ route('manage-ib-visual.index') }}" class="{{ request()->routeIs('manage-ib-visual.index') ? 'active' : '' }}">IB Visual</a></li>
                     <li><a href="{{ route('manage-technology.index') }}" class="{{ request()->routeIs('manage-technology.index') ? 'active' : '' }}">Technology</a></li>
+                    <li><a href="{{ route('manage-sports-activities.index') }}" class="{{ request()->routeIs('manage-sports-activities.index') ? 'active' : '' }}">Sports Activities</a></li>
     
                   </ul>
                 </li>
