@@ -33,7 +33,7 @@ use App\Http\Controllers\Backend\PerformingArtsController;
 use App\Http\Controllers\Backend\TechnologyController;
 use App\Http\Controllers\Backend\SportsController;
 use App\Http\Controllers\Backend\ServiceController;
-
+use App\Http\Controllers\Backend\SafetyController;
 
 
 
@@ -154,6 +154,9 @@ Route::resource('manage-sports-activities', SportsController::class);
 
 // ==== Manage Service Learning
 Route::resource('manage-service-learning', ServiceController::class);
+
+// ==== Manage Safety and Security
+Route::resource('manage-safety-security', SafetyController::class);
 
 
 
