@@ -29,7 +29,7 @@ use App\Http\Controllers\Backend\ScholarshipController;
 use App\Http\Controllers\Backend\FeeStructureController;
 use App\Http\Controllers\Backend\VirtualController;
 use App\Http\Controllers\Backend\MediaCenterController;
-
+use App\Http\Controllers\Backend\PerformingArtsController;
 
 
 
@@ -138,6 +138,9 @@ Route::resource('manage-virtual-tour', VirtualController::class);
 
 // ==== Manage Media Centre
 Route::resource('manage-media-center', MediaCenterController::class);
+
+// ==== Manage IB Visual and Performing Arts
+Route::resource('manage-ib-visual', PerformingArtsController::class);
 
 
 

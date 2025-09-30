@@ -17,14 +17,14 @@
             <div class="page-title">
               <div class="row">
                 <div class="col-6">
-                  <h4>Add Privacy Policy Form</h4>
+                  <h4>Add IB Visual and Performing Arts Form</h4>
                 </div>
                 <div class="col-6">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                    <a href="{{ route('manage-privacy-policy.index') }}">Home</a>
+                    <a href="{{ route('manage-ib-visual.index') }}">Home</a>
                     </li>
-                    <li class="breadcrumb-item active">Add Privacy Policy</li>
+                    <li class="breadcrumb-item active">Add IB Visual and Performing Arts</li>
                 </ol>
 
                 </div>
@@ -37,7 +37,7 @@
                 <div class="col-md-12">
                     <div class="card">
                     <div class="card-header">
-                        <h4>Privacy Policy Form</h4>
+                        <h4>IB Visual and Performing Arts Form</h4>
                         <p class="f-m-light mt-1">Fill up your true details and submit the form.</p>
                     </div>
                     <div class="card-body">
@@ -47,7 +47,7 @@
                             <div class="col-12">
                             <div class="tab-content" id="wizard-tabContent">
                                 <div class="tab-pane fade show active" id="wizard-contact" role="tabpanel" aria-labelledby="wizard-contact-tab">
-                                    <form class="row g-3 needs-validation custom-input" novalidate action="{{ route('manage-privacy-policy.store') }}" method="POST" enctype="multipart/form-data">
+                                    <form class="row g-3 needs-validation custom-input" novalidate action="{{ route('manage-ib-visual.store') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
 
                                         <!-- Section Title -->
@@ -83,39 +83,46 @@
                                         </div>
 
 
+                                        <!-- Section Image -->
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="section_image"> Section Image </label>
+                                            <input class="form-control" id="section_image" type="file" name="section_image" onchange="previewSection(event)">
+                                            <div class="invalid-feedback">Please upload a Section image.</div>
+                                            <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small>
+                                            <br>
+                                            <small class="text-secondary"><b>Note: Only files in .jpg, .jpeg, .png, .webp, .svg format can be uploaded.</b></small>
 
-                                        <!-- Description Textarea -->
-                                        <div class="col-md-12">
-                                            <label for="description" class="form-label">Description </label>
-                                            <textarea name="description" id="editor" class="form-control" rows="4" placeholder="Enter description">{{ old('description') }}</textarea>
-                                            <div class="invalid-feedback">Please enter a description.</div>
+                                            <!-- Image Preview -->
+                                            <div class="mt-2">
+                                                <img id="sectionPreview" src="#" alt="Preview" class="img-fluid rounded border d-none" style="max-height: 150px; background:black;">
+                                            </div>
                                         </div>
 
 
 
+                                    
                                         <hr class="mt-5">
 
                                         <!-- Title -->
                                         <div class="col-md-6 mt-5">
-                                            <label class="form-label" for="policy_title">Policy Title<span class="txt-danger">*</span></label>
-                                            <input class="form-control" id="policy_title" type="text" name="policy_title" placeholder="Enter Policy Title" required>
-                                            <div class="invalid-feedback">Please enter a Policy Title.</div>
+                                            <label class="form-label" for="title">Title<span class="txt-danger">*</span></label>
+                                            <input class="form-control" id="title" type="text" name="title" placeholder="Enter Title" required>
+                                            <div class="invalid-feedback">Please enter a Title.</div>
                                         </div>
 
 
 
-                                        
-                                        <!-- Description Textarea -->
+                                       <!-- Description Textarea -->
                                         <div class="col-md-12">
-                                            <label for="description" class="form-label">Policy <span class="txt-danger">*</span></label>
-                                            <textarea name="policy" id="editor1" class="form-control" rows="4" required placeholder="Enter Policy">{{ old('policy') }}</textarea>
-                                            <div class="invalid-feedback">Please enter a Policy.</div>
+                                            <label for="description" class="form-label">Description <span class="txt-danger">*</span></label>
+                                            <textarea name="description" id="editor" class="form-control" rows="4" required placeholder="Enter description">{{ old('description') }}</textarea>
+                                            <div class="invalid-feedback">Please enter a description.</div>
                                         </div>
 
 
                                         <!-- Form Actions -->
                                         <div class="col-12 text-end">
-                                            <a href="{{ route('manage-privacy-policy.index') }}" class="btn btn-danger px-4">Cancel</a>
+                                            <a href="{{ route('manage-ib-visual.index') }}" class="btn btn-danger px-4">Cancel</a>
                                             <button class="btn btn-primary" type="submit">Submit</button>
                                         </div>
                                     </form>
@@ -139,12 +146,6 @@
        @include('components.backend.main-js')
 
 
-            
-        <script>
-        ClassicEditor.create(document.querySelector('#policy1'))
-            .catch(error => { console.error(error); });
-        </script>
-        
        
         <script>
             function previewThumbnail(event) {
@@ -163,6 +164,16 @@
                 } else {
                     preview.src = "#";
                     preview.classList.add('d-none'); // hide if no file
+                }
+            }
+
+            // Preview Section Image
+            function previewSection(event) {
+                var output = document.getElementById('sectionPreview');
+                output.src = URL.createObjectURL(event.target.files[0]);
+                output.classList.remove('d-none');
+                output.onload = function() {
+                    URL.revokeObjectURL(output.src); // Free memory
                 }
             }
         </script>
