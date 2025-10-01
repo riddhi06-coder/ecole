@@ -103,7 +103,7 @@
                 </li>
 
 
-                <li class="sidebar-list {{ request()->routeIs('manage-virtual-tour.index', 'manage-media-center.index', 'manage-ib-visual.index','manage-technology.index','manage-sports-activities.index','manage-service-learning.index','manage-safety-security.index','manage-child-safeguarding-policy.index','manage-about-alumni.index','manage-accredation-association.index') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-virtual-tour.index', 'manage-media-center.index', 'manage-ib-visual.index','manage-technology.index','manage-sports-activities.index','manage-service-learning.index','manage-safety-security.index','manage-bus-service.index','manage-about-alumni.index','manage-accredation-association.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -124,7 +124,8 @@
                     <li><a href="{{ route('manage-service-learning.index') }}" class="{{ request()->routeIs('manage-service-learning.index') ? 'active' : '' }}">Service Learning</a></li>
                     <li><a href="{{ route('manage-service-learning.index') }}" class="{{ request()->routeIs('manage-service-learning.index') ? 'active' : '' }}">Cafeteria</a></li>
                     <li><a href="{{ route('manage-safety-security.index') }}" class="{{ request()->routeIs('manage-safety-security.index') ? 'active' : '' }}">Safety and Security</a></li>
-    
+                    <li><a href="{{ route('manage-bus-service.index') }}" class="{{ request()->routeIs('manage-bus-service.index') ? 'active' : '' }}">Bus Service</a></li>
+                  
                   </ul>
                 </li>
 
