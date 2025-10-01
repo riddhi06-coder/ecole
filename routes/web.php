@@ -35,7 +35,7 @@ use App\Http\Controllers\Backend\SportsController;
 use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\SafetyController;
 use App\Http\Controllers\Backend\BusServiceController;
-
+use App\Http\Controllers\Backend\OtherFacilitiesController;
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -161,6 +161,9 @@ Route::resource('manage-safety-security', SafetyController::class);
 
 // ==== Manage Bus Service
 Route::resource('manage-bus-service', BusServiceController::class);
+
+// ==== Manage Other Facilities
+Route::resource('manage-other-facilities', OtherFacilitiesController::class);
 
 
 

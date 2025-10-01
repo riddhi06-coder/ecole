@@ -13,20 +13,20 @@ use Illuminate\Support\Str;
 
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\BusService;
+use App\Models\OtherFacilities;
 
-class BusServiceController extends Controller
+class OtherFacilitiesController extends Controller
 {
 
     public function index()
     {
-        $sportsActivities = BusService::orderBy('id', 'asc')->wherenull('deleted_by')->get();
-        return view('backend.campus.bus_service.index', compact('sportsActivities'));
+        $sportsActivities = OtherFacilities::orderBy('id', 'asc')->wherenull('deleted_by')->get();
+        return view('backend.campus.other_facilities.index', compact('sportsActivities'));
     }
 
     public function create(Request $request)
     {
-        return view('backend.campus.bus_service.create');
+        return view('backend.campus.other_facilities.create');
     }
 
     public function store(Request $request)
@@ -75,7 +75,7 @@ class BusServiceController extends Controller
             }
 
             // ✅ Save Record to Database
-            $sports = new BusService(); // Make sure the model exists
+            $sports = new OtherFacilities(); // Make sure the model exists
             $sports->banner_heading   = $request->banner_heading;
             $sports->banner_image     = $bannerName;
             $sports->section_heading  = $request->section_heading;
@@ -85,8 +85,8 @@ class BusServiceController extends Controller
             $sports->inserted_at      = Carbon::now();
             $sports->save();
 
-            return redirect()->route('manage-bus-service.index')
-                            ->with('message', 'Bus Service record added successfully.');
+            return redirect()->route('manage-other-facilities.index')
+                            ->with('message', 'Other Facilities record added successfully.');
 
         } catch (\Illuminate\Validation\ValidationException $ve) {
             throw $ve; // Let Laravel handle validation errors
@@ -99,15 +99,15 @@ class BusServiceController extends Controller
 
     public function edit($id)
     {
-        $sports = BusService::findOrFail($id);
-        return view('backend.campus.bus_service.edit', compact('sports'));
+        $sports = OtherFacilities::findOrFail($id);
+        return view('backend.campus.other_facilities.edit', compact('sports'));
     }
 
     public function update(Request $request, $id)
     {
         try {
             // Find the record
-            $sports = BusService::findOrFail($id);
+            $sports = OtherFacilities::findOrFail($id);
 
             // ✅ Validate input
             $validated = $request->validate([
@@ -171,8 +171,8 @@ class BusServiceController extends Controller
             $sports->modified_at      = Carbon::now();
             $sports->save();
 
-            return redirect()->route('manage-bus-service.index')
-                            ->with('message', 'Sports Activity record updated successfully.');
+            return redirect()->route('manage-other-facilities.index')
+                            ->with('message', 'Facilities record updated successfully.');
 
         } catch (\Illuminate\Validation\ValidationException $ve) {
             throw $ve; // Let Laravel handle validation errors
@@ -188,12 +188,13 @@ class BusServiceController extends Controller
         $data['deleted_by'] =  Auth::user()->id;
         $data['deleted_at'] =  Carbon::now();
         try {
-            $industries = BusService::findOrFail($id);
+            $industries = OtherFacilities::findOrFail($id);
             $industries->update($data);
 
-            return redirect()->route('manage-bus-service.index')->with('message', 'Details deleted successfully!');
+            return redirect()->route('manage-other-facilities.index')->with('message', 'Details deleted successfully!');
         } catch (Exception $ex) {
             return redirect()->back()->with('error', 'Something Went Wrong - ' . $ex->getMessage());
         }
     }
+
 }
