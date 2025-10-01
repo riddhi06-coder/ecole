@@ -103,7 +103,7 @@
                 </li>
 
 
-                <li class="sidebar-list {{ request()->routeIs('manage-virtual-tour.index', 'manage-media-center.index', 'manage-ib-visual.index','manage-technology.index','manage-sports-activities.index','manage-service-learning.index','manage-safety-security.index','manage-bus-service.index','manage-other-facilities.index','manage-stuco.index','manage-cafeteria.index') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-virtual-tour.index', 'manage-media-center.index', 'manage-ib-visual.index','manage-technology.index','manage-sports-activities.index','manage-service-learning.index','manage-safety-security.index','manage-bus-service.index','manage-other-facilities.index','manage-stuco.index','manage-cafeteria.index','manage-gallery-images.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -112,7 +112,7 @@
                     <svg class="fill-icon">
                       <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
                     </svg>
-                    <span>Capmus Life</span>
+                    <span>Campus Life</span>
                   </a>
                   <ul class="sidebar-submenu">
                     <li><a href="{{ route('manage-virtual-tour.index') }}" class="{{ request()->routeIs('manage-virtual-tour.index') ? 'active' : '' }}">Virtual Tour</a></li>
@@ -120,6 +120,14 @@
                     <li><a href="{{ route('manage-ib-visual.index') }}" class="{{ request()->routeIs('manage-ib-visual.index') ? 'active' : '' }}">IB Visual</a></li>
                     <li><a href="{{ route('manage-technology.index') }}" class="{{ request()->routeIs('manage-technology.index') ? 'active' : '' }}">Technology</a></li>
                     <li><a href="{{ route('manage-sports-activities.index') }}" class="{{ request()->routeIs('manage-sports-activities.index') ? 'active' : '' }}">Sports Activities</a></li>
+                  
+                    <li class="{{ request()->routeIs('manage-gallery-images.index', 'manage-media-center.index') ? 'active' : '' }}"><a class="submenu-title" href="#">Gallery<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+                      <ul class="nav-sub-childmenu submenu-content">
+                        <li><a href="{{ route('manage-gallery-images.index') }}">Images</a></li>
+                        <li><a href="{{ route('manage-gallery-images.index') }}">Videos</a></li>
+                      </ul>
+                    </li>
+
                     <li><a href="{{ route('manage-stuco.index') }}" class="{{ request()->routeIs('manage-stuco.index') ? 'active' : '' }}">STUCO</a></li>
                     <li><a href="{{ route('manage-service-learning.index') }}" class="{{ request()->routeIs('manage-service-learning.index') ? 'active' : '' }}">Service Learning</a></li>
                     <li><a href="{{ route('manage-cafeteria.index') }}" class="{{ request()->routeIs('manage-cafeteria.index') ? 'active' : '' }}">Cafeteria</a></li>

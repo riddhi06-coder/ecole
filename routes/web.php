@@ -38,7 +38,7 @@ use App\Http\Controllers\Backend\BusServiceController;
 use App\Http\Controllers\Backend\OtherFacilitiesController;
 use App\Http\Controllers\Backend\STUCOController;
 use App\Http\Controllers\Backend\CafeteriaController;
-
+use App\Http\Controllers\Backend\GalleryImagesController;
 
 
 
@@ -174,6 +174,9 @@ Route::resource('manage-stuco', STUCOController::class);
 
 // ==== Manage Cafeteria
 Route::resource('manage-cafeteria', CafeteriaController::class);
+
+// ==== Manage Gallery
+Route::resource('manage-gallery-images', GalleryImagesController::class);
 
 
 
