@@ -36,6 +36,10 @@ use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\SafetyController;
 use App\Http\Controllers\Backend\BusServiceController;
 use App\Http\Controllers\Backend\OtherFacilitiesController;
+use App\Http\Controllers\Backend\STUCOController;
+
+
+
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -164,6 +168,9 @@ Route::resource('manage-bus-service', BusServiceController::class);
 
 // ==== Manage Other Facilities
 Route::resource('manage-other-facilities', OtherFacilitiesController::class);
+
+// ==== Manage STUCO
+Route::resource('manage-stuco', STUCOController::class);
 
 
 
