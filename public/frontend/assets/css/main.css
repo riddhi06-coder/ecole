@@ -5687,7 +5687,7 @@ section,
 
 .cafeteria-nutritionist-sec {
   position: relative;
-  background-image: url(../img/bg/school-nutritionist-img-one.webp);
+  /* background-image: url(../img/bg/school-nutritionist-img-one.webp); */
   background-size: cover;
   background-position: center bottom;
   background-repeat: no-repeat;

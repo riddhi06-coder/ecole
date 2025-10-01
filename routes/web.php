@@ -37,7 +37,7 @@ use App\Http\Controllers\Backend\SafetyController;
 use App\Http\Controllers\Backend\BusServiceController;
 use App\Http\Controllers\Backend\OtherFacilitiesController;
 use App\Http\Controllers\Backend\STUCOController;
-
+use App\Http\Controllers\Backend\CafeteriaController;
 
 
 
@@ -171,6 +171,9 @@ Route::resource('manage-other-facilities', OtherFacilitiesController::class);
 
 // ==== Manage STUCO
 Route::resource('manage-stuco', STUCOController::class);
+
+// ==== Manage Cafeteria
+Route::resource('manage-cafeteria', CafeteriaController::class);
 
 
 
