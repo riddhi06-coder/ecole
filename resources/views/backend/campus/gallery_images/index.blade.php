@@ -56,13 +56,39 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Banner Image</th>
-                                <th>Banner Heading</th>
+                                <th>Event Name</th>
+                                <th>Event Image</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                               
+                              @foreach($galleryImages as $index => $gallery)
+                                  <tr>
+                                      <td>{{ $index + 1 }}</td>
+                                      <td>{{ $gallery->event_name }}</td>
+                                      <td>
+                                          @if($gallery->thumbnail_image)
+                                              <img src="{{ asset('uploads/campus-life/' . $gallery->thumbnail_image) }}" 
+                                                  alt="{{ $gallery->event_name }}" 
+                                                  style="width: 150px; height: auto; border-radius: 5px;">
+                                          @else
+                                              <span class="text-muted">No Image</span>
+                                          @endif
+                                      </td>
+                                      <td>
+                                          <!-- Action Buttons -->
+                                          <a href="{{ route('manage-gallery-images.edit', $gallery->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                          <form action="{{ route('manage-gallery-images.destroy', $gallery->id) }}" method="POST" style="display:inline;">
+                                              @csrf
+                                              @method('DELETE')
+                                              <button type="submit" class="btn btn-sm btn-danger"
+                                                      onclick="return confirm('Are you sure you want to delete this?')">
+                                                  Delete
+                                              </button>
+                                          </form>
+                                      </td>
+                                  </tr>
+                              @endforeach
                             </tbody>
                         </table>
                     </div>
