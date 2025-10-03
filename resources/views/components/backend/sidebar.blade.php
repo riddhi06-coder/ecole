@@ -103,7 +103,7 @@
                 </li>
 
 
-                <li class="sidebar-list {{ request()->routeIs('manage-virtual-tour.index', 'manage-media-center.index', 'manage-ib-visual.index','manage-technology.index','manage-sports-activities.index','manage-service-learning.index','manage-safety-security.index','manage-bus-service.index','manage-other-facilities.index','manage-stuco.index','manage-cafeteria.index','manage-gallery-images.index') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-virtual-tour.index', 'manage-media-center.index', 'manage-ib-visual.index','manage-technology.index','manage-sports-activities.index','manage-service-learning.index','manage-safety-security.index','manage-bus-service.index','manage-other-facilities.index','manage-stuco.index','manage-cafeteria.index','manage-gallery-images.index','manage-gallery-videos.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -121,10 +121,10 @@
                     <li><a href="{{ route('manage-technology.index') }}" class="{{ request()->routeIs('manage-technology.index') ? 'active' : '' }}">Technology</a></li>
                     <li><a href="{{ route('manage-sports-activities.index') }}" class="{{ request()->routeIs('manage-sports-activities.index') ? 'active' : '' }}">Sports Activities</a></li>
                   
-                    <li class="{{ request()->routeIs('manage-gallery-images.index', 'manage-media-center.index') ? 'active' : '' }}"><a class="submenu-title" href="#">Gallery<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+                    <li class="{{ request()->routeIs('manage-gallery-images.index', 'manage-gallery-videos.index') ? 'active' : '' }}"><a class="submenu-title" href="#">Gallery<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                       <ul class="nav-sub-childmenu submenu-content">
                         <li><a href="{{ route('manage-gallery-images.index') }}">Images</a></li>
-                        <li><a href="{{ route('manage-gallery-images.index') }}">Videos</a></li>
+                        <li><a href="{{ route('manage-gallery-videos.index') }}">Videos</a></li>
                       </ul>
                     </li>
 
