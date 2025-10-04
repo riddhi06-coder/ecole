@@ -91,7 +91,7 @@
             <ul>
               <li><a href="{{ route('frontend.virtual_tour') }}">Virtual Tour</a></li>
               <li><a href="{{ route('frontend.media_center') }}">Media Centre</a></li>
-              <li><a href="#">IB Visual & Performing Arts</a></li>
+              <li><a href="{{ route('frontend.ib_visual_and_performing_arts') }}">IB Visual & Performing Arts</a></li>
               <li><a href="#">Technology</a></li>
               <li><a href="#">Sports and Extra Curricular Activities</a></li>
               <li><a href="#">Gallery</a></li>

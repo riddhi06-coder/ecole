@@ -34,6 +34,11 @@ use App\Models\FeeStructure;
 use App\Models\MeritScholarship;
 use App\Models\VirtualTour;
 use App\Models\MediaCenter;
+use App\Models\IBVisual;
+
+
+
+
 
 
 class HomeController extends Controller
@@ -167,6 +172,13 @@ class HomeController extends Controller
         $media_center_banner = MediaCenter::wherenull('deleted_by')->first();
         $media_center = MediaCenter::wherenull('deleted_by')->get();
         return view('frontend.media_center', compact('media_center_banner','media_center'));
+    }
+
+    // ====  IB Visual and Performing Arts
+    public function ib_visual_and_performing_arts() {
+        $ib_visual_and_performing_arts_banner = IBVisual ::wherenull('deleted_by')->first();
+        $ib_visual_and_performing_arts = IBVisual ::wherenull('deleted_by')->get();
+        return view('frontend.ib_visual_and_performing_arts', compact('ib_visual_and_performing_arts_banner','ib_visual_and_performing_arts'));
     }
 
 
