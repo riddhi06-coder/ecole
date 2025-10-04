@@ -257,7 +257,8 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Sports and Extra Curricular Activities
     Route::get('/sports-and-extra-curricular-activities', [HomeController::class, 'sports_and_extra_curricular_activities'])->name('frontend.sports_and_extra_curricular_activities');
 
-    
+    // ==== Gallery
+    Route::get('/gallery', [HomeController::class, 'gallery'])->name('frontend.gallery');
 
 
 
