@@ -89,7 +89,7 @@
           <li class="dropdown"><a href="#"><span>Campus Life</span> <i
                 class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="#">Virtual Tour</a></li>
+              <li><a href="{{ route('frontend.virtual_tour') }}">Virtual Tour</a></li>
               <li><a href="#">Media Centre</a></li>
               <li><a href="#">IB Visual & Performing Arts</a></li>
               <li><a href="#">Technology</a></li>

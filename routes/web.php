@@ -242,6 +242,9 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Merit Scholarship
     Route::get('/merit-scholarship', [HomeController::class, 'merit_scholarship'])->name('frontend.merit_scholarship');
 
+    // ==== Virtual Tour
+    Route::get('/virtual-tour', [HomeController::class, 'virtual_tour'])->name('frontend.virtual_tour');
+
     
 
 

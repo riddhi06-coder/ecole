@@ -32,7 +32,7 @@ use App\Models\AdmissionProcedure;
 use App\Models\Faqs;
 use App\Models\FeeStructure;
 use App\Models\MeritScholarship;
-
+use App\Models\VirtualTour;
 
 
 
@@ -153,6 +153,13 @@ class HomeController extends Controller
         $merit_scholarship_banner = MeritScholarship::wherenull('deleted_by')->first();
         $merit_scholarship = MeritScholarship::wherenull('deleted_by')->get();
         return view('frontend.merit_scholarship', compact('merit_scholarship_banner','merit_scholarship'));
+    }
+
+    // ====  Virtual Tour
+    public function virtual_tour() {
+        $virtual_tour_banner = VirtualTour::wherenull('deleted_by')->first();
+        $virtual_tour = VirtualTour::wherenull('deleted_by')->get();
+        return view('frontend.virtual_tour', compact('virtual_tour_banner','virtual_tour'));
     }
 
 
