@@ -39,7 +39,7 @@ use App\Models\Technology;
 use App\Models\SportsActivity;
 use App\Models\GalleryImage;
 use App\Models\GalleryVideo;
-
+use App\Models\STUCO;
 
 
 
@@ -217,6 +217,13 @@ class HomeController extends Controller
         $images = json_decode($galleryItem->gallery_images, true) ?? [];
 
         return view('frontend.gallery_images', compact('gallery_banner','galleryItem', 'images'));
+    }
+
+    // ====  STUCO
+    public function stuco() {
+        $stuco_banner = STUCO ::wherenull('deleted_by')->first();
+        $stuco = STUCO ::wherenull('deleted_by')->get();
+        return view('frontend.stuco', compact('stuco_banner','stuco'));
     }
 
     

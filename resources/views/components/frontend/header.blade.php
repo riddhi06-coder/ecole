@@ -95,7 +95,7 @@
               <li><a href="{{ route('frontend.technology') }}">Technology</a></li>
               <li><a href="{{ route('frontend.sports_and_extra_curricular_activities') }}">Sports and Extra Curricular Activities</a></li>
               <li><a href="{{ route('frontend.gallery') }}">Gallery</a></li>
-              <li><a href="#">STUCO</a></li>
+              <li><a href="{{ route('frontend.stuco') }}">STUCO</a></li>
               <li><a href="#">Service Learning</a></li>
               <li><a href="#">Cafeteria</a></li>
               <li><a href="#">Safety and Security</a></li>

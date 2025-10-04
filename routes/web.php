@@ -263,6 +263,9 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // Route to show gallery by slug
     Route::get('/images/{slug}', [HomeController::class, 'showBySlug'])->name('gallery.show');
 
+    // ==== STUCO
+    Route::get('/stuco', [HomeController::class, 'stuco'])->name('frontend.stuco');
+
 
 
 
