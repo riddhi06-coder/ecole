@@ -251,6 +251,9 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== IB Visual and Performing Arts
     Route::get('/ib-visual-and-performing-arts', [HomeController::class, 'ib_visual_and_performing_arts'])->name('frontend.ib_visual_and_performing_arts');
 
+    // ==== Technology
+    Route::get('/technology', [HomeController::class, 'technology'])->name('frontend.technology');
+
     
 
 

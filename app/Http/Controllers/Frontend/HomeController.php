@@ -35,7 +35,7 @@ use App\Models\MeritScholarship;
 use App\Models\VirtualTour;
 use App\Models\MediaCenter;
 use App\Models\IBVisual;
-
+use App\Models\Technology;
 
 
 
@@ -179,6 +179,12 @@ class HomeController extends Controller
         $ib_visual_and_performing_arts_banner = IBVisual ::wherenull('deleted_by')->first();
         $ib_visual_and_performing_arts = IBVisual ::wherenull('deleted_by')->get();
         return view('frontend.ib_visual_and_performing_arts', compact('ib_visual_and_performing_arts_banner','ib_visual_and_performing_arts'));
+    }
+
+    // ====  Technology
+    public function technology() {
+        $technology_banner = Technology ::wherenull('deleted_by')->first();
+        return view('frontend.technology', compact('technology_banner'));
     }
 
 
