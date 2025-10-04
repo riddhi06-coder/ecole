@@ -278,6 +278,9 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Bus Service
     Route::get('/bus-service', [HomeController::class, 'bus_service'])->name('frontend.bus_service');
 
+    // ==== Other Facilities
+    Route::get('/other-facilities', [HomeController::class, 'other_facilities'])->name('frontend.other_facilities');
+
 
 
 

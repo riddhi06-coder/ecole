@@ -44,7 +44,7 @@ use App\Models\Service;
 use App\Models\Cafeteria;
 use App\Models\SafetySecurity;
 use App\Models\BusService;
-
+use App\Models\OtherFacilities;
 
 
 
@@ -254,6 +254,12 @@ class HomeController extends Controller
     public function bus_service() {
         $bus_service_banner = BusService ::wherenull('deleted_by')->first();
         return view('frontend.bus_service', compact('bus_service_banner'));
+    }
+
+    // ====  Other Facilities
+    public function other_facilities() {
+        $other_facilities_banner = OtherFacilities ::wherenull('deleted_by')->first();
+        return view('frontend.other_facilities', compact('other_facilities_banner'));
     }
 
 
