@@ -281,6 +281,12 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Other Facilities
     Route::get('/other-facilities', [HomeController::class, 'other_facilities'])->name('frontend.other_facilities');
 
+    // ==== Apply For Admission
+    Route::get('/apply-for-admission', [HomeController::class, 'apply_for_admission'])->name('frontend.apply_for_admission');
+
+    // ==== Schedule A Visit For Admission
+    Route::get('/schedule-a-visit-for-admission', [HomeController::class, 'schedule_a_visit_for_admission'])->name('frontend.schedule_a_visit_for_admission');
+
 
 
 

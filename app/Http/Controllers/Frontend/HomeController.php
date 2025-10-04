@@ -140,6 +140,17 @@ class HomeController extends Controller
         return view('frontend.privacy_policy', compact('privacy_policy_banner','privacy_policy'));
     }
 
+    // ====  Apply For Admission
+    public function apply_for_admission() {
+        return view('frontend.apply_for_admission');
+    }
+
+    // ====  Schedule A Visit For Admission
+    public function schedule_a_visit_for_admission() {
+        return view('frontend.schedule_a_visit_for_admission');
+    }
+
+
     // ==== Admission Criteria and Process
     public function admission_criteria_and_process() {
         $admission_criteria_and_process_banner = AdmissionProcedure::wherenull('deleted_by')->first();
@@ -261,6 +272,8 @@ class HomeController extends Controller
         $other_facilities_banner = OtherFacilities ::wherenull('deleted_by')->first();
         return view('frontend.other_facilities', compact('other_facilities_banner'));
     }
+
+
 
 
     

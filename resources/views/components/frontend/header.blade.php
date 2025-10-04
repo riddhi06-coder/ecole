@@ -55,8 +55,8 @@
           <li class="dropdown"><a href="#"><span>Admissions</span> <i
                 class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="#">Apply for admission</a></li>
-              <li><a href="#">Schedule a Visit</a></li>
+              <li><a href="{{ route('frontend.apply_for_admission') }}">Apply for admission</a></li>
+              <li><a href="{{ route('frontend.schedule_a_visit_for_admission') }}">Schedule a Visit</a></li>
               <li><a href="#">Enquire about admission</a></li>
               <li><a href="{{ route('frontend.admission_criteria_and_process') }}">Admission Criteria & Process</a></li>
               <li><a href="{{ route('frontend.faq') }}">FAQs</a></li>
