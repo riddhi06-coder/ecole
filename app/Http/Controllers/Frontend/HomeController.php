@@ -204,8 +204,7 @@ class HomeController extends Controller
         $gallery_videos = GalleryVideo ::wherenull('deleted_by')->get();
         return view('frontend.gallery', compact('gallery_banner','gallery','gallery_videos'));
     }
-
-    
+ 
     //====  Gallery Detailed images
     public function showBySlug($slug)
     {
