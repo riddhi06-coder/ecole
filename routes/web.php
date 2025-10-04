@@ -143,15 +143,6 @@ Route::resource('manage-schedule-visit', ScheduleVisitController::class);
 // ==== Enquiry About Admission
 Route::resource('manage-enquiry-admission', EnquiryAdmissionController::class);
 
-
-
-
-
-
-
-
-
-
 // ==== Manage Admission Criteria and Process
 Route::resource('manage-admission-criteria', AdmissionController::class);
 

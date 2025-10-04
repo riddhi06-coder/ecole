@@ -45,7 +45,9 @@ use App\Models\Cafeteria;
 use App\Models\SafetySecurity;
 use App\Models\BusService;
 use App\Models\OtherFacilities;
-
+use App\Models\ApplyAdmission;
+use App\Models\ScheduleVisit;
+use App\Models\EnquiryAdmission;
 
 
 
@@ -142,17 +144,20 @@ class HomeController extends Controller
 
     // ====  Apply For Admission
     public function apply_for_admission() {
-        return view('frontend.apply_for_admission');
+        $apply_for_admission = ApplyAdmission::wherenull('deleted_by')->first();
+        return view('frontend.apply_for_admission', compact('apply_for_admission'));
     }
 
     // ====  Schedule A Visit For Admission
     public function schedule_a_visit_for_admission() {
-        return view('frontend.schedule_a_visit_for_admission');
+        $schedule_a_visit_for_admission = ScheduleVisit::wherenull('deleted_by')->first();
+        return view('frontend.schedule_a_visit_for_admission', compact('schedule_a_visit_for_admission'));
     }
 
     // ====  Enquiry About Admission
     public function enquiry_about_admission() {
-        return view('frontend.enquiry_about_admission');
+        $enquiry_about_admission = EnquiryAdmission::wherenull('deleted_by')->first();
+        return view('frontend.enquiry_about_admission', compact('enquiry_about_admission'));
     }
 
     // ==== Admission Criteria and Process

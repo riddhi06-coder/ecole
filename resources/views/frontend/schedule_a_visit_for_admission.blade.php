@@ -10,15 +10,17 @@
 
     <main class="main">
 
-        <section class="ecolemon-breadcrumb-sec ecol-apply-for-admission-breadcrumb-sec">
+        <section class="ecolemon-breadcrumb-sec ecol-apply-for-admission-breadcrumb-sec" style="background-image: url('{{ asset('uploads/campus-life/'.$schedule_a_visit_for_admission->banner_image) }}'); 
+                    background-size: cover; 
+                    background-position: center">
             <div class="container">
                 <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <h1>Schedule A Visit For Admission</h1>
+                    <h1>{{  $schedule_a_visit_for_admission->banner_heading ? $schedule_a_visit_for_admission->banner_heading : 'What sets us apart?' }}</h1>
                     <ul class="bread-list">
                     <li><a href="../">Home<i class="fa fa-angle-right"></i></a></li>
                     <li><a href="javascript:void(0)">Admissions<i class="fa fa-angle-right"></i></a></li>
-                    <li class="active"><a href="javascript:void(0)">Schedule A Visit For Admission</a></li>
+                    <li class="active"><a href="javascript:void(0)">{{  $schedule_a_visit_for_admission->banner_heading ? $schedule_a_visit_for_admission->banner_heading : 'What sets us apart?' }}</a></li>
                     </ul>
                 </div>
                 </div>
@@ -30,12 +32,7 @@
                 <div class="row">
                 <div class="col-12 col-md-12">
                     <div class="apply-for-admission-content-sec">
-                    <p>
-                        École Mondiale World School is committed to student and promotes the welfare of all students. The school
-                        expects all staff, visitors and volunteers to share this commitment. All employees are required to
-                        undergo relevant background checks and to be compliant with our <a
-                        href="http://faciliusclients.com/child-protection-policy" target="_blank">Child Protection Policy.</a>
-                    </p>
+                    <p> {!! $schedule_a_visit_for_admission->description !!} </p>
                     <p>Fill up the application form below. The mandatory fields are marked with an *</p>
                     </div>
                 </div>
