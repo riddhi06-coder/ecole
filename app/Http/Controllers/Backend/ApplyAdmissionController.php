@@ -18,7 +18,6 @@ use App\Models\ApplyAdmission;
 class ApplyAdmissionController extends Controller
 {
 
-    
     public function index()
     {
         $admissions = ApplyAdmission::orderBy('id', 'asc')->wherenull('deleted_by')->get();
