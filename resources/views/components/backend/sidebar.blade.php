@@ -82,7 +82,7 @@
                 </li>
 
 
-                <li class="sidebar-list {{ request()->routeIs('manage-admission-criteria.index', 'manage-faqs.index', 'manage-merit-scholarships.index','manage-fee-structure.index','manage-apply-admission.index','manage-schedule-visit.index','manage-about-testimonials.index','manage-child-safeguarding-policy.index','manage-about-alumni.index','manage-accredation-association.index') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-admission-criteria.index', 'manage-faqs.index', 'manage-merit-scholarships.index','manage-fee-structure.index','manage-apply-admission.index','manage-schedule-visit.index','manage-enquiry-admission.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -96,6 +96,7 @@
                   <ul class="sidebar-submenu">
                     <li><a href="{{ route('manage-apply-admission.index') }}" class="{{ request()->routeIs('manage-apply-admission.index') ? 'active' : '' }}">Apply For Admission</a></li>
                     <li><a href="{{ route('manage-schedule-visit.index') }}" class="{{ request()->routeIs('manage-schedule-visit.index') ? 'active' : '' }}">Schedule A Visit</a></li>
+                    <li><a href="{{ route('manage-enquiry-admission.index') }}" class="{{ request()->routeIs('manage-enquiry-admission.index') ? 'active' : '' }}">Enquiry About Admission</a></li>
                     <li><a href="{{ route('manage-admission-criteria.index') }}" class="{{ request()->routeIs('manage-admission-criteria.index') ? 'active' : '' }}">Admission Criteria</a></li>
                     <li><a href="{{ route('manage-faqs.index') }}" class="{{ request()->routeIs('manage-faqs.index') ? 'active' : '' }}">FAQs</a></li>
                     <li><a href="{{ route('manage-fee-structure.index') }}" class="{{ request()->routeIs('manage-fee-structure.index') ? 'active' : '' }}">Fee Structure</a></li>

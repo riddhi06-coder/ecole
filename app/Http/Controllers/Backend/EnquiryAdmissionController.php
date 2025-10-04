@@ -13,20 +13,20 @@ use Illuminate\Support\Str;
 
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\ScheduleVisit;
+use App\Models\EnquiryAdmission;
 
-class ScheduleVisitController extends Controller
+class EnquiryAdmissionController extends Controller
 {
 
     public function index()
     {
-        $admissions = ScheduleVisit::orderBy('id', 'asc')->wherenull('deleted_by')->get();
-        return view('backend.admission.schedule_visit.index', compact('admissions'));
+        $admissions = EnquiryAdmission::orderBy('id', 'asc')->wherenull('deleted_by')->get();
+        return view('backend.admission.enquiry_admission.index', compact('admissions'));
     }
 
     public function create(Request $request)
     {
-        return view('backend.admission.schedule_visit.create');
+        return view('backend.admission.enquiry_admission.create');
     }
 
     public function store(Request $request)
@@ -55,7 +55,7 @@ class ScheduleVisitController extends Controller
             }
 
             // ✅ Save to DB (assuming model is ApplyAdmission)
-            ScheduleVisit::create([
+            EnquiryAdmission::create([
                 'banner_heading' => $request->banner_heading,
                 'banner_image'   => $imageName,
                 'description'    => $request->description,
@@ -63,7 +63,7 @@ class ScheduleVisitController extends Controller
                 'created_at'     => Carbon::now() ?? null,
             ]);
 
-            return redirect()->route('manage-schedule-visit.index')
+            return redirect()->route('manage-enquiry-admission.index')
                 ->with('message', 'Details added successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong: ' . $e->getMessage());
@@ -72,8 +72,8 @@ class ScheduleVisitController extends Controller
 
     public function edit($id)
     {
-        $admission = ScheduleVisit::findOrFail($id);
-        return view('backend.admission.schedule_visit.edit', compact('admission'));
+        $admission = EnquiryAdmission::findOrFail($id);
+        return view('backend.admission.enquiry_admission.edit', compact('admission'));
     }
 
     public function update(Request $request, $id)
@@ -93,7 +93,7 @@ class ScheduleVisitController extends Controller
 
         try {
             // ✅ Find existing record
-            $admission = ScheduleVisit::findOrFail($id);
+            $admission = EnquiryAdmission::findOrFail($id);
 
             // ✅ Handle new image upload (if provided)
             if ($request->hasFile('image')) {
@@ -115,7 +115,7 @@ class ScheduleVisitController extends Controller
             $admission->modified_at    = Carbon::now() ?? null;
             $admission->save();
 
-            return redirect()->route('manage-schedule-visit.index')
+            return redirect()->route('manage-enquiry-admission.index')
                 ->with('message', 'Details updated successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong: ' . $e->getMessage());
@@ -127,10 +127,10 @@ class ScheduleVisitController extends Controller
         $data['deleted_by'] =  Auth::user()->id;
         $data['deleted_at'] =  Carbon::now();
         try {
-            $industries = ScheduleVisit::findOrFail($id);
+            $industries = EnquiryAdmission::findOrFail($id);
             $industries->update($data);
 
-            return redirect()->route('manage-schedule-visit.index')->with('message', 'Details deleted successfully!');
+            return redirect()->route('manage-enquiry-admission.index')->with('message', 'Details deleted successfully!');
         } catch (Exception $ex) {
             return redirect()->back()->with('error', 'Something Went Wrong - ' . $ex->getMessage());
         }

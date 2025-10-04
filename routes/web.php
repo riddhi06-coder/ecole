@@ -42,6 +42,7 @@ use App\Http\Controllers\Backend\GalleryImagesController;
 use App\Http\Controllers\Backend\GalleryVideosController;
 use App\Http\Controllers\Backend\ApplyAdmissionController;
 use App\Http\Controllers\Backend\ScheduleVisitController;
+use App\Http\Controllers\Backend\EnquiryAdmissionController;
 
 
 
@@ -138,6 +139,9 @@ Route::resource('manage-apply-admission', ApplyAdmissionController::class);
 
 // ==== Schedule A Visit For Admission
 Route::resource('manage-schedule-visit', ScheduleVisitController::class);
+
+// ==== Enquiry About Admission
+Route::resource('manage-enquiry-admission', EnquiryAdmissionController::class);
 
 
 
