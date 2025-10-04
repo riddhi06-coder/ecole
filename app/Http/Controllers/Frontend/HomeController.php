@@ -150,6 +150,10 @@ class HomeController extends Controller
         return view('frontend.schedule_a_visit_for_admission');
     }
 
+    // ====  Enquiry About Admission
+    public function enquiry_about_admission() {
+        return view('frontend.enquiry_about_admission');
+    }
 
     // ==== Admission Criteria and Process
     public function admission_criteria_and_process() {
