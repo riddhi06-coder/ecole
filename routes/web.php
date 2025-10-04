@@ -254,6 +254,9 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Technology
     Route::get('/technology', [HomeController::class, 'technology'])->name('frontend.technology');
 
+    // ==== Sports and Extra Curricular Activities
+    Route::get('/sports-and-extra-curricular-activities', [HomeController::class, 'sports_and_extra_curricular_activities'])->name('frontend.sports_and_extra_curricular_activities');
+
     
 
 

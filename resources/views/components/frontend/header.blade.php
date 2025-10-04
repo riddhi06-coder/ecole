@@ -93,7 +93,7 @@
               <li><a href="{{ route('frontend.media_center') }}">Media Centre</a></li>
               <li><a href="{{ route('frontend.ib_visual_and_performing_arts') }}">IB Visual & Performing Arts</a></li>
               <li><a href="{{ route('frontend.technology') }}">Technology</a></li>
-              <li><a href="#">Sports and Extra Curricular Activities</a></li>
+              <li><a href="{{ route('frontend.sports_and_extra_curricular_activities') }}">Sports and Extra Curricular Activities</a></li>
               <li><a href="#">Gallery</a></li>
               <li><a href="#">STUCO</a></li>
               <li><a href="#">Service Learning</a></li>

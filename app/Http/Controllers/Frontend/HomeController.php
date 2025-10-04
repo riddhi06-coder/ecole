@@ -36,7 +36,7 @@ use App\Models\VirtualTour;
 use App\Models\MediaCenter;
 use App\Models\IBVisual;
 use App\Models\Technology;
-
+use App\Models\SportsActivity;
 
 
 
@@ -186,6 +186,14 @@ class HomeController extends Controller
         $technology_banner = Technology ::wherenull('deleted_by')->first();
         return view('frontend.technology', compact('technology_banner'));
     }
+
+     // ====  Sports and Extra Curricular Activities
+    public function sports_and_extra_curricular_activities() {
+        $sports_and_extra_curricular_activities_banner = SportsActivity ::wherenull('deleted_by')->first();
+        $sports_and_extra_curricular_activities = SportsActivity ::wherenull('deleted_by')->get();
+        return view('frontend.sports_and_extra_curricular_activities', compact('sports_and_extra_curricular_activities_banner','sports_and_extra_curricular_activities'));
+    }
+
 
 
 
