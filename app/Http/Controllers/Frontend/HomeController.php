@@ -33,7 +33,7 @@ use App\Models\Faqs;
 use App\Models\FeeStructure;
 use App\Models\MeritScholarship;
 use App\Models\VirtualTour;
-
+use App\Models\MediaCenter;
 
 
 class HomeController extends Controller
@@ -160,6 +160,13 @@ class HomeController extends Controller
         $virtual_tour_banner = VirtualTour::wherenull('deleted_by')->first();
         $virtual_tour = VirtualTour::wherenull('deleted_by')->get();
         return view('frontend.virtual_tour', compact('virtual_tour_banner','virtual_tour'));
+    }
+
+    // ====  Media Centre
+    public function media_center() {
+        $media_center_banner = MediaCenter::wherenull('deleted_by')->first();
+        $media_center = MediaCenter::wherenull('deleted_by')->get();
+        return view('frontend.media_center', compact('media_center_banner','media_center'));
     }
 
 

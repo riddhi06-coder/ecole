@@ -245,6 +245,9 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Virtual Tour
     Route::get('/virtual-tour', [HomeController::class, 'virtual_tour'])->name('frontend.virtual_tour');
 
+    // ==== Media Centre
+    Route::get('/media-center', [HomeController::class, 'media_center'])->name('frontend.media_center');
+
     
 
 

@@ -90,7 +90,7 @@
                 class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="{{ route('frontend.virtual_tour') }}">Virtual Tour</a></li>
-              <li><a href="#">Media Centre</a></li>
+              <li><a href="{{ route('frontend.media_center') }}">Media Centre</a></li>
               <li><a href="#">IB Visual & Performing Arts</a></li>
               <li><a href="#">Technology</a></li>
               <li><a href="#">Sports and Extra Curricular Activities</a></li>
