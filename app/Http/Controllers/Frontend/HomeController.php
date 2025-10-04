@@ -41,6 +41,11 @@ use App\Models\GalleryImage;
 use App\Models\GalleryVideo;
 use App\Models\STUCO;
 use App\Models\Service;
+use App\Models\Cafeteria;
+
+
+
+
 
 
 class HomeController extends Controller
@@ -229,9 +234,15 @@ class HomeController extends Controller
     // ====  Service Learning
     public function service_learning() {
         $service_learning_banner = Service ::wherenull('deleted_by')->first();
-        $service_learning = Service ::wherenull('deleted_by')->get();
-        return view('frontend.service_learning', compact('service_learning_banner','service_learning'));
+        return view('frontend.service_learning', compact('service_learning_banner'));
     }
+
+    // ====  Cafeteria
+    public function cafeteria() {
+        $cafeteria_banner = Cafeteria ::wherenull('deleted_by')->first();
+        return view('frontend.cafeteria', compact('cafeteria_banner'));
+    }
+
 
     
 
