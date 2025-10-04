@@ -57,7 +57,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Title</th>
-                                <th>Video</th>
+                                <!-- <th>Video</th> -->
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -66,7 +66,7 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $video->title }}</td>
-                                        <td>
+                                        <!-- <td>
                                             @if($video->video_iframe_url)
                                                 <iframe width="200" height="150" 
                                                         src="{{ $video->video_iframe_url }}" 
@@ -75,7 +75,7 @@
                                             @else
                                                 N/A
                                             @endif
-                                        </td>
+                                        </td> -->
                                         <td>
                                             <a href="{{ route('manage-gallery-videos.edit', $video->id) }}" class="btn btn-sm btn-primary">Edit</a><br><br>
                                             <form action="{{ route('manage-gallery-videos.destroy', $video->id) }}" method="POST" style="display:inline-block;">
