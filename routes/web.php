@@ -275,6 +275,9 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Safety and Security
     Route::get('/safety-and-security', [HomeController::class, 'safety_and_security'])->name('frontend.safety_and_security');
 
+    // ==== Bus Service
+    Route::get('/bus-service', [HomeController::class, 'bus_service'])->name('frontend.bus_service');
+
 
 
 

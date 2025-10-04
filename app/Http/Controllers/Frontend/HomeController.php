@@ -43,7 +43,7 @@ use App\Models\STUCO;
 use App\Models\Service;
 use App\Models\Cafeteria;
 use App\Models\SafetySecurity;
-
+use App\Models\BusService;
 
 
 
@@ -248,6 +248,12 @@ class HomeController extends Controller
     public function safety_and_security() {
         $safety_and_security_banner = SafetySecurity ::wherenull('deleted_by')->first();
         return view('frontend.safety_and_security', compact('safety_and_security_banner'));
+    }
+
+    // ====  Bus Service
+    public function bus_service() {
+        $bus_service_banner = BusService ::wherenull('deleted_by')->first();
+        return view('frontend.bus_service', compact('bus_service_banner'));
     }
 
 
