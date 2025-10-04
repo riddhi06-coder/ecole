@@ -266,6 +266,9 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== STUCO
     Route::get('/stuco', [HomeController::class, 'stuco'])->name('frontend.stuco');
 
+    // ==== Service Learning
+    Route::get('/service-learning', [HomeController::class, 'service_learning'])->name('frontend.service_learning');
+
 
 
 

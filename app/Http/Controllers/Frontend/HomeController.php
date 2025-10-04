@@ -40,7 +40,7 @@ use App\Models\SportsActivity;
 use App\Models\GalleryImage;
 use App\Models\GalleryVideo;
 use App\Models\STUCO;
-
+use App\Models\Service;
 
 
 class HomeController extends Controller
@@ -224,6 +224,13 @@ class HomeController extends Controller
         $stuco_banner = STUCO ::wherenull('deleted_by')->first();
         $stuco = STUCO ::wherenull('deleted_by')->get();
         return view('frontend.stuco', compact('stuco_banner','stuco'));
+    }
+
+    // ====  Service Learning
+    public function service_learning() {
+        $service_learning_banner = Service ::wherenull('deleted_by')->first();
+        $service_learning = Service ::wherenull('deleted_by')->get();
+        return view('frontend.service_learning', compact('service_learning_banner','service_learning'));
     }
 
     
