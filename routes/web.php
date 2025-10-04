@@ -41,6 +41,8 @@ use App\Http\Controllers\Backend\CafeteriaController;
 use App\Http\Controllers\Backend\GalleryImagesController;
 use App\Http\Controllers\Backend\GalleryVideosController;
 use App\Http\Controllers\Backend\ApplyAdmissionController;
+use App\Http\Controllers\Backend\ScheduleVisitController;
+
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -131,12 +133,11 @@ Route::resource('manage-contact-us', ContactUsController::class);
 // ==== Manage Privacy Policy
 Route::resource('manage-privacy-policy', PrivacyController::class);
 
-
-
 // ==== Manage Apply For Admission
 Route::resource('manage-apply-admission', ApplyAdmissionController::class);
 
-
+// ==== Schedule A Visit For Admission
+Route::resource('manage-schedule-visit', ScheduleVisitController::class);
 
 
 
