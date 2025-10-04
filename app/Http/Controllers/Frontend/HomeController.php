@@ -206,6 +206,21 @@ class HomeController extends Controller
     }
 
     
+    //====  Gallery Detailed images
+    public function showBySlug($slug)
+    {
+        // Fetch gallery where slug matches
+        $gallery_banner = GalleryImage ::wherenull('deleted_by')->first();
+        $galleryItem = GalleryImage::where('slug', $slug)
+                              ->whereNull('deleted_by')
+                              ->firstOrFail();
+
+        $images = json_decode($galleryItem->gallery_images, true) ?? [];
+
+        return view('frontend.gallery_images', compact('gallery_banner','galleryItem', 'images'));
+    }
+
+    
 
 
 

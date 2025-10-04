@@ -260,6 +260,10 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Gallery
     Route::get('/gallery', [HomeController::class, 'gallery'])->name('frontend.gallery');
 
+    // Route to show gallery by slug
+    Route::get('/images/{slug}', [HomeController::class, 'showBySlug'])->name('gallery.show');
+
+
 
 
 });

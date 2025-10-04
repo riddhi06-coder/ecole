@@ -78,13 +78,13 @@
                                                     <div class="album-overlay">
                                                         <div class="album-header">
                                                             <h3>
-                                                                <a href="#">
+                                                                <a href="{{ route('gallery.show', $item->slug) }}">
                                                                     {{ $item->event_name }}
                                                                 </a>
                                                             </h3>
                                                         </div>
                                                         <div class="album-details">
-                                                            <a href="#" class="btn-link">
+                                                            <a href="{{ route('gallery.show', $item->slug) }}" class="btn-link">
                                                                 <i class="fa-solid fa-arrow-right"></i>
                                                             </a>
                                                         </div>
