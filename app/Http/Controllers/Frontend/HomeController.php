@@ -42,6 +42,7 @@ use App\Models\GalleryVideo;
 use App\Models\STUCO;
 use App\Models\Service;
 use App\Models\Cafeteria;
+use App\Models\SafetySecurity;
 
 
 
@@ -241,6 +242,12 @@ class HomeController extends Controller
     public function cafeteria() {
         $cafeteria_banner = Cafeteria ::wherenull('deleted_by')->first();
         return view('frontend.cafeteria', compact('cafeteria_banner'));
+    }
+
+    // ====  Safety and Security
+    public function safety_and_security() {
+        $safety_and_security_banner = SafetySecurity ::wherenull('deleted_by')->first();
+        return view('frontend.safety_and_security', compact('safety_and_security_banner'));
     }
 
 

@@ -272,6 +272,9 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Cafeteria
     Route::get('/cafeteria', [HomeController::class, 'cafeteria'])->name('frontend.cafeteria');
 
+    // ==== Safety and Security
+    Route::get('/safety-and-security', [HomeController::class, 'safety_and_security'])->name('frontend.safety_and_security');
+
 
 
 

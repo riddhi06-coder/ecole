@@ -98,7 +98,7 @@
               <li><a href="{{ route('frontend.stuco') }}">STUCO</a></li>
               <li><a href="{{ route('frontend.service_learning') }}">Service Learning</a></li>
               <li><a href="{{ route('frontend.cafeteria') }}">Cafeteria</a></li>
-              <li><a href="#">Safety and Security</a></li>
+              <li><a href="{{ route('frontend.safety_and_security') }}">Safety and Security</a></li>
               <li><a href="#">Bus Service</a></li>
               <li><a href="#">Other Facilities</a></li>
             </ul>
