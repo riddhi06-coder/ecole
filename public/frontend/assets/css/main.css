@@ -6266,7 +6266,7 @@ section,
 
 .university-of-bath-two-sec {
   position: relative;
-  background-image: url(../img/bg/university-offered-bg.webp);
+  /* background-image: url(../img/bg/university-offered-bg.webp); */
   background-position: center center;
   background-size: cover;
   z-index: 1;

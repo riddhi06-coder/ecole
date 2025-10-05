@@ -43,6 +43,7 @@ use App\Http\Controllers\Backend\GalleryVideosController;
 use App\Http\Controllers\Backend\ApplyAdmissionController;
 use App\Http\Controllers\Backend\ScheduleVisitController;
 use App\Http\Controllers\Backend\EnquiryAdmissionController;
+use App\Http\Controllers\Backend\UniversityController;
 
 
 
@@ -193,6 +194,9 @@ Route::resource('manage-gallery-images', GalleryImagesController::class);
 
 // ==== Manage Gallery Videos
 Route::resource('manage-gallery-videos', GalleryVideosController::class);
+
+// ==== Manage University of Bath
+Route::resource('manage-university-bath', UniversityController::class);
 
 
 

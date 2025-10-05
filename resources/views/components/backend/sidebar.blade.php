@@ -142,6 +142,23 @@
                 </li>
 
 
+                <li class="sidebar-list {{ request()->routeIs('manage-university-bath.index', 'manage-faqs.index') ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"> </i>
+                  <a class="sidebar-link sidebar-title" href="#">
+                    <svg class="stroke-icon"> 
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#notification-header') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#notification-header') }}"></use>
+                    </svg>
+                    <span>Careers</span>
+                  </a>
+                  <ul class="sidebar-submenu">
+                    <li><a href="{{ route('manage-university-bath.index') }}" class="{{ request()->routeIs('manage-university-bath.index') ? 'active' : '' }}">University of Bath</a></li> 
+                  </ul>
+                </li>
+
+
                 <li class="sidebar-list {{ request()->routeIs('manage-contact-us.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"></i>
                   <a class="sidebar-link" href="{{ route('manage-contact-us.index') }}">
