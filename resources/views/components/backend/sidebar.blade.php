@@ -142,7 +142,7 @@
                 </li>
 
 
-                <li class="sidebar-list {{ request()->routeIs('manage-university-bath.index', 'manage-faqs.index') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-university-bath.index', 'manage-career.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -154,6 +154,7 @@
                     <span>Careers</span>
                   </a>
                   <ul class="sidebar-submenu">
+                    <li><a href="{{ route('manage-career.index') }}" class="{{ request()->routeIs('manage-career.index') ? 'active' : '' }}">Career Opportunities</a></li> 
                     <li><a href="{{ route('manage-university-bath.index') }}" class="{{ request()->routeIs('manage-university-bath.index') ? 'active' : '' }}">University of Bath</a></li> 
                   </ul>
                 </li>

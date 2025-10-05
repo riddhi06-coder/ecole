@@ -1077,9 +1077,9 @@ section,
   background: url(../img/bg/faq-banner-img.webp) center/cover no-repeat;
 } */
 
-.ecol-career-breadcrumb-sec {
+/* .ecol-career-breadcrumb-sec {
   background: url(../img/bg/career-breadcrumb.webp) center/cover no-repeat;
-}
+} */
 
 .ecol-bulletin-board-breadcrumb-sec {
   background: url(../img/bg/bulletin-board-banner.webp) center/cover no-repeat;
@@ -6128,7 +6128,7 @@ section,
 
 .career-teaching-job-inner-wrap {
   position: relative;
-  background-image: url(../img/bg/teaching-job-opportunities-bg.webp);
+  /* background-image: url(../img/bg/teaching-job-opportunities-bg.webp); */
   background-position: center top;
   background-size: cover;
   text-align: center;
@@ -6180,7 +6180,7 @@ section,
 
 .career-non-teaching-job-inner-wrap {
   position: relative;
-  background-image: url(../img/bg/non-teaching-job-opportunities-bg.webp);
+  /* background-image: url(../img/bg/non-teaching-job-opportunities-bg.webp); */
   background-position: center top;
   background-size: cover;
   text-align: center;
