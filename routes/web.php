@@ -306,6 +306,9 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Enquiry About Admission
     Route::get('/enquiry-about-admission', [HomeController::class, 'enquiry_about_admission'])->name('frontend.enquiry_about_admission');
 
+    // ==== University of Bath
+    Route::get('/university-of-bath', [HomeController::class, 'university_of_bath'])->name('frontend.university_of_bath');
+
 
 
 

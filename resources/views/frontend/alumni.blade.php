@@ -18,7 +18,7 @@
             <div class="container">
                 <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <h1>  {{  $alumni_banner->banner_heading ? $alumni_banner->banner_heading : 'What sets us apart?' }}</h1>
+                    <h1> {{  $alumni_banner->banner_heading ? $alumni_banner->banner_heading : 'What sets us apart?' }}</h1>
                     <ul class="bread-list">
                     <li><a href="{{ url('/') }}">Home<i class="fa fa-angle-right"></i></a></li>
                     <li><a href="javascript:void(0)">About us<i class="fa fa-angle-right"></i></a></li>

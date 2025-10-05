@@ -48,7 +48,7 @@ use App\Models\OtherFacilities;
 use App\Models\ApplyAdmission;
 use App\Models\ScheduleVisit;
 use App\Models\EnquiryAdmission;
-
+use App\Models\UniversityBath;
 
 
 class HomeController extends Controller
@@ -282,6 +282,11 @@ class HomeController extends Controller
         return view('frontend.other_facilities', compact('other_facilities_banner'));
     }
 
+    // ====  University of Bath
+    public function university_of_bath() {
+        $university_of_bath_banner = UniversityBath ::wherenull('deleted_by')->first();
+        return view('frontend.university_of_bath', compact('university_of_bath_banner'));
+    }
 
 
 
