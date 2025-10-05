@@ -116,7 +116,7 @@
 
           <li class="dropdown"><a href="#"><span>Careers</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="#">Career Opportunities</a></li>
+              <li><a href="{{ route('frontend.career_opportunities') }}">Career Opportunities</a></li>
               <li><a href="{{ route('frontend.university_of_bath') }}">University of Bath</a></li>
             </ul>
           </li>

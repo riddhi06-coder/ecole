@@ -49,7 +49,7 @@ use App\Models\ApplyAdmission;
 use App\Models\ScheduleVisit;
 use App\Models\EnquiryAdmission;
 use App\Models\UniversityBath;
-
+use App\Models\Career;
 
 class HomeController extends Controller
 {
@@ -286,6 +286,13 @@ class HomeController extends Controller
     public function university_of_bath() {
         $university_of_bath_banner = UniversityBath ::wherenull('deleted_by')->first();
         return view('frontend.university_of_bath', compact('university_of_bath_banner'));
+    }
+
+    // ====  Career Opportunities
+    public function career_opportunities() {
+        $career_opportunities_banner = Career ::wherenull('deleted_by')->first();
+        $job_opportunities = json_decode($career_opportunities_banner->teaching_details ?? '[]', true);
+        return view('frontend.career_opportunities', compact('career_opportunities_banner','job_opportunities'));
     }
 
 
