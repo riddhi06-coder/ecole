@@ -50,6 +50,10 @@ use App\Models\ScheduleVisit;
 use App\Models\EnquiryAdmission;
 use App\Models\UniversityBath;
 use App\Models\Career;
+use App\Models\Policy;
+
+
+
 
 class HomeController extends Controller
 {
@@ -293,6 +297,13 @@ class HomeController extends Controller
         $career_opportunities_banner = Career ::wherenull('deleted_by')->first();
         $job_opportunities = json_decode($career_opportunities_banner->teaching_details ?? '[]', true);
         return view('frontend.career_opportunities', compact('career_opportunities_banner','job_opportunities'));
+    }
+
+    // ====  Policies
+    public function policies() {
+        $policies_banner = Policy ::wherenull('deleted_by')->first();
+        $job_opportunities = json_decode($policies_banner->documents ?? '[]', true);
+        return view('frontend.policies', compact('policies_banner','job_opportunities'));
     }
 
 

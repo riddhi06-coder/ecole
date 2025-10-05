@@ -106,6 +106,24 @@
                 </li>
 
 
+                <li class="sidebar-list {{ request()->routeIs('manage-policies.index', 'manage-faqs.index', 'manage-merit-scholarships.index','manage-fee-structure.index','manage-apply-admission.index','manage-schedule-visit.index','manage-enquiry-admission.index') ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"> </i>
+                  <a class="sidebar-link sidebar-title" href="#">
+                    <svg class="stroke-icon"> 
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-widget') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-widget') }}"></use>
+                    </svg>
+                    <span>Academics</span>
+                  </a>
+                  <ul class="sidebar-submenu">
+                    <li><a href="{{ route('manage-policies.index') }}" class="{{ request()->routeIs('manage-policies.index') ? 'active' : '' }}">Policies</a></li>
+                  </ul>
+                </li>
+
+
+
                 <li class="sidebar-list {{ request()->routeIs('manage-virtual-tour.index', 'manage-media-center.index', 'manage-ib-visual.index','manage-technology.index','manage-sports-activities.index','manage-service-learning.index','manage-safety-security.index','manage-bus-service.index','manage-other-facilities.index','manage-stuco.index','manage-cafeteria.index','manage-gallery-images.index','manage-gallery-videos.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">

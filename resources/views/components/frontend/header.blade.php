@@ -76,7 +76,7 @@
                   <li><a href="#">Creativity, Activity, Service</a></li>
                 </ul>
               </li>
-              <li><a href="#">Policies</a></li>
+              <li><a href="{{ route('frontend.policies') }}">Policies</a></li>
               <li><a href="#">IB Early Years & Primary Years Programme</a></li>
               <li><a href="#">IB Middle Years Programme</a></li>
               <li><a href="#">IB Diploma Programme</a></li>
