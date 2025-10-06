@@ -51,7 +51,8 @@ use App\Models\EnquiryAdmission;
 use App\Models\UniversityBath;
 use App\Models\Career;
 use App\Models\Policy;
-
+use App\Models\ManageTeachingJob;
+use App\Models\ManageNonTeachingJob;
 
 
 
@@ -304,6 +305,18 @@ class HomeController extends Controller
         $policies_banner = Policy ::wherenull('deleted_by')->first();
         $job_opportunities = json_decode($policies_banner->documents ?? '[]', true);
         return view('frontend.policies', compact('policies_banner','job_opportunities'));
+    }
+
+    // ====  Teaching Job Opportunities
+    public function teaching_job_opportunities() {
+        $teaching_job_opportunities_banner = ManageTeachingJob ::wherenull('deleted_by')->first();
+        return view('frontend.teaching_job_opportunities', compact('teaching_job_opportunities_banner'));
+    }
+
+    // ====  Non-Teaching Job Opportunities
+    public function non_teaching_job_opportunities() {
+        $non_teaching_job_opportunities_banner = ManageNonTeachingJob ::wherenull('deleted_by')->first();
+        return view('frontend.non_teaching_job_opportunities', compact('non_teaching_job_opportunities_banner'));
     }
 
 

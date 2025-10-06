@@ -7013,3 +7013,128 @@ section,
 .bulletin-board-details-content-sec p a:hover {
   color: #ffcc28 !important;
 }
+
+
+
+
+/* ======== */
+.teaching-job-opp-content-sec .teaching-job-opp-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #11317B;
+  text-transform: capitalize;
+  margin-bottom: 12px;
+  margin-top: 20px;
+}
+
+.teaching-job-opp-img-sec img {
+  border-radius: 10px;
+  width: 100%;
+}
+
+.teaching-job-opp-content-sec p {
+  color: #000000;
+}
+
+.teaching-job-opp-content-sec p a {
+  color: #11317B !important;
+  font-weight: 600;
+}
+
+.teaching-job-opp-content-sec p a:hover {
+  color: #ffcc28 !important;
+}
+
+.teaching-job-opp-content-sec .listing-one li {
+    color: #000000;
+}
+
+.teaching-job-opp-content-sec .listing-one li::marker {
+  color: #11317B;
+}
+
+.teaching-job-opp-btn-sec .btn {
+  background-color: #fff;
+  color: #11317b;
+  border: 1px solid #11317b;
+  font-weight: 500;
+  text-align: center;
+  display: inline-block;
+  padding: 13px 32px;
+  border-radius: 10px !important;
+  text-transform: uppercase;
+  font-size: 14px;
+  transform: perspective(1px) translateZ(0);
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+  transition: all 0.4S ease;
+  margin-top: 12px;
+}
+
+.teaching-job-opp-btn-sec .btn:hover {
+  background-color: #ffcc28;
+  color: #11317B;
+  border: 1px solid #ffcc28;
+}
+
+/* ======== */
+.non-teaching-job-opp-content-sec .non-teaching-job-opp-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #11317B;
+  text-transform: capitalize;
+  margin-bottom: 12px;
+  margin-top: 20px;
+}
+
+.non-teaching-job-opp-img-sec img {
+  border-radius: 10px;
+  width: 100%;
+}
+
+.non-teaching-job-opp-content-sec p {
+  color: #000000;
+}
+
+.non-teaching-job-opp-content-sec p a {
+  color: #11317B !important;
+  font-weight: 600;
+}
+
+.non-teaching-job-opp-content-sec p a:hover {
+  color: #ffcc28 !important;
+}
+
+.non-teaching-job-opp-content-sec .listing-one li {
+    color: #000000;
+}
+
+.non-teaching-job-opp-content-sec .listing-one li::marker {
+  color: #11317B;
+}
+
+.non-teaching-job-opp-btn-sec .btn {
+  background-color: #fff;
+  color: #11317b;
+  border: 1px solid #11317b;
+  font-weight: 500;
+  text-align: center;
+  display: inline-block;
+  padding: 13px 32px;
+  border-radius: 10px !important;
+  text-transform: uppercase;
+  font-size: 14px;
+  transform: perspective(1px) translateZ(0);
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+  transition: all 0.4S ease;
+  margin-top: 12px;
+}
+
+.non-teaching-job-opp-btn-sec .btn:hover {
+  background-color: #ffcc28;
+  color: #11317B;
+  border: 1px solid #ffcc28;
+}

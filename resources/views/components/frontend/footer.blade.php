@@ -43,8 +43,8 @@
                         <ul>
                             <li><a href="{{ route('frontend.what_sets_us_apart') }}">About</a></li>
                             <li><a href="{{ route('frontend.contact_us') }}">Contact Us</a></li>
-                            <li><a href="#">FAQs</a></li>
-                            <li><a href="#">Careers</a></li>
+                            <li><a href="{{ route('frontend.faq') }}">FAQs</a></li>
+                            <li><a href="{{ route('frontend.career_opportunities') }}">Careers</a></li>
                             <li><a href="#">Sitemap</a></li>
                         </ul>
                     </div>

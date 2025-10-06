@@ -43,7 +43,9 @@
                                     <div class="{{ $index == 0 ? 'career-teaching-job-inner-wrap' : 'career-non-teaching-job-inner-wrap' }}"
                                         style="background-image: url('{{ asset('uploads/careers/'.$job['image']) }}');">
                                         <h4>{{ $job['title'] }}</h4>
-                                        <a class="careers-btn" href="#">Know More</a>
+                                        <a class="careers-btn" href="{{ $index == 0 ? route('frontend.teaching_job_opportunities') : route('frontend.non_teaching_job_opportunities') }}">
+                                            Know More
+                                        </a>
                                     </div>
                                 </div>
                             @endforeach

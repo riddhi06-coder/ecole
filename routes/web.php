@@ -331,6 +331,12 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Policies
     Route::get('/policies', [HomeController::class, 'policies'])->name('frontend.policies');
 
+    // ==== Teaching Job Opportunities
+    Route::get('/vacancy/teaching-job-opportunities', [HomeController::class, 'teaching_job_opportunities'])->name('frontend.teaching_job_opportunities');
+
+    // ==== Non-Teaching Job Opportunities
+    Route::get('/vacancy/non-teaching-job-opportunities', [HomeController::class, 'non_teaching_job_opportunities'])->name('frontend.non_teaching_job_opportunities');
+
 
 
 
