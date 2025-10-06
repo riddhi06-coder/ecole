@@ -46,6 +46,9 @@ use App\Http\Controllers\Backend\EnquiryAdmissionController;
 use App\Http\Controllers\Backend\UniversityController;
 use App\Http\Controllers\Backend\CareerController;
 use App\Http\Controllers\Backend\PolicyController;
+use App\Http\Controllers\Backend\TeachingJobsController;
+
+
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -204,6 +207,9 @@ Route::resource('manage-career', CareerController::class);
 
 // ==== Manage Policies
 Route::resource('manage-policies', PolicyController::class);
+
+// ==== Manage Teaching Job Opportunities
+Route::resource('manage-teaching-jobs', TeachingJobsController::class);
 
 
 
