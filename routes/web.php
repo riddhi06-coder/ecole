@@ -351,10 +351,13 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     Route::get('/vacancy/non-teaching-job-opportunities', [HomeController::class, 'non_teaching_job_opportunities'])->name('frontend.non_teaching_job_opportunities');
 
     // ==== IB Learner Profile
-    Route::get('/ib-learner-profile', [HomeController::class, 'ib_learner_profile'])->name('frontend.ib_learner_profile');
+    Route::get('/academics/ib-learner-profile', [HomeController::class, 'ib_learner_profile'])->name('frontend.ib_learner_profile');
 
     // ==== Student Support Services
-    Route::get('/student-support-services', [HomeController::class, 'student_support_services'])->name('frontend.student_support_services');
+    Route::get('/academics/student-support-services', [HomeController::class, 'student_support_services'])->name('frontend.student_support_services');
+
+    // ==== University & College Counselling Programme
+    Route::get('/academics/college-counselling', [HomeController::class, 'college_counselling'])->name('frontend.college_counselling');
 
 
 

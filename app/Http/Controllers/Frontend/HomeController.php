@@ -55,7 +55,7 @@ use App\Models\ManageTeachingJob;
 use App\Models\ManageNonTeachingJob;
 use App\Models\ManageLearnerProfile;
 use App\Models\StudentSupport;
-
+use App\Models\UniversityPage;
 
 
 
@@ -334,6 +334,12 @@ class HomeController extends Controller
     public function student_support_services() {
         $student_support_services_banner = StudentSupport ::wherenull('deleted_by')->first();
         return view('frontend.student_support_services', compact('student_support_services_banner'));
+    }
+
+    // ====  Student Support Services
+    public function college_counselling() {
+        $college_counselling_banner = UniversityPage ::wherenull('deleted_by')->first();
+        return view('frontend.college_counselling', compact('college_counselling_banner'));
     }
 
     

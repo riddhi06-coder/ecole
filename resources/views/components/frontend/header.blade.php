@@ -81,7 +81,7 @@
               <li><a href="#">IB Middle Years Programme</a></li>
               <li><a href="#">IB Diploma Programme</a></li>
               <li><a href="{{ route('frontend.student_support_services') }}">Student Support Services</a></li>
-              <li><a href="#">University & College Counselling Programme</a></li>
+              <li><a href="{{ route('frontend.college_counselling') }}">University & College Counselling Programme</a></li>
               <li><a href="{{ route('frontend.ib_learner_profile') }}">IB Learner Profile</a></li>
             </ul>
           </li>
