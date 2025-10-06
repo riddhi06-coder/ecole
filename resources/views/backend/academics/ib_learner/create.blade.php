@@ -134,7 +134,7 @@
 
                                         <!-- Form Actions -->
                                         <div class="col-12 text-end">
-                                            <a href="{{ route('manage-sports-activities.index') }}" class="btn btn-danger px-4">Cancel</a>
+                                            <a href="{{ route('manage-student-support.index') }}" class="btn btn-danger px-4">Cancel</a>
                                             <button class="btn btn-primary" type="submit">Submit</button>
                                         </div>
                                     </form>
