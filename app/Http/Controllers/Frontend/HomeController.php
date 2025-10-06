@@ -54,6 +54,10 @@ use App\Models\Policy;
 use App\Models\ManageTeachingJob;
 use App\Models\ManageNonTeachingJob;
 use App\Models\ManageLearnerProfile;
+use App\Models\StudentSupport;
+
+
+
 
 
 class HomeController extends Controller
@@ -326,7 +330,11 @@ class HomeController extends Controller
         return view('frontend.ib_learner_profile', compact('ib_learner_profile_banner','ib_learner_profile'));
     }
 
-
+    // ====  Student Support Services
+    public function student_support_services() {
+        $student_support_services_banner = StudentSupport ::wherenull('deleted_by')->first();
+        return view('frontend.student_support_services', compact('student_support_services_banner'));
+    }
 
     
 

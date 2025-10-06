@@ -348,6 +348,9 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== IB Learner Profile
     Route::get('/ib-learner-profile', [HomeController::class, 'ib_learner_profile'])->name('frontend.ib_learner_profile');
 
+    // ==== Student Support Services
+    Route::get('/student-support-services', [HomeController::class, 'student_support_services'])->name('frontend.student_support_services');
+
 
 
 });
