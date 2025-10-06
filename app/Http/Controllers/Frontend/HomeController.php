@@ -53,7 +53,7 @@ use App\Models\Career;
 use App\Models\Policy;
 use App\Models\ManageTeachingJob;
 use App\Models\ManageNonTeachingJob;
-
+use App\Models\ManageLearnerProfile;
 
 
 class HomeController extends Controller
@@ -317,6 +317,13 @@ class HomeController extends Controller
     public function non_teaching_job_opportunities() {
         $non_teaching_job_opportunities_banner = ManageNonTeachingJob ::wherenull('deleted_by')->first();
         return view('frontend.non_teaching_job_opportunities', compact('non_teaching_job_opportunities_banner'));
+    }
+
+    // ====  IB Learner Profile
+    public function ib_learner_profile() {
+        $ib_learner_profile_banner = ManageLearnerProfile ::wherenull('deleted_by')->first();
+        $ib_learner_profile = ManageLearnerProfile ::wherenull('deleted_by')->get();
+        return view('frontend.ib_learner_profile', compact('ib_learner_profile_banner','ib_learner_profile'));
     }
 
 
