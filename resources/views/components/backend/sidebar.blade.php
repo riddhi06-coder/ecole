@@ -106,7 +106,7 @@
                 </li>
 
 
-                <li class="sidebar-list {{ request()->routeIs('manage-policies.index', 'manage-learner-profile.index', 'manage-student-support.index','manage-fee-structure.index','manage-apply-admission.index','manage-schedule-visit.index','manage-enquiry-admission.index') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-policies.index', 'manage-learner-profile.index', 'manage-student-support.index','mmanage-universities.index','manage-university-page.index','manage-schedule-visit.index','manage-enquiry-admission.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -128,7 +128,7 @@
 
                       <ul class="nav-sub-childmenu submenu-content">
                           <li><a href="{{ route('manage-university-page.index') }}">Page Details</a></li>
-                          <li><a href="{{ route('manage-nonteaching-jobs.index') }}">Alumni Admission Details</a></li>
+                          <li><a href="{{ route('manage-universities.index') }}">Alumni Admission Details</a></li>
                       </ul>
                   </li>
                     <li><a href="{{ route('manage-learner-profile.index') }}" class="{{ request()->routeIs('manage-learner-profile.index') ? 'active' : '' }}">IB Learner Profile</a></li>

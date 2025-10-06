@@ -51,7 +51,7 @@ use App\Http\Controllers\Backend\NonTeachingJobsController;
 use App\Http\Controllers\Backend\LearnerProfileController;
 use App\Http\Controllers\Backend\StudentSupportController;
 use App\Http\Controllers\Backend\UniversityPageController;
-
+use App\Http\Controllers\Backend\UniversitiesController;
 
 
 
@@ -226,6 +226,9 @@ Route::resource('manage-student-support', StudentSupportController::class);
 
 // ==== Manage University & College Counselling Programme
 Route::resource('manage-university-page', UniversityPageController::class);
+
+// ==== Manage University & College Counselling Programme
+Route::resource('manage-universities', UniversitiesController::class);
 
 
 
