@@ -180,7 +180,7 @@
 
                       <ul class="nav-sub-childmenu submenu-content">
                           <li><a href="{{ route('manage-teaching-jobs.index') }}">Teaching Job</a></li>
-                          <li><a href="{{ route('manage-career.create') }}">Non Teaching Job</a></li>
+                          <li><a href="{{ route('manage-nonteaching-jobs.index') }}">Non Teaching Job</a></li>
                       </ul>
                   </li>
                     <li><a href="{{ route('manage-university-bath.index') }}" class="{{ request()->routeIs('manage-university-bath.index') ? 'active' : '' }}">University of Bath</a></li> 

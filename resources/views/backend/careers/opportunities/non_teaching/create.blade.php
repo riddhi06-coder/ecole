@@ -17,14 +17,14 @@
             <div class="page-title">
               <div class="row">
                 <div class="col-6">
-                  <h4>Add Teaching Job Opportunities Form</h4>
+                  <h4>Add Non-Teaching Job Opportunities Form</h4>
                 </div>
                 <div class="col-6">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                    <a href="{{ route('manage-teaching-jobs.index') }}">Home</a>
+                    <a href="{{ route('manage-nonteaching-jobs.index') }}">Home</a>
                     </li>
-                    <li class="breadcrumb-item active">Add Teaching Job Opportunities</li>
+                    <li class="breadcrumb-item active">Add Non-Teaching Job Opportunities</li>
                 </ol>
 
                 </div>
@@ -37,7 +37,7 @@
                 <div class="col-md-12">
                     <div class="card">
                     <div class="card-header">
-                        <h4>Teaching Job Opportunities Form</h4>
+                        <h4>Non-Teaching Job Opportunities Form</h4>
                         <p class="f-m-light mt-1">Fill up your true details and submit the form.</p>
                     </div>
                     <div class="card-body">
@@ -47,7 +47,7 @@
                             <div class="col-12">
                             <div class="tab-content" id="wizard-tabContent">
                                 <div class="tab-pane fade show active" id="wizard-contact" role="tabpanel" aria-labelledby="wizard-contact-tab">
-                                    <form class="row g-3 needs-validation custom-input" novalidate action="{{ route('manage-teaching-jobs.store') }}" method="POST" enctype="multipart/form-data">
+                                    <form class="row g-3 needs-validation custom-input" novalidate action="{{ route('manage-nonteaching-jobs.store') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
 
                                         <!-- Section Title -->
@@ -108,7 +108,7 @@
 
                                         <!-- Form Actions -->
                                         <div class="col-12 text-end">
-                                            <a href="{{ route('manage-teaching-jobs.index') }}" class="btn btn-danger px-4">Cancel</a>
+                                            <a href="{{ route('manage-nonteaching-jobs.index') }}" class="btn btn-danger px-4">Cancel</a>
                                             <button class="btn btn-primary" type="submit">Submit</button>
                                         </div>
                                     </form>
