@@ -48,6 +48,8 @@ use App\Http\Controllers\Backend\CareerController;
 use App\Http\Controllers\Backend\PolicyController;
 use App\Http\Controllers\Backend\TeachingJobsController;
 use App\Http\Controllers\Backend\NonTeachingJobsController;
+use App\Http\Controllers\Backend\LearnerProfileController;
+
 
 
 
@@ -213,6 +215,9 @@ Route::resource('manage-teaching-jobs', TeachingJobsController::class);
 
 // ==== Manage Non-Teaching Job Opportunities
 Route::resource('manage-nonteaching-jobs', NonTeachingJobsController::class);
+
+// ==== Manage IB Learner Profile
+Route::resource('manage-learner-profile', LearnerProfileController::class);
 
 
 

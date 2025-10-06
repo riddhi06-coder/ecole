@@ -29,25 +29,25 @@
         </section>
         
         <section class="non-teaching-job-opp-sec">
-        <div class="container">
-            <div class="row">
-            <div class="col-12 col-md-12">
-                <div class="non-teaching-job-opp-img-sec">
-                <img src="{{ asset('uploads/careers/' . $non_teaching_job_opportunities_banner->section_image ) }}" class="img-fluid"
-                    alt="Non-Teaching Job Opportunities Image">
-                </div>
-            </div>
-            <div class="col-12 col-md-12">
-                <div class="non-teaching-job-opp-content-sec">
-                    <h4 class="non-teaching-job-opp-title">{{  $non_teaching_job_opportunities_banner->section_heading ? $non_teaching_job_opportunities_banner->section_heading : 'What sets us apart?' }}</h4>
-                    <p>{!! $non_teaching_job_opportunities_banner->description !!}</p>
-                    </div>
-                    <div class="non-teaching-job-opp-btn-sec">
-                        <a href="#" class="btn-ecol btn">Apply Now</a>
+            <div class="container">
+                <div class="row">
+                <div class="col-12 col-md-12">
+                    <div class="non-teaching-job-opp-img-sec">
+                    <img src="{{ asset('uploads/careers/' . $non_teaching_job_opportunities_banner->section_image ) }}" class="img-fluid"
+                        alt="Non-Teaching Job Opportunities Image">
                     </div>
                 </div>
+                <div class="col-12 col-md-12">
+                    <div class="non-teaching-job-opp-content-sec">
+                        <h4 class="non-teaching-job-opp-title">{{  $non_teaching_job_opportunities_banner->section_heading ? $non_teaching_job_opportunities_banner->section_heading : 'What sets us apart?' }}</h4>
+                        <p>{!! $non_teaching_job_opportunities_banner->description !!}</p>
+                        </div>
+                        <div class="non-teaching-job-opp-btn-sec">
+                            <a href="#" class="btn-ecol btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
         </section>
         
     </main>
