@@ -55,6 +55,9 @@ use App\Http\Controllers\Backend\UniversitiesController;
 use App\Http\Controllers\Backend\CurriculumController;
 use App\Http\Controllers\Backend\IBPrimaryController;
 use App\Http\Controllers\Backend\IBMiddleController;
+use App\Http\Controllers\Backend\IBDiplomaController;
+
+
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -240,6 +243,9 @@ Route::resource('manage-ib-primary', IBPrimaryController::class);
 
 // ==== Manage IB Middle Years Programme
 Route::resource('manage-ib-middle', IBMiddleController::class);
+
+// ==== Manage IB Diploma Programme
+Route::resource('manage-ib-diploma', IBDiplomaController::class);
 
 
 
