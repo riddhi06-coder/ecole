@@ -70,7 +70,7 @@
               <li class="dropdown"><a href="{{ route('frontend.curriculum_overview') }}"><span>Curriculum Overview</span> <i
                     class="bi bi-chevron-down toggle-dropdown"></i></a>
                 <ul>
-                  <li><a href="#">Primary Years</a></li>
+                  <li><a href="{{ route('frontend.primary_years_programme') }}">Primary Years</a></li>
                   <li><a href="#">Middle Years</a></li>
                   <li><a href="#">Diploma</a></li>
                   <li><a href="#">Creativity, Activity, Service</a></li>

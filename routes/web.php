@@ -53,7 +53,7 @@ use App\Http\Controllers\Backend\StudentSupportController;
 use App\Http\Controllers\Backend\UniversityPageController;
 use App\Http\Controllers\Backend\UniversitiesController;
 use App\Http\Controllers\Backend\CurriculumController;
-
+use App\Http\Controllers\Backend\IBPrimaryController;
 
 
 
@@ -235,6 +235,9 @@ Route::resource('manage-universities', UniversitiesController::class);
 // ==== Manage Curriculum Overview
 Route::resource('manage-curriculum', CurriculumController::class);
 
+// ==== Manage IB Primary Years Programme
+Route::resource('manage-ib-primary', IBPrimaryController::class);
+
 
 
 
@@ -369,6 +372,9 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
 
     // ==== Curriculum Overview
     Route::get('/curriculum-overview', [HomeController::class, 'curriculum_overview'])->name('frontend.curriculum_overview');
+
+    // ==== IB Primary Years Programme
+    Route::get('/primary-years-programme', [HomeController::class, 'primary_years_programme'])->name('frontend.primary_years_programme');
 
 
 

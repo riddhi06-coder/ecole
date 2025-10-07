@@ -58,6 +58,10 @@ use App\Models\StudentSupport;
 use App\Models\UniversityPage;
 use App\Models\UniversityColleges;
 use App\Models\Curriculum;
+use App\Models\IBPrimary;
+
+
+
 
 
 class HomeController extends Controller
@@ -366,6 +370,12 @@ class HomeController extends Controller
     public function curriculum_overview() {
         $curriculum_overview_banner = Curriculum ::wherenull('deleted_by')->first();
         return view('frontend.curriculum_overview', compact('curriculum_overview_banner'));
+    }
+
+    public function primary_years_programme() {
+        $curriculum_overview_banner = Curriculum ::wherenull('deleted_by')->first();
+        $primary_banner = IBPrimary ::wherenull('deleted_by')->first();
+        return view('frontend.primary_years_programme', compact('curriculum_overview_banner','primary_banner'));
     }
 
 
