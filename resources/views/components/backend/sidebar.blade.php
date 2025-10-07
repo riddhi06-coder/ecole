@@ -118,19 +118,32 @@
                     <span>Academics</span>
                   </a>
                   <ul class="sidebar-submenu">
+
+                    <li>
+                        <a class="submenu-title {{ request()->routeIs('manage-curriculum.*') ? 'active' : '' }}" href="#">
+                            Curriculum Overview
+                            <span class="sub-arrow"><i class="fa fa-angle-right"></i></span>
+                        </a>
+
+                        <ul class="nav-sub-childmenu submenu-content">
+                            <li><a href="{{ route('manage-curriculum.index') }}">Curriculum Overview</a></li>
+                            <li><a href="{{ route('manage-universities.index') }}">Alumni Admission Details</a></li>
+                        </ul>
+                    </li>
+
                     <li><a href="{{ route('manage-policies.index') }}" class="{{ request()->routeIs('manage-policies.index') ? 'active' : '' }}">Policies</a></li>
                     <li><a href="{{ route('manage-student-support.index') }}" class="{{ request()->routeIs('manage-student-support.index') ? 'active' : '' }}">Student Support</a></li>
                     <li>
-                      <a class="submenu-title {{ request()->routeIs('manage-university-page.*') ? 'active' : '' }}" href="#">
-                          University & College Counselling
-                          <span class="sub-arrow"><i class="fa fa-angle-right"></i></span>
-                      </a>
+                        <a class="submenu-title {{ request()->routeIs('manage-university-page.*') ? 'active' : '' }}" href="#">
+                            University & College Counselling
+                            <span class="sub-arrow"><i class="fa fa-angle-right"></i></span>
+                        </a>
 
-                      <ul class="nav-sub-childmenu submenu-content">
-                          <li><a href="{{ route('manage-university-page.index') }}">Page Details</a></li>
-                          <li><a href="{{ route('manage-universities.index') }}">Alumni Admission Details</a></li>
-                      </ul>
-                  </li>
+                        <ul class="nav-sub-childmenu submenu-content">
+                            <li><a href="{{ route('manage-university-page.index') }}">Page Details</a></li>
+                            <li><a href="{{ route('manage-universities.index') }}">Alumni Admission Details</a></li>
+                        </ul>
+                    </li>
                     <li><a href="{{ route('manage-learner-profile.index') }}" class="{{ request()->routeIs('manage-learner-profile.index') ? 'active' : '' }}">IB Learner Profile</a></li>
                   </ul>
                 </li>

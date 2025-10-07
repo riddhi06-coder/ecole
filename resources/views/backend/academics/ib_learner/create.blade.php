@@ -106,7 +106,7 @@
                                             <!-- Description Textarea -->
                                             <div class="col-md-12">
                                                 <label for="description" class="form-label">Section Description </label>
-                                                <textarea name="section_description" id="section_description" class="form-control" rows="4" placeholder="Enter Section description">{{ old('description') }}</textarea>
+                                                <textarea name="section_description" id="section_description" class="form-control" rows="4" placeholder="Enter Section description">{{ old('section_description') }}</textarea>
                                                 <div class="invalid-feedback">Please enter a Section description.</div>
                                             </div>
 
@@ -133,7 +133,7 @@
 
                                         <!-- Form Actions -->
                                         <div class="col-12 text-end">
-                                            <a href="{{ route('manage-student-support.index') }}" class="btn btn-danger px-4">Cancel</a>
+                                            <a href="{{ route('manage-learner-profile.index') }}" class="btn btn-danger px-4">Cancel</a>
                                             <button class="btn btn-primary" type="submit">Submit</button>
                                         </div>
                                     </form>
