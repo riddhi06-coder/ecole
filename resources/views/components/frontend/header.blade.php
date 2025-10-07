@@ -67,7 +67,7 @@
 
           <li class="dropdown"><a href="#"><span>Academics</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li class="dropdown"><a href="#"><span>Curriculum Overview</span> <i
+              <li class="dropdown"><a href="{{ route('frontend.curriculum_overview') }}"><span>Curriculum Overview</span> <i
                     class="bi bi-chevron-down toggle-dropdown"></i></a>
                 <ul>
                   <li><a href="#">Primary Years</a></li>

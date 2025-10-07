@@ -367,6 +367,9 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== University & College Counselling Programme
     Route::get('/academics/college-counselling', [HomeController::class, 'college_counselling'])->name('frontend.college_counselling');
 
+    // ==== Curriculum Overview
+    Route::get('/curriculum-overview', [HomeController::class, 'curriculum_overview'])->name('frontend.curriculum_overview');
+
 
 
 });

@@ -197,15 +197,24 @@
                         'Trebuchet MS, Helvetica, sans-serif', 'Verdana, Geneva, sans-serif'
                     ]
                 },
-                fontSize: {
-                    options: [ 'tiny', 'small', 'default', 'big', 'huge' ]
-                },
-                alignment: {
-                    options: [ 'left', 'center', 'right', 'justify' ]
+                fontSize: { options: [ 'tiny', 'small', 'default', 'big', 'huge' ] },
+                alignment: { options: [ 'left', 'center', 'right', 'justify' ] },
+
+                // ✅ Missing comma added above
+                htmlSupport: {
+                    allow: [
+                        {
+                            name: /.*/,
+                            attributes: true,
+                            classes: true,
+                            styles: true
+                        }
+                    ]
                 }
             })
             .catch(error => { console.error(error); });
         </script>
+
 
 
         <script>

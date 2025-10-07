@@ -57,7 +57,7 @@ use App\Models\ManageLearnerProfile;
 use App\Models\StudentSupport;
 use App\Models\UniversityPage;
 use App\Models\UniversityColleges;
-
+use App\Models\Curriculum;
 
 
 class HomeController extends Controller
@@ -362,7 +362,11 @@ class HomeController extends Controller
         return view('frontend.college_counselling', compact('college_counselling_banner','colleges','availableCountries'));
     }
 
-    
+    // ====  Curriculum Overview
+    public function curriculum_overview() {
+        $curriculum_overview_banner = Curriculum ::wherenull('deleted_by')->first();
+        return view('frontend.curriculum_overview', compact('curriculum_overview_banner'));
+    }
 
 
 
