@@ -28,10 +28,39 @@ class CreativityController extends Controller
         return view('backend.academics.curriculum.creativity.create');
     }
 
-
     public function store(Request $request)
     {
-        // dd($request);
+        // dd($request); 
+        if ($request->detailed_page === 'yes' && isset($request->event_name)) {
+            $filledEventName = [];
+            $filledDescriptions = [];
+            $filledBannerImages = [];
+            $filledGalleryImages = [];
+
+            foreach ($request->event_name as $i => $eventName) {
+                $description = $request->detailed_description[$i] ?? null;
+                $banner = $request->banner_image[$i] ?? null;
+                $gallery = $request->gallery_images[$i] ?? null;
+
+                // Only include sections where at least one required field is filled
+                if (!empty($eventName) || !empty($description) || !empty($banner)) {
+                    $filledEventName[] = $eventName;
+                    $filledDescriptions[] = $description;
+                    $filledBannerImages[] = $banner;
+                    $filledGalleryImages[] = $gallery ?? [];
+                }
+            }
+
+            // Overwrite request arrays so validation ignores empty sections
+            $request->merge([
+                'event_name' => $filledEventName,
+                'detailed_description' => $filledDescriptions,
+                'banner_image' => $filledBannerImages,
+                'gallery_images' => $filledGalleryImages,
+            ]);
+        }
+
+
         // ✅ Validation
         $validated = $request->validate([
             'banner_heading'    => 'nullable|string|max:255',
@@ -43,11 +72,12 @@ class CreativityController extends Controller
             'description'       => 'required_if:detailed_page,no|string',
 
             // Detailed sections
-            'event_name.*'           => 'nullable|required_if:detailed_page,yes|string|max:255',
-            'banner_image.*'         => 'nullable|required_if:detailed_page,yes|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
-            'detailed_description.*' => 'nullable|required_if:detailed_page,yes|string',
-            'gallery_images'         => 'nullable|required_if:detailed_page,yes|array|min:1',
-            'gallery_images.*.*'     => 'nullable|required_if:detailed_page,yes|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+           'event_name.*'           => 'required_if:detailed_page,yes|string|max:255',
+            'banner_image.*'         => 'required_if:detailed_page,yes|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'detailed_description.*' => 'required_if:detailed_page,yes|string',
+            'gallery_images'         => 'nullable|array',
+            'gallery_images.*.*'     => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+
         ], [
             'title.required'                     => 'Title is required.',
             'detailed_page.required'             => 'Please select whether this is a detailed page.',
@@ -91,19 +121,27 @@ class CreativityController extends Controller
 
                 // Banner image for this section
                 $banner = null;
-                if (isset($request->banner_image[$index])) {
+                if (isset($request->banner_image[$index]) && $request->banner_image[$index]->isValid()) {
                     $file = $request->banner_image[$index];
                     $banner = time() . rand(10, 999) . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('uploads/academics'), $banner);
+
+                    try {
+                        $file->move(public_path('uploads/academics'), $banner);
+                    } catch (\Exception $e) {
+                        dd('Banner upload failed:', $e->getMessage(), $file->getError());
+                    }
                 }
+
 
                 // Gallery images for this section
                 $galleries = [];
                 if (isset($request->gallery_images[$index])) {
                     foreach ($request->gallery_images[$index] as $galleryFile) {
-                        $galleryName = time() . rand(10, 999) . '.' . $galleryFile->getClientOriginalExtension();
-                        $galleryFile->move(public_path('uploads/academics'), $galleryName);
-                        $galleries[] = $galleryName;
+                        if ($galleryFile && $galleryFile->isValid()) { // ✅ Only process valid files
+                            $galleryName = time() . rand(10, 999) . '.' . $galleryFile->getClientOriginalExtension();
+                            $galleryFile->move(public_path('uploads/academics'), $galleryName);
+                            $galleries[] = $galleryName;
+                        }
                     }
                 }
 
@@ -119,21 +157,22 @@ class CreativityController extends Controller
 
         // ✅ Store in DB
         $activity = new CreativityActivity();
-        $activity->banner_heading   = $validated['banner_heading'] ?? null;
-        $activity->banner_image     = $bannerImage;
-        $activity->section_heading  = $validated['section_heading'] ?? null;
-        $activity->section_image    = $sectionImage;
-        $activity->title            = $validated['title'];
-        $activity->detailed_page    = $validated['detailed_page'];
-        $activity->description      = $validated['description'] ?? null;
-        $activity->detailed_sections= json_encode($detailedSections); // store sections as JSON
-        $activity->created_by       = Auth::id();
-        $activity->created_at       = Carbon::now();
+        $activity->banner_heading    = $validated['banner_heading'] ?? null;
+        $activity->banner_image      = $bannerImage;
+        $activity->section_heading   = $validated['section_heading'] ?? null;
+        $activity->section_image     = $sectionImage;
+        $activity->title             = $validated['title'];
+        $activity->detailed_page     = $validated['detailed_page'];
+        $activity->description       = $validated['description'] ?? null;
+        $activity->detailed_sections = json_encode($detailedSections); // store sections as JSON
+        $activity->inserted_by        = Auth::id();
+        $activity->inserted_at        = Carbon::now();
         $activity->save();
 
         return redirect()->route('manage-creativity-activity.index')
                         ->with('message', 'Creativity Activity has been added successfully.');
     }
+
 
 
 

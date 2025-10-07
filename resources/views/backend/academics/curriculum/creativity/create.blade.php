@@ -144,7 +144,7 @@
                                                     <div class="row mt-3">
                                                         <div class="col-md-6">
                                                             <label class="form-label">Event Name <span class="txt-danger">*</span></label>
-                                                            <input type="text" name="event_name[]" class="form-control" placeholder="Enter Event Name" required>
+                                                            <input type="text" name="event_name[]" class="form-control" placeholder="Enter Event Name">
                                                         </div>
                                                         <div class="col-md-6">
                                                             <label class="form-label">Detailed Page Banner Image <span class="txt-danger">*</span></label>
