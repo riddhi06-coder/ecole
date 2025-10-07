@@ -383,6 +383,12 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== IB Primary Years Programme
     Route::get('/primary-years-programme', [HomeController::class, 'primary_years_programme'])->name('frontend.primary_years_programme');
 
+    // ==== IB Middle Years Programme
+    Route::get('/middle-years-programme', [HomeController::class, 'middle_years_programme'])->name('frontend.middle_years_programme');
+
+    // ==== IB Diploma Programme
+    Route::get('/diploma-programme', [HomeController::class, 'diploma_programme'])->name('frontend.diploma_programme');
+
 
 
 });

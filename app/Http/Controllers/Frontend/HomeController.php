@@ -59,8 +59,8 @@ use App\Models\UniversityPage;
 use App\Models\UniversityColleges;
 use App\Models\Curriculum;
 use App\Models\IBPrimary;
-
-
+use App\Models\IBMiddle;
+use App\Models\IBDiploma;
 
 
 
@@ -372,10 +372,25 @@ class HomeController extends Controller
         return view('frontend.curriculum_overview', compact('curriculum_overview_banner'));
     }
 
+    // ==== IB Primary Years Programme
     public function primary_years_programme() {
         $curriculum_overview_banner = Curriculum ::wherenull('deleted_by')->first();
         $primary_banner = IBPrimary ::wherenull('deleted_by')->first();
         return view('frontend.primary_years_programme', compact('curriculum_overview_banner','primary_banner'));
+    }
+
+    // ==== IB Middle Years Programme
+    public function middle_years_programme() {
+        $curriculum_overview_banner = Curriculum ::wherenull('deleted_by')->first();
+        $primary_banner = IBMiddle ::wherenull('deleted_by')->first();
+        return view('frontend.middle_years_programme', compact('curriculum_overview_banner','primary_banner'));
+    }
+
+    // ==== IB Diploma Programme
+    public function diploma_programme() {
+        $curriculum_overview_banner = Curriculum ::wherenull('deleted_by')->first();
+        $primary_banner = IBDiploma ::wherenull('deleted_by')->first();
+        return view('frontend.diploma_programme', compact('curriculum_overview_banner','primary_banner'));
     }
 
 

@@ -71,8 +71,8 @@
                     class="bi bi-chevron-down toggle-dropdown"></i></a>
                 <ul>
                   <li><a href="{{ route('frontend.primary_years_programme') }}">Primary Years</a></li>
-                  <li><a href="#">Middle Years</a></li>
-                  <li><a href="#">Diploma</a></li>
+                  <li><a href="{{ route('frontend.middle_years_programme') }}">Middle Years</a></li>
+                  <li><a href="{{ route('frontend.diploma_programme') }}">Diploma</a></li>
                   <li><a href="#">Creativity, Activity, Service</a></li>
                 </ul>
               </li>
