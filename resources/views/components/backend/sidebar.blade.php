@@ -128,6 +128,7 @@
                         <ul class="nav-sub-childmenu submenu-content">
                             <li><a href="{{ route('manage-curriculum.index') }}">Curriculum Overview</a></li>
                             <li><a href="{{ route('manage-ib-primary.index') }}">IB Primary Years</a></li>
+                            <li><a href="{{ route('manage-ib-middle.index') }}">IB Middle Years</a></li>
                         </ul>
                     </li>
 
