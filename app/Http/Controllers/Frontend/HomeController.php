@@ -56,7 +56,7 @@ use App\Models\ManageNonTeachingJob;
 use App\Models\ManageLearnerProfile;
 use App\Models\StudentSupport;
 use App\Models\UniversityPage;
-
+use App\Models\UniversityColleges;
 
 
 
@@ -338,8 +338,28 @@ class HomeController extends Controller
 
     // ====  Student Support Services
     public function college_counselling() {
+
         $college_counselling_banner = UniversityPage ::wherenull('deleted_by')->first();
-        return view('frontend.college_counselling', compact('college_counselling_banner'));
+
+        // Controller: Fetch colleges with country join
+        $colleges = UniversityColleges::select(
+                'university_college_counselling.*',
+                'countries.name as country_name'
+            )
+            ->join('countries', 'university_college_counselling.country_id', '=', 'countries.id')
+            ->whereNull('university_college_counselling.deleted_by')
+            ->get();
+
+
+        // Only include countries that have at least one university
+        $availableCountries = DB::table('university_college_counselling')
+                    ->join('countries', 'university_college_counselling.country_id', '=', 'countries.id')
+                    ->whereNull('university_college_counselling.deleted_by')
+                    ->select('countries.id', 'countries.name')
+                    ->distinct()
+                    ->get();
+
+        return view('frontend.college_counselling', compact('college_counselling_banner','colleges','availableCountries'));
     }
 
     
