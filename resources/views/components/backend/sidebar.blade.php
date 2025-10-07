@@ -130,6 +130,7 @@
                             <li><a href="{{ route('manage-ib-primary.index') }}">IB Primary Years</a></li>
                             <li><a href="{{ route('manage-ib-middle.index') }}">IB Middle Years</a></li>
                             <li><a href="{{ route('manage-ib-diploma.index') }}">IB Diploma Programme</a></li>
+                            <li><a href="{{ route('manage-creativity-activity.index') }}">Creativity, Activity, Service</a></li>
                         </ul>
                     </li>
 
