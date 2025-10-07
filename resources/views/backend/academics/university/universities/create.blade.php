@@ -81,12 +81,12 @@
                                                 <tbody>
                                                    <tr>
                                                         <td>
-                                                            <label for="university_name_0">University Name <span class="text-danger">*</span></label>
+                                                            <label for="university_name_0">University Name</label>
                                                             <input type="text" id="university_name_0" name="universities[0][name]" class="form-control" placeholder="Enter University Name" required>
                                                         </td>
                                                         <td>
-                                                            <label for="university_url_0">URL <span class="text-danger">*</span></label>
-                                                            <input type="url" id="university_url_0" name="universities[0][url]" class="form-control" placeholder="Enter University URL" required>
+                                                            <label for="university_url_0">URL</label>
+                                                            <input type="url" id="university_url_0" name="universities[0][url]" class="form-control" placeholder="Enter University URL">
                                                         </td>
                                                         <td>
                                                             <button type="button" class="btn btn-danger btn-sm remove-row">Remove</button>
@@ -138,7 +138,7 @@
 
                     newRow.innerHTML = `
                         <td><input type="text" name="universities[${rowIndex}][name]" class="form-control" placeholder="Enter University Name" required></td>
-                        <td><input type="url" name="universities[${rowIndex}][url]" class="form-control" placeholder="Enter University URL" required></td>
+                        <td><input type="url" name="universities[${rowIndex}][url]" class="form-control" placeholder="Enter University URL"></td>
                         <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
                     `;
                     tbody.appendChild(newRow);

@@ -25,4 +25,5 @@ class UniversityColleges extends Model
         'deleted_at',
         'deleted_by',
     ];
+
 }

@@ -56,13 +56,30 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Banner Image</th>
-                                <th>Banner Heading</th>
+                                <th>Country</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                              
+                                @foreach($universities as $index => $university)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $university->country_name ?? 'N/A' }}</td>
+                                        <td>
+                                            <a href="{{ route('manage-universities.edit', $university->id) }}" class="btn btn-primary btn-sm">
+                                                 Edit
+                                            </a>
+                                            <form action="{{ route('manage-universities.destroy', $university->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Are you sure you want to delete this record?')">
+                                                     Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
