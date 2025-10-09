@@ -52,51 +52,68 @@
                                         method="POST" enctype="multipart/form-data">
                                         @csrf
 
-                                        <!-- Section Title -->
-                                        <div class="col-md-6">
-                                            <label class="form-label" for="banner_heading">Banner Heading</label>
-                                            <input class="form-control" id="banner_heading" type="text" name="banner_heading" placeholder="Enter Banner Heading">
-                                            <div class="invalid-feedback">Please enter a Banner Heading.</div>
-                                        </div>
 
-                                        <!-- Thumbnail Image -->
-                                        <div class="col-md-6">
-                                            <label class="form-label" for="image">Banner Image</label>
-                                            <input class="form-control" id="image" type="file" name="image" onchange="previewThumbnail(event)">
-                                            <div class="invalid-feedback">Please upload a Banner image.</div>
-                                            <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small><br>
-                                            <small class="text-secondary"><b>Allowed formats: .jpg, .jpeg, .png, .webp, .svg</b></small>
+                                        @php
+                                            use App\Models\CreativityActivity;
+                                            $firstActivity = CreativityActivity::first();
+                            
+                                        @endphp
 
-                                            <!-- Image Preview -->
-                                            <div class="mt-2">
-                                                <img id="thumbnailPreview" src="#" alt="Preview" 
-                                                    class="img-fluid rounded border d-none" style="max-height:150px; background:black;">
+                                        @if(!$firstActivity)
+                                            <!-- Section Title -->
+                                            <div class="col-md-6">
+                                                <label class="form-label" for="banner_heading">Banner Heading</label>
+                                                <input class="form-control" id="banner_heading" type="text" name="banner_heading" placeholder="Enter Banner Heading">
+                                                <div class="invalid-feedback">Please enter a Banner Heading.</div>
                                             </div>
-                                        </div>
 
-                                        <!-- Section Heading -->
-                                        <div class="col-md-6">
-                                            <label class="form-label" for="section_heading">Section Heading</label>
-                                            <input class="form-control" id="section_heading" type="text" name="section_heading" placeholder="Enter Section Heading">
-                                            <div class="invalid-feedback">Please enter a Section Heading.</div>
-                                        </div>
+                                            <!-- Thumbnail Image -->
+                                            <div class="col-md-6">
+                                                <label class="form-label" for="image">Banner Image</label>
+                                                <input class="form-control" id="image" type="file" name="image" onchange="previewThumbnail(event)">
+                                                <div class="invalid-feedback">Please upload a Banner image.</div>
+                                                <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small><br>
+                                                <small class="text-secondary"><b>Allowed formats: .jpg, .jpeg, .png, .webp, .svg</b></small>
 
-                                        <!-- Section Image -->
-                                        <div class="col-md-6">
-                                            <label class="form-label" for="section_image">Section Image</label>
-                                            <input class="form-control" id="section_image" type="file" name="section_image" onchange="previewSectionImage(event)">
-                                            <div class="invalid-feedback">Please upload a Section image.</div>
-                                            <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small><br>
-                                            <small class="text-secondary"><b>Allowed formats: .jpg, .jpeg, .png, .webp, .svg</b></small>
-
-                                            <!-- Image Preview -->
-                                            <div class="mt-2">
-                                                <img id="sectionImagePreview" src="#" alt="Preview" 
-                                                    class="img-fluid rounded border d-none" style="max-height:150px; background:black;">
+                                                <!-- Image Preview -->
+                                                <div class="mt-2">
+                                                    <img id="thumbnailPreview" src="#" alt="Preview" 
+                                                        class="img-fluid rounded border d-none" style="max-height:150px; background:black;">
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <hr class="mt-5">
+                                            <!-- Section Heading -->
+                                            <div class="col-md-6">
+                                                <label class="form-label" for="section_heading">Section Heading</label>
+                                                <input class="form-control" id="section_heading" type="text" name="section_heading" placeholder="Enter Section Heading">
+                                                <div class="invalid-feedback">Please enter a Section Heading.</div>
+                                            </div>
+
+                                            <!-- Section Image -->
+                                            <div class="col-md-6">
+                                                <label class="form-label" for="section_image">Section Image</label>
+                                                <input class="form-control" id="section_image" type="file" name="section_image" onchange="previewSectionImage(event)">
+                                                <div class="invalid-feedback">Please upload a Section image.</div>
+                                                <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small><br>
+                                                <small class="text-secondary"><b>Allowed formats: .jpg, .jpeg, .png, .webp, .svg</b></small>
+
+                                                <!-- Image Preview -->
+                                                <div class="mt-2">
+                                                    <img id="sectionImagePreview" src="#" alt="Preview" 
+                                                        class="img-fluid rounded border d-none" style="max-height:150px; background:black;">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-12" id="simple_description_box">
+                                                <label for="section_description" class="form-label">Section Description</label>
+                                                <textarea name="section_description" id="section_description" class="form-control" rows="4" placeholder="Enter Section description">{{ old('section_description') }}</textarea>
+                                                <div class="invalid-feedback">Please enter a Section description.</div>
+                                            </div>
+
+                                            <hr class="mt-5">
+                                        @endif
+
 
                                         <!-- Title -->
                                         <div class="col-md-6 mt-5">

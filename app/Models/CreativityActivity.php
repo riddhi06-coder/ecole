@@ -17,6 +17,7 @@ class CreativityActivity extends Model
         'banner_image',
         'section_heading', 
         'section_image',
+        'section_description',
         'title',        
         'detailed_page',    
         'description ',  

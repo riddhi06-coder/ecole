@@ -67,36 +67,27 @@ class CreativityController extends Controller
             'image'             => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
             'section_heading'   => 'nullable|string|max:255',
             'section_image'     => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'section_description' => 'nullable|string',
             'title'             => 'required|string|max:255',
             'detailed_page'     => 'required|in:yes,no',
             'description'       => 'required_if:detailed_page,no|string',
 
-            // Detailed sections
-           'event_name.*'           => 'required_if:detailed_page,yes|string|max:255',
-            'banner_image.*'         => 'required_if:detailed_page,yes|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
-            'detailed_description.*' => 'required_if:detailed_page,yes|string',
+            // Detailed sections: only validate if detailed_page = yes
+            'event_name.*'           => $request->detailed_page === 'yes' ? 'required|string|max:255' : 'nullable|string',
+            'banner_image.*'         => $request->detailed_page === 'yes' ? 'required|image|mimes:jpg,jpeg,png,webp,svg|max:2048' : 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'detailed_description.*' => $request->detailed_page === 'yes' ? 'required|string' : 'nullable|string',
             'gallery_images'         => 'nullable|array',
             'gallery_images.*.*'     => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
-
         ], [
-            'title.required'                     => 'Title is required.',
-            'detailed_page.required'             => 'Please select whether this is a detailed page.',
-            'description.required_if'            => 'Description is required if detailed page is No.',
+            'title.required' => 'Title is required.',
+            'detailed_page.required' => 'Please select whether this is a detailed page.',
+            'description.required_if' => 'Description is required if detailed page is No.',
 
-            'event_name.*.required_if'           => 'Event Name is required for each detailed section.',
-            'banner_image.*.required_if'         => 'Detailed Page Banner Image is required for each section.',
-            'banner_image.*.image'               => 'Banner Image must be a valid image.',
-            'banner_image.*.mimes'               => 'Allowed formats for Banner Image: jpg, jpeg, png, webp, svg.',
-            'banner_image.*.max'                 => 'Maximum size for Banner Image is 2MB.',
-
-            'detailed_description.*.required_if' => 'Detailed Description is required for each section.',
-
-            'gallery_images.required_if'         => 'At least one gallery image is required for each section.',
-            'gallery_images.*.*.required_if'     => 'Gallery image is required.',
-            'gallery_images.*.*.image'           => 'Gallery images must be valid images.',
-            'gallery_images.*.*.mimes'           => 'Allowed formats for Gallery Images: jpg, jpeg, png, webp, svg.',
-            'gallery_images.*.*.max'             => 'Maximum size for each Gallery Image is 2MB.',
+            'event_name.*.required' => 'Event Name is required for each detailed section.',
+            'banner_image.*.required' => 'Detailed Page Banner Image is required for each section.',
+            'detailed_description.*.required' => 'Detailed Description is required for each section.',
         ]);
+
 
         // ✅ Upload main banner
         $bannerImage = null;
@@ -161,10 +152,11 @@ class CreativityController extends Controller
         $activity->banner_image      = $bannerImage;
         $activity->section_heading   = $validated['section_heading'] ?? null;
         $activity->section_image     = $sectionImage;
+        $activity->section_description  = $validated['section_description'] ?? null;
         $activity->title             = $validated['title'];
         $activity->detailed_page     = $validated['detailed_page'];
         $activity->description       = $validated['description'] ?? null;
-        $activity->detailed_sections = json_encode($detailedSections); // store sections as JSON
+        $activity->detailed_sections = json_encode($detailedSections) ?? null ; // store sections as JSON
         $activity->inserted_by        = Auth::id();
         $activity->inserted_at        = Carbon::now();
         $activity->save();
