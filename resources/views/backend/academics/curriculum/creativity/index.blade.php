@@ -56,13 +56,27 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Banner Heading</th>
-                                <th>Banner Image</th>
+                                <th>Title</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
-                            <tbody>
-                                
+                              <tbody>
+                                @foreach ($activities as $index => $activity)
+                                  <tr>
+                                      <td>{{ $index + 1 }}</td>
+                                      <td>{{ $activity->title }}</td>
+                                      <td>
+                                          <a href="{{ route('manage-creativity-activity.edit', $activity->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                          <form action="{{ route('manage-creativity-activity.destroy', $activity->id) }}" method="POST" class="d-inline">
+                                              @csrf
+                                              @method('DELETE')
+                                              <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+                                                  Delete
+                                              </button>
+                                          </form>
+                                      </td>
+                                  </tr>
+                                @endforeach
                             </tbody>
 
                         </table>

@@ -20,8 +20,10 @@ class CreativityController extends Controller
     
     public function index()
     {
-        return view('backend.academics.curriculum.creativity.index');
+        $activities = CreativityActivity::whereNull('deleted_at')->get();
+        return view('backend.academics.curriculum.creativity.index', compact('activities'));
     }
+
 
     public function create(Request $request)
     {
