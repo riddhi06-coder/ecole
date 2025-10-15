@@ -169,6 +169,8 @@
                                                         <div class="col-md-6">
                                                             <label class="form-label">Detailed Page Banner Image</label>
                                                             <input type="file" name="banner_image[]" class="form-control banner-input" accept="image/*">
+
+
                                                             <small class="text-secondary"><b>Max size: 2MB | Allowed: jpg, jpeg, png, webp, svg</b></small>
                                                             <div class="mt-2">
                                                                 <img class="img-fluid rounded border banner-preview" style="max-height:150px; display:none;">
@@ -225,7 +227,7 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Detailed Page Banner Image</label>
-                                                                <input type="file" name="banner_image[]" class="form-control banner-input" accept="image/*">
+                                                                <input type="file" name="banner_image[{{ $index }}]" class="form-control banner-input" accept="image/*">
                                                                 @if(!empty($section['banner_image']))
                                                                     <div class="mt-2">
                                                                         <img class="img-fluid rounded border banner-preview" src="{{ asset('uploads/academics/' . $section['banner_image']) }}" style="max-height:150px;">
@@ -236,7 +238,7 @@
 
                                                         <div class="col-md-12 mt-3">
                                                             <label class="form-label">Detailed Description</label>
-                                                            <textarea name="detailed_description[]" class="form-control" rows="4">{{ $section['detailed_description'] ?? '' }}</textarea>
+                                                             <textarea name="detailed_description[{{ $index }}]" class="form-control" rows="4">{{ $section['detailed_description'] ?? '' }}</textarea>
                                                         </div>
 
                                                         <div class="col-md-12 mt-3">
@@ -255,11 +257,15 @@
                                                                     @php
                                                                         $galleryImages = $section['gallery_images'] ?? [];
                                                                     @endphp
+
                                                                     @if(count($galleryImages))
-                                                                        @foreach($galleryImages as $gallery)
+                                                                        @foreach($galleryImages as $galleryIndex => $gallery)
                                                                             <tr>
                                                                                 <td>
-                                                                                    <input type="file" name="gallery_images[{{ $index }}][]" class="form-control gallery-input">
+                                                                                    <input type="file" name="gallery_images[{{ $index }}][]" class="form-control gallery-input" multiple>
+
+                                                                                    <!-- Keep existing image as old_gallery_images -->
+                                                                                    <input type="hidden" name="old_gallery_images[{{ $index }}][]" value="{{ $gallery }}">
                                                                                 </td>
                                                                                 <td>
                                                                                     <img src="{{ asset('uploads/academics/' . $gallery) }}" class="img-fluid rounded border img-preview" style="max-height:80px;">
@@ -272,13 +278,21 @@
                                                                     @else
                                                                         <tr>
                                                                             <td>
-                                                                                <input type="file" name="gallery_images[{{ $index }}][]" class="form-control gallery-input">
+                                                                                <input type="file" name="gallery_images[{{ $index }}][]" class="form-control gallery-input" multiple>
                                                                             </td>
-                                                                            <td><img class="img-preview" style="max-height:80px; display:none;"></td>
-                                                                            <td><button type="button" class="btn btn-sm btn-danger removeRow">Remove</button></td>
+                                                                            <td>
+                                                                                <img class="img-preview" style="max-height:80px; display:none;">
+                                                                            </td>
+                                                                            <td>
+                                                                                <button type="button" class="btn btn-sm btn-danger removeRow">Remove</button>
+                                                                            </td>
                                                                         </tr>
                                                                     @endif
                                                                 </tbody>
+
+
+
+
                                                             </table>
                                                         </div>
                                                     </div>
@@ -364,11 +378,17 @@
                     template.style.display = 'block';
                     template.classList.remove('detailed_section_template');
 
-                    // Update gallery input names
                     const sectionCount = container.querySelectorAll('.detailed_section').length;
-                    template.querySelectorAll('.gallery-input').forEach((input, index) => {
+
+                    // Update section input names
+                    template.querySelector('input[name="event_name[]"]').name = `event_name[${sectionCount}]`;
+                    template.querySelector('input[name="banner_image[]"]').name = `banner_image[${sectionCount}]`;
+                    template.querySelector('textarea[name="detailed_description[]"]').name = `detailed_description[${sectionCount}]`;
+
+                    // Update gallery input names
+                    template.querySelectorAll('.gallery-input').forEach(input => {
                         input.name = `gallery_images[${sectionCount}][]`;
-                        input.value = ''; // reset
+                        input.value = '';
                     });
 
                     // Reset previews
@@ -379,6 +399,8 @@
 
                     container.appendChild(template);
                 }
+
+
 
                 // Show Add More button if Yes is selected and add first section
                 function handleDetailedPageChange() {
@@ -405,11 +427,7 @@
                         const section = e.target.closest('.detailed_section');
                         section.remove();
                     }
-                    // Remove gallery row
-                    if (e.target.classList.contains('removeRow')) {
-                        const row = e.target.closest('tr');
-                        row.remove();
-                    }
+                
                     // Add gallery row
                     if (e.target.classList.contains('addGalleryRow')) {
                         const galleryTable = e.target.closest('.gallery-table');
@@ -424,8 +442,16 @@
 
                 // Banner & gallery image previews
                 document.addEventListener('change', function(e) {
+                    // Banner image preview
                     if (e.target.classList.contains('banner-input')) {
-                        const preview = e.target.closest('.detailed_section').querySelector('.banner-preview');
+                        // Get the parent .detailed_section of this input
+                        const section = e.target.closest('.detailed_section');
+                        if (!section) return;
+
+                        // Find the preview img inside this section only
+                        const preview = section.querySelector('.banner-preview');
+                        if (!preview) return;
+
                         const file = e.target.files[0];
                         if (file) {
                             const reader = new FileReader();
@@ -440,8 +466,14 @@
                         }
                     }
 
+                    // Gallery image preview
                     if (e.target.classList.contains('gallery-input')) {
-                        const preview = e.target.closest('tr').querySelector('.img-preview');
+                        const row = e.target.closest('tr');
+                        if (!row) return;
+
+                        const preview = row.querySelector('.img-preview');
+                        if (!preview) return;
+
                         const file = e.target.files[0];
                         if (file) {
                             const reader = new FileReader();
@@ -459,6 +491,28 @@
 
                 // Initial check
                 handleDetailedPageChange();
+            });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.removeRow').forEach(function(button){
+                    button.addEventListener('click', function() {
+                        const row = this.closest('tr');
+                        
+                        // Mark old_gallery_images as removed
+                        const oldInput = row.querySelector('input[type="hidden"]');
+                        if (oldInput) {
+                            // Create a new hidden input for removed_gallery_images
+                            const removedInput = document.createElement('input');
+                            removedInput.type = 'hidden';
+                            removedInput.name = oldInput.name.replace('old_gallery_images', 'removed_gallery_images');
+                            removedInput.value = oldInput.value;
+                            row.closest('form').appendChild(removedInput);
+                        }
+
+                        // Remove row from table
+                        row.remove();
+                    });
+                });
             });
 
         </script>

@@ -172,116 +172,154 @@ class CreativityController extends Controller
         return view('backend.academics.curriculum.creativity.edit', compact('creativity'));
     }
 
-public function update(Request $request, $id)
-{
-    $activity = CreativityActivity::findOrFail($id);
+    public function update(Request $request, $id)
+    {
+        // dd($request);    
+        $activity = CreativityActivity::findOrFail($id);
 
-    $validated = $request->validate([
-        'banner_heading' => 'nullable|string|max:255',
-        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
-        'section_heading' => 'nullable|string|max:255',
-        'section_image' => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
-        'section_description' => 'nullable|string',
-        'title' => 'required|string|max:255',
-        'detailed_page' => 'required|in:yes,no',
-        'description' => 'required_if:detailed_page,no|string',
-        'event_name.*' => 'nullable|string|max:255',
-        'banner_image.*' => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
-        'detailed_description.*' => 'nullable|string',
-        'gallery_images' => 'nullable|array',
-        'gallery_images.*.*' => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
-    ]);
+        $validated = $request->validate([
+            'banner_heading' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'section_heading' => 'nullable|string|max:255',
+            'section_image' => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'section_description' => 'nullable|string',
+            'title' => 'required|string|max:255',
+            'detailed_page' => 'required|in:yes,no',
+            'description' => 'required_if:detailed_page,no|string',
+            'event_name.*' => 'nullable|string|max:255',
+            'banner_image.*' => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'detailed_description.*' => 'nullable|string',
+            'gallery_images' => 'nullable|array',
+            'gallery_images.*.*' => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'old_gallery_images' => 'nullable|array',
+            'removed_gallery_images' => 'nullable|array',
+        ]);
 
-    // Banner image
-    $bannerImage = $activity->banner_image;
-    if ($request->hasFile('image')) {
-        if ($bannerImage && file_exists(public_path('uploads/academics/' . $bannerImage))) {
-            @unlink(public_path('uploads/academics/' . $bannerImage));
-        }
-        $file = $request->file('image');
-        $bannerImage = time() . rand(10, 999) . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('uploads/academics'), $bannerImage);
-    }
-
-    // Section image
-    $sectionImage = $activity->section_image;
-    if ($request->hasFile('section_image')) {
-        if ($sectionImage && file_exists(public_path('uploads/academics/' . $sectionImage))) {
-            @unlink(public_path('uploads/academics/' . $sectionImage));
-        }
-        $file = $request->file('section_image');
-        $sectionImage = time() . rand(10, 999) . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('uploads/academics'), $sectionImage);
-    }
-
-    // Detailed sections
-    $detailedSections = [];
-
-    if ($request->detailed_page === 'yes' && isset($request->event_name)) {
-        // Remove empty/null entries and reindex
-        $eventNames = array_values(array_filter($request->event_name));
-        $detailedDescriptions = array_values(array_filter($request->detailed_description ?? []));
-        $bannerImages = $request->banner_image ?? [];
-        $galleryImages = $request->gallery_images ?? [];
-
-        $oldSections = json_decode($activity->detailed_sections, true) ?? [];
-
-        foreach ($eventNames as $index => $eventName) {
-
-            // Banner
-            $banner = $oldSections[$index]['banner_image'] ?? null;
-            if (!empty($bannerImages[$index]) && $bannerImages[$index] instanceof \Illuminate\Http\UploadedFile) {
-                $file = $bannerImages[$index];
-                $banner = time() . '_' . rand(10, 999) . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('uploads/academics'), $banner);
+        // Handle main banner image
+        $bannerImage = $activity->banner_image;
+        if ($request->hasFile('image')) {
+            if ($bannerImage && file_exists(public_path('uploads/academics/' . $bannerImage))) {
+                @unlink(public_path('uploads/academics/' . $bannerImage));
             }
+            $file = $request->file('image');
+            $bannerImage = time() . rand(10, 999) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/academics'), $bannerImage);
+        }
 
-            // Gallery
-            $galleries = $oldSections[$index]['gallery_images'] ?? [];
-            if (isset($galleryImages[$index]) && is_array($galleryImages[$index])) {
+        // Handle section image
+        $sectionImage = $activity->section_image;
+        if ($request->hasFile('section_image')) {
+            if ($sectionImage && file_exists(public_path('uploads/academics/' . $sectionImage))) {
+                @unlink(public_path('uploads/academics/' . $sectionImage));
+            }
+            $file = $request->file('section_image');
+            $sectionImage = time() . rand(10, 999) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/academics'), $sectionImage);
+        }
+
+        // Prepare detailed sections
+        $detailedSections = [];
+
+        if ($request->detailed_page === 'yes' && $request->event_name) {
+            // Clean and reindex arrays to avoid null/empty gaps
+            $eventNames = array_values(array_filter($request->event_name));
+            $detailedDescriptions = array_values($request->detailed_description ?? []);
+            $bannerImages = $request->banner_image ?? []; // keep associative by index
+
+            $galleryImages = $request->gallery_images ?? [];
+            $oldGalleryImages = $request->old_gallery_images ?? [];
+            $removedGalleryImages = $request->removed_gallery_images ?? [];
+            $oldSections = json_decode($activity->detailed_sections, true) ?? [];
+
+            foreach ($eventNames as $index => $eventName) {
+                // Section banner
+                $bannerFile = $bannerImages[$index] ?? null;
+                $banner = $oldSections[$index]['banner_image'] ?? null;
+
+                if ($bannerFile instanceof \Illuminate\Http\UploadedFile) {
+                    $banner = time() . '_' . rand(10,999) . '.' . $bannerFile->getClientOriginalExtension();
+                    $bannerFile->move(public_path('uploads/academics'), $banner);
+                }
+
+                // Galleries
+                $oldGalleries = $oldGalleryImages[$index] ?? [];
+                $removedGalleries = $removedGalleryImages[$index] ?? [];
+                $newGalleryFiles = $galleryImages[$index] ?? [];
                 $galleries = [];
-                foreach ($galleryImages[$index] as $galleryFile) {
+
+                // Keep old galleries except removed/null
+                if (is_array($oldGalleries)) {
+                    foreach ($oldGalleries as $oldImg) {
+                        if ($oldImg && (!is_array($removedGalleries) || !in_array($oldImg, $removedGalleries))) {
+                            $galleries[] = $oldImg;
+                        }
+                    }
+                }
+
+                // Flatten new gallery uploads
+                $flatGalleryFiles = [];
+                foreach ($newGalleryFiles as $files) {
+                    if (is_array($files)) {
+                        $flatGalleryFiles = array_merge($flatGalleryFiles, $files);
+                    } elseif ($files) {
+                        $flatGalleryFiles[] = $files;
+                    }
+                }
+
+                // Upload new gallery images
+                foreach ($flatGalleryFiles as $galleryFile) {
                     if ($galleryFile instanceof \Illuminate\Http\UploadedFile) {
-                        $galleryName = time() . '_' . preg_replace('/[^a-zA-Z0-9_\-]/', '_', pathinfo($galleryFile->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $galleryFile->getClientOriginalExtension();
+                        $galleryName = time() . '_' . rand(10,999) . '_' .
+                            preg_replace('/[^a-zA-Z0-9_\-]/','_', pathinfo($galleryFile->getClientOriginalName(), PATHINFO_FILENAME)) .
+                            '.' . $galleryFile->getClientOriginalExtension();
                         $galleryFile->move(public_path('uploads/academics'), $galleryName);
                         $galleries[] = $galleryName;
                     }
                 }
-            }
 
-            $detailedSections[] = [
-                'event_name' => $eventName,
-                'slug' => Str::slug($eventName),
-                'banner_image' => $banner,
-                'detailed_description' => $detailedDescriptions[$index] ?? null,
-                'gallery_images' => $galleries,
-            ];
+                $detailedSections[] = [
+                    'event_name' => $eventName,
+                    'slug' => Str::slug($eventName),
+                    'banner_image' => $banner,
+                    'detailed_description' => $detailedDescriptions[$index] ?? null,
+                    'gallery_images' => $galleries,
+                ];
+            }
+        }
+
+
+        // Update activity
+        $activity->update([
+            'banner_heading'      => $validated['banner_heading'] ?? $activity->banner_heading,
+            'banner_image'        => $bannerImage,
+            'section_heading'     => $validated['section_heading'] ?? $activity->section_heading,
+            'section_image'       => $sectionImage,
+            'section_description' => $validated['section_description'] ?? $activity->section_description,
+            'title'               => $validated['title'],
+            'detailed_page'       => $validated['detailed_page'],
+            'description'         => $validated['description'] ?? null,
+            'detailed_sections'   => json_encode($detailedSections),
+            'modified_by'         => Auth::id(),
+            'modified_at'         => now(),
+        ]);
+
+        return redirect()->route('manage-creativity-activity.index')
+            ->with('message', 'Creativity Activity has been updated successfully.');
+    }
+
+    public function destroy(string $id)
+    {
+        $data['deleted_by'] =  Auth::user()->id;
+        $data['deleted_at'] =  Carbon::now();
+        try {
+            $industries = CreativityActivity::findOrFail($id);
+            $industries->update($data);
+
+            return redirect()->route('manage-creativity-activity.index')->with('message', 'Details deleted successfully!');
+        } catch (Exception $ex) {
+            return redirect()->back()->with('error', 'Something Went Wrong - ' . $ex->getMessage());
         }
     }
-
-    if ($request->detailed_page === 'no') {
-        $detailedSections = [];
-    }
-
-    // Update DB
-    $activity->update([
-        'banner_heading'      => $validated['banner_heading'] ?? $activity->banner_heading,
-        'banner_image'        => $bannerImage,
-        'section_heading'     => $validated['section_heading'] ?? $activity->section_heading,
-        'section_image'       => $sectionImage,
-        'section_description' => $validated['section_description'] ?? $activity->section_description,
-        'title'               => $validated['title'],
-        'detailed_page'       => $validated['detailed_page'],
-        'description'         => $validated['description'] ?? null,
-        'detailed_sections'   => json_encode($detailedSections),
-        'modified_by'         => Auth::id(),
-        'modified_at'         => now(),
-    ]);
-
-    return redirect()->route('manage-creativity-activity.index')
-        ->with('message', 'Creativity Activity has been updated successfully.');
-}
-
 
 
 
