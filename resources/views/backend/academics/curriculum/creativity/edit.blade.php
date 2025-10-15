@@ -169,9 +169,9 @@
                                                         <div class="col-md-6">
                                                             <label class="form-label">Detailed Page Banner Image</label>
                                                             <input type="file" name="banner_image[]" class="form-control banner-input" accept="image/*">
+                                                            <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small><br>
+                                                            <small class="text-secondary"><b>Allowed formats: .jpg, .jpeg, .png, .webp, .svg</b></small>
 
-
-                                                            <small class="text-secondary"><b>Max size: 2MB | Allowed: jpg, jpeg, png, webp, svg</b></small>
                                                             <div class="mt-2">
                                                                 <img class="img-fluid rounded border banner-preview" style="max-height:150px; display:none;">
                                                             </div>
@@ -197,7 +197,10 @@
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
-                                                                    <td><input type="file" name="gallery_images[0][]" class="form-control gallery-input" accept="image/*"></td>
+                                                                    <td><input type="file" name="gallery_images[0][]" class="form-control gallery-input" accept="image/*">
+                                                                        <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small><br>
+                                                                        <small class="text-secondary"><b>Allowed formats: .jpg, .jpeg, .png, .webp, .svg</b></small>
+                                                                    </td>
                                                                     <td><img class="img-preview" style="max-height:80px; display:none;"></td>
                                                                     <td><button type="button" class="btn btn-sm btn-danger removeRow">Remove</button></td>
                                                                 </tr>
@@ -228,6 +231,8 @@
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Detailed Page Banner Image</label>
                                                                 <input type="file" name="banner_image[{{ $index }}]" class="form-control banner-input" accept="image/*">
+                                                                <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small><br>
+                                                                <small class="text-secondary"><b>Allowed formats: .jpg, .jpeg, .png, .webp, .svg</b></small>
                                                                 @if(!empty($section['banner_image']))
                                                                     <div class="mt-2">
                                                                         <img class="img-fluid rounded border banner-preview" src="{{ asset('uploads/academics/' . $section['banner_image']) }}" style="max-height:150px;">
@@ -263,7 +268,8 @@
                                                                             <tr>
                                                                                 <td>
                                                                                     <input type="file" name="gallery_images[{{ $index }}][]" class="form-control gallery-input" multiple>
-
+                                                                                    <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small><br>
+                                                                                    <small class="text-secondary"><b>Allowed formats: .jpg, .jpeg, .png, .webp, .svg</b></small>
                                                                                     <!-- Keep existing image as old_gallery_images -->
                                                                                     <input type="hidden" name="old_gallery_images[{{ $index }}][]" value="{{ $gallery }}">
                                                                                 </td>
@@ -279,6 +285,8 @@
                                                                         <tr>
                                                                             <td>
                                                                                 <input type="file" name="gallery_images[{{ $index }}][]" class="form-control gallery-input" multiple>
+                                                                                <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small><br>
+                                                                                <small class="text-secondary"><b>Allowed formats: .jpg, .jpeg, .png, .webp, .svg</b></small>
                                                                             </td>
                                                                             <td>
                                                                                 <img class="img-preview" style="max-height:80px; display:none;">
@@ -493,27 +501,25 @@
                 handleDetailedPageChange();
             });
 
-            document.addEventListener('DOMContentLoaded', function () {
-                document.querySelectorAll('.removeRow').forEach(function(button){
-                    button.addEventListener('click', function() {
-                        const row = this.closest('tr');
-                        
-                        // Mark old_gallery_images as removed
-                        const oldInput = row.querySelector('input[type="hidden"]');
-                        if (oldInput) {
-                            // Create a new hidden input for removed_gallery_images
-                            const removedInput = document.createElement('input');
-                            removedInput.type = 'hidden';
-                            removedInput.name = oldInput.name.replace('old_gallery_images', 'removed_gallery_images');
-                            removedInput.value = oldInput.value;
-                            row.closest('form').appendChild(removedInput);
-                        }
+            document.addEventListener('click', function(e){
+                if(e.target.classList.contains('removeRow')){
+                    const row = e.target.closest('tr');
+                    
+                    // Mark old_gallery_images as removed (if exists)
+                    const oldInput = row.querySelector('input[type="hidden"]');
+                    if(oldInput){
+                        const removedInput = document.createElement('input');
+                        removedInput.type = 'hidden';
+                        removedInput.name = oldInput.name.replace('old_gallery_images', 'removed_gallery_images');
+                        removedInput.value = oldInput.value;
+                        row.closest('form').appendChild(removedInput);
+                    }
 
-                        // Remove row from table
-                        row.remove();
-                    });
-                });
+                    // Remove row from table
+                    row.remove();
+                }
             });
+
 
         </script>
 
