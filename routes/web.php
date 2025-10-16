@@ -58,7 +58,7 @@ use App\Http\Controllers\Backend\IBMiddleController;
 use App\Http\Controllers\Backend\IBDiplomaController;
 use App\Http\Controllers\Backend\CreativityController;
 use App\Http\Controllers\Backend\PrimaryYearsController;
-
+use App\Http\Controllers\Backend\MiddleYearsController;
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -253,6 +253,9 @@ Route::resource('manage-creativity-activity', CreativityController::class);
 
 // ==== Manage IB Early Years & Primary Years Programme
 Route::resource('manage-pyp', PrimaryYearsController::class);
+
+// ==== Manage IB Early Years & Primary Years Programme
+Route::resource('manage-myp', MiddleYearsController::class);
 
 
 
