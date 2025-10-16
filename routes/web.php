@@ -396,7 +396,7 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     Route::get('/cas-service-programme', [HomeController::class, 'cas_service_programme'])->name('frontend.cas_service_programme');
 
     // ====  Creativity, Activity, Service Detail Page
-    Route::get('/creativity/{slug}', [HomeController::class, 'creativity_detail'])->name('frontend.creativity_detail');
+    Route::get('/cas-service-programme/{slug}', [HomeController::class, 'creativity_detail'])->name('frontend.creativity_detail');
 
 
 

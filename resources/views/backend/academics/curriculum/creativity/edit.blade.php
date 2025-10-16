@@ -164,7 +164,7 @@
                                                     <div class="row mt-3">
                                                         <div class="col-md-6">
                                                             <label class="form-label">Event Name <span class="txt-danger">*</span></label>
-                                                            <input type="text" name="event_name[]" class="form-control" placeholder="Enter Event Name">
+                                                            <input type="text" name="event_name[]" class="form-control" placeholder="Enter Event Name" required>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <label class="form-label">Detailed Page Banner Image</label>
@@ -226,7 +226,7 @@
                                                         <div class="row mt-3">
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Event Name</label>
-                                                                <input type="text" name="event_name[]" class="form-control" value="{{ $section['event_name'] ?? '' }}">
+                                                                <input type="text" name="event_name[{{ $index }}]" class="form-control" value="{{ $section['event_name'] ?? '' }}">
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Detailed Page Banner Image</label>
@@ -243,7 +243,7 @@
 
                                                         <div class="col-md-12 mt-3">
                                                             <label class="form-label">Detailed Description</label>
-                                                             <textarea name="detailed_description[{{ $index }}]" class="form-control detailed-description" rows="4" >{{ $section['detailed_description'] ?? '' }}</textarea>
+                                                            <textarea name="detailed_description[{{ $index }}]" class="form-control detailed-description" rows="4" >{{ $section['detailed_description'] ?? '' }}</textarea>
                                                         </div>
 
                                                         <div class="col-md-12 mt-3">
@@ -307,6 +307,7 @@
                                                 @endforeach
 
                                             </div>
+                                            
                                         </div>
 
 
@@ -380,24 +381,58 @@
                 const addDetailedBtn = document.getElementById('addDetailedSection');
                 const container = document.getElementById('detailedSectionContainer');
 
+                // Initialize CKEditor for a textarea
+                function initCKEditor(textarea) {
+                    if (!textarea) return;
+                    ClassicEditor.create(textarea, {
+                        toolbar: [
+                            'heading', '|',
+                            'bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript',
+                            'link', 'blockQuote', 'codeBlock',
+                            'bulletedList', 'numberedList', 'todoList',
+                            '|',
+                            'alignment', 'outdent', 'indent',
+                            '|',
+                            'fontColor', 'fontBackgroundColor', 'fontSize', 'fontFamily',
+                            '|',
+                            'insertTable', 'imageUpload', 'mediaEmbed', 'horizontalLine', 'pageBreak',
+                            '|',
+                            'undo', 'redo', 'removeFormat', 'highlight', 'specialCharacters'
+                        ]
+                    }).catch(error => { console.error(error); });
+                }
+
+                // Initialize CKEditor for existing sections (exclude template)
+                document.querySelectorAll('#detailedSectionContainer .detailed-description').forEach(textarea => {
+                    initCKEditor(textarea);
+                });
+
                 // Function to add a new detailed section
                 function addDetailedSection() {
-                    const template = document.querySelector('.detailed_section_template').cloneNode(true);
+                    const template = document.querySelector('.detailed_section_template .detailed_section').cloneNode(true);
                     template.style.display = 'block';
-                    template.classList.remove('detailed_section_template');
 
-                    const sectionCount = container.querySelectorAll('.detailed_section').length;
+                    // Remove any CKEditor instance from the cloned textarea
+                    const oldTextarea = template.querySelector('.detailed-description');
+                    if (oldTextarea) {
+                        // Destroy existing instance if exists (just in case)
+                        const editorInstance = ClassicEditor.instances?.[oldTextarea.id];
+                        if (editorInstance) {
+                            editorInstance.destroy();
+                        }
+                        oldTextarea.value = ''; // reset content
+                        oldTextarea.removeAttribute('id'); // remove id if present
+                    }
 
-                    // Update section input names
+                    container.appendChild(template);
+
+                    const sectionCount = container.querySelectorAll('.detailed_section').length - 1;
+
+                    // Update input names
                     template.querySelector('input[name="event_name[]"]').name = `event_name[${sectionCount}]`;
                     template.querySelector('input[name="banner_image[]"]').name = `banner_image[${sectionCount}]`;
                     template.querySelector('textarea[name="detailed_description[]"]').name = `detailed_description[${sectionCount}]`;
-
-                    // Update gallery input names
-                    template.querySelectorAll('.gallery-input').forEach(input => {
-                        input.name = `gallery_images[${sectionCount}][]`;
-                        input.value = '';
-                    });
+                    template.querySelectorAll('.gallery-input').forEach(input => input.name = `gallery_images[${sectionCount}][]`);
 
                     // Reset previews
                     template.querySelectorAll('.banner-preview, .img-preview').forEach(img => {
@@ -405,16 +440,19 @@
                         img.style.display = 'none';
                     });
 
-                    container.appendChild(template);
+                    // Initialize CKEditor for the new textarea
+                    const newTextarea = template.querySelector('.detailed-description');
+                    if (newTextarea) initCKEditor(newTextarea);
                 }
-
 
 
                 // Show Add More button if Yes is selected and add first section
                 function handleDetailedPageChange() {
+                    if (!container) return;
+
                     if (detailedPageSelect.value === 'yes') {
                         addDetailedBtn.style.display = 'inline-block';
-                        if (container.querySelectorAll('.detailed_section').length === 0) {
+                        if(container.querySelectorAll('.detailed_section').length === 0) {
                             addDetailedSection();
                         }
                     } else {
@@ -429,34 +467,44 @@
                 // Add More button click
                 addDetailedBtn.addEventListener('click', addDetailedSection);
 
-                // Remove entire detailed section
+                // Remove entire detailed section or add gallery row
                 document.addEventListener('click', function(e) {
                     if (e.target.classList.contains('remove-section')) {
                         const section = e.target.closest('.detailed_section');
                         section.remove();
                     }
-                
-                    // Add gallery row
+
                     if (e.target.classList.contains('addGalleryRow')) {
                         const galleryTable = e.target.closest('.gallery-table');
                         const tbody = galleryTable.querySelector('tbody');
-                        const rowCount = tbody.querySelectorAll('tr').length;
                         const newRow = tbody.querySelector('tr').cloneNode(true);
                         newRow.querySelectorAll('input').forEach(input => input.value = '');
                         newRow.querySelector('img').style.display = 'none';
                         tbody.appendChild(newRow);
                     }
+
+                    if(e.target.classList.contains('removeRow')){
+                        const row = e.target.closest('tr');
+                        
+                        // Mark old_gallery_images as removed (if exists)
+                        const oldInput = row.querySelector('input[type="hidden"]');
+                        if(oldInput){
+                            const removedInput = document.createElement('input');
+                            removedInput.type = 'hidden';
+                            removedInput.name = oldInput.name.replace('old_gallery_images', 'removed_gallery_images');
+                            removedInput.value = oldInput.value;
+                            row.closest('form').appendChild(removedInput);
+                        }
+
+                        row.remove();
+                    }
                 });
 
                 // Banner & gallery image previews
                 document.addEventListener('change', function(e) {
-                    // Banner image preview
                     if (e.target.classList.contains('banner-input')) {
-                        // Get the parent .detailed_section of this input
                         const section = e.target.closest('.detailed_section');
                         if (!section) return;
-
-                        // Find the preview img inside this section only
                         const preview = section.querySelector('.banner-preview');
                         if (!preview) return;
 
@@ -474,11 +522,9 @@
                         }
                     }
 
-                    // Gallery image preview
                     if (e.target.classList.contains('gallery-input')) {
                         const row = e.target.closest('tr');
                         if (!row) return;
-
                         const preview = row.querySelector('.img-preview');
                         if (!preview) return;
 
@@ -500,71 +546,8 @@
                 // Initial check
                 handleDetailedPageChange();
             });
-
-            document.addEventListener('click', function(e){
-                if(e.target.classList.contains('removeRow')){
-                    const row = e.target.closest('tr');
-                    
-                    // Mark old_gallery_images as removed (if exists)
-                    const oldInput = row.querySelector('input[type="hidden"]');
-                    if(oldInput){
-                        const removedInput = document.createElement('input');
-                        removedInput.type = 'hidden';
-                        removedInput.name = oldInput.name.replace('old_gallery_images', 'removed_gallery_images');
-                        removedInput.value = oldInput.value;
-                        row.closest('form').appendChild(removedInput);
-                    }
-
-                    // Remove row from table
-                    row.remove();
-                }
-            });
-
-
         </script>
 
-
-<script>
-    document.querySelectorAll('.detailed-description').forEach(textarea => {
-        ClassicEditor.create(textarea, {
-            toolbar: [
-                'heading', '|',
-                'bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript',
-                'link', 'blockQuote', 'codeBlock',
-                'bulletedList', 'numberedList', 'todoList',
-                '|',
-                'alignment', 'outdent', 'indent',
-                '|',
-                'fontColor', 'fontBackgroundColor', 'fontSize', 'fontFamily',
-                '|',
-                'insertTable', 'imageUpload', 'mediaEmbed', 'horizontalLine', 'pageBreak',
-                '|',
-                'undo', 'redo', 'removeFormat', 'highlight', 'specialCharacters'
-            ],
-            heading: {
-                options: [
-                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                    { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-                    { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-                    { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
-                    { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
-                    { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
-                ]
-            },
-            fontFamily: {
-                options: [
-                    'default', 'Arial, Helvetica, sans-serif', 'Courier New, Courier, monospace',
-                    'Georgia, serif', 'Lucida Sans Unicode, Lucida Grande, sans-serif',
-                    'Tahoma, Geneva, sans-serif', 'Times New Roman, Times, serif',
-                    'Trebuchet MS, Helvetica, sans-serif', 'Verdana, Geneva, sans-serif'
-                ]
-            },
-            fontSize: { options: [ 'tiny', 'small', 'default', 'big', 'huge' ] },
-            alignment: { options: [ 'left', 'center', 'right', 'justify' ] }
-        }).catch(error => { console.error(error); });
-    });
-</script>
 
 
 

@@ -220,75 +220,90 @@ class CreativityController extends Controller
             $file->move(public_path('uploads/academics'), $sectionImage);
         }
 
-        // Prepare detailed sections
+        // Get old sections and filter out fully empty ones
+        // Decode old sections and remove fully empty ones
+        $oldSections = json_decode($activity->detailed_sections, true) ?? [];
+        $oldSections = array_filter($oldSections, function($section) {
+            return !empty($section['event_name']) 
+                || !empty($section['detailed_description']) 
+                || !empty($section['banner_image']) 
+                || (!empty($section['gallery_images']) && count($section['gallery_images']) > 0);
+        });
+
+        // Start fresh array
         $detailedSections = [];
 
+        // Only process detailed page sections
         if ($request->detailed_page === 'yes' && $request->event_name) {
-            // Clean and reindex arrays to avoid null/empty gaps
-            $eventNames = array_values(array_filter($request->event_name));
-            $detailedDescriptions = array_values($request->detailed_description ?? []);
-            $bannerImages = $request->banner_image ?? []; // keep associative by index
-
+            $eventNames = $request->event_name;
+            $detailedDescriptions = $request->detailed_description ?? [];
+            $bannerImages = $request->banner_image ?? [];
             $galleryImages = $request->gallery_images ?? [];
             $oldGalleryImages = $request->old_gallery_images ?? [];
             $removedGalleryImages = $request->removed_gallery_images ?? [];
-            $oldSections = json_decode($activity->detailed_sections, true) ?? [];
 
             foreach ($eventNames as $index => $eventName) {
-                // Section banner
-                $bannerFile = $bannerImages[$index] ?? null;
-                $banner = $oldSections[$index]['banner_image'] ?? null;
-
-                if ($bannerFile instanceof \Illuminate\Http\UploadedFile) {
-                    $banner = time() . '_' . rand(10,999) . '.' . $bannerFile->getClientOriginalExtension();
-                    $bannerFile->move(public_path('uploads/academics'), $banner);
-                }
-
-                // Galleries
+                $description = $detailedDescriptions[$index] ?? null;
                 $oldGalleries = $oldGalleryImages[$index] ?? [];
                 $removedGalleries = $removedGalleryImages[$index] ?? [];
                 $newGalleryFiles = $galleryImages[$index] ?? [];
+
+                // Skip section if completely empty
+                $hasOldGallery = !empty($oldGalleries) && count(array_filter($oldGalleries)) > 0;
+                if (empty($eventName) && empty($description) && !$hasOldGallery) {
+                    continue;
+                }
+
+                // Section banner
+                $bannerFile = $bannerImages[$index] ?? null;
+                $banner = $oldSections[$index]['banner_image'] ?? null;
+                if ($bannerFile instanceof \Illuminate\Http\UploadedFile) {
+                    $banner = time() . '_' . rand(10, 999) . '.' . $bannerFile->getClientOriginalExtension();
+                    $bannerFile->move(public_path('uploads/academics'), $banner);
+                }
+
+                // Prepare galleries
                 $galleries = [];
 
-                // Keep old galleries except removed/null
-                if (is_array($oldGalleries)) {
-                    foreach ($oldGalleries as $oldImg) {
-                        if ($oldImg && (!is_array($removedGalleries) || !in_array($oldImg, $removedGalleries))) {
-                            $galleries[] = $oldImg;
-                        }
+                // Keep old galleries except removed
+                foreach ($oldGalleries as $oldImg) {
+                    if ($oldImg && (!is_array($removedGalleries) || !in_array($oldImg, $removedGalleries))) {
+                        $galleries[] = $oldImg;
                     }
                 }
 
-                // Flatten new gallery uploads
+                // Flatten and upload new gallery files
                 $flatGalleryFiles = [];
                 foreach ($newGalleryFiles as $files) {
-                    if (is_array($files)) {
-                        $flatGalleryFiles = array_merge($flatGalleryFiles, $files);
-                    } elseif ($files) {
-                        $flatGalleryFiles[] = $files;
-                    }
+                    if (is_array($files)) $flatGalleryFiles = array_merge($flatGalleryFiles, $files);
+                    elseif ($files) $flatGalleryFiles[] = $files;
                 }
-
-                // Upload new gallery images
-                foreach ($flatGalleryFiles as $galleryFile) {
-                    if ($galleryFile instanceof \Illuminate\Http\UploadedFile) {
-                        $galleryName = time() . '_' . rand(10,999) . '_' .
-                            preg_replace('/[^a-zA-Z0-9_\-]/','_', pathinfo($galleryFile->getClientOriginalName(), PATHINFO_FILENAME)) .
-                            '.' . $galleryFile->getClientOriginalExtension();
-                        $galleryFile->move(public_path('uploads/academics'), $galleryName);
+                foreach ($flatGalleryFiles as $file) {
+                    if ($file instanceof \Illuminate\Http\UploadedFile) {
+                        $galleryName = time() . '_' . rand(10, 999) . '_' . 
+                            preg_replace('/[^a-zA-Z0-9_\-]/','_', pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . 
+                            '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('uploads/academics'), $galleryName);
                         $galleries[] = $galleryName;
                     }
                 }
 
+                // Add this section only if it has some data
                 $detailedSections[] = [
-                    'event_name' => $eventName,
-                    'slug' => Str::slug($eventName),
+                    'event_name' => $eventName ?: null,
+                    'slug' => $eventName ? Str::slug($eventName) : '',
                     'banner_image' => $banner,
-                    'detailed_description' => $detailedDescriptions[$index] ?? null,
+                    'detailed_description' => $description,
                     'gallery_images' => $galleries,
                 ];
             }
         }
+
+        // Reindex to remove gaps
+        $detailedSections = array_values($detailedSections);
+
+
+
 
 
         // Update activity
