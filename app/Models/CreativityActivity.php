@@ -20,7 +20,7 @@ class CreativityActivity extends Model
         'section_description',
         'title',        
         'detailed_page',    
-        'description ',  
+        'description',  
         'detailed_sections', 
 
         'inserted_at',

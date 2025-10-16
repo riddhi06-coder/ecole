@@ -396,8 +396,18 @@ class HomeController extends Controller
     // ====  Creativity, Activity, Service
     public function cas_service_programme() {
         $cas_service_programme_banner = CreativityActivity ::wherenull('deleted_by')->first();
-        $cas_service_programme = CreativityActivity ::wherenull('deleted_by')->first();
+        $cas_service_programme = CreativityActivity ::wherenull('deleted_by')->get();
         return view('frontend.cas_service_programme', compact('cas_service_programme_banner','cas_service_programme'));
+    }
+
+    // ====  Creativity, Activity, Service Detail Page
+    public function creativity_detail($slug)
+    {
+        $activity = CreativityActivity::where('detailed_sections', 'like', '%"slug":"' . $slug . '"%')
+            ->whereNull('deleted_by')
+            ->first();
+
+        return view('frontend.creativity_detail', compact('activity'));
     }
 
 

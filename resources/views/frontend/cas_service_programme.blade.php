@@ -44,52 +44,70 @@
 
 
 
-                        <h6>Creativity:</h6>
-                        <p>'Exploring or extending ideas leading to an original or interpretive product or performance'</p>
-                        <p>The school provide after-school activities that involve students in various roles and responsibilities
-                            to use their creative minds and plan for school events such as the EMUN, the Coffee House, the
-                            Battlelaureate, and TEDxÉMWS</p>
-                        <h6>EMUN:</h6>
-                        <ul class="listing-one">
-                            <li><a href="#">Coffee House</a></li>
-                            <li><a href="#">Battlelaureate</a></li>
-                            <li><a href="#">TEDxÉMWS</a></li>
-                        </ul>
-                        <h6>Activity:</h6>
-                        <p>'Physical exertion contributes to a healthy lifestyle'</p>
-                        <p>The annual CAS trips happen in late October each year. The students undertake challenging and exciting
-                            physical activities to not only learn some life skill but also develop their personality and leadership
-                            qualities. The trips also provide opportunities to perform acts of service or create some delightful art
-                            pieces.</p>
-                        <h6>CAS Trips:</h6>
-                        <ul class="listing-one">
-                            <li><a href="#">Prague and Berlin</a></li>
-                            <li><a href="#">Rishikesh</a></li>
-                            <li><a href="#">Uttrakhand</a></li>
-                            <li><a href="#">Pondicherry</a></li>
-                            <li><a href="#">Nepal</a></li>
-                        </ul>
-                        <h6>Service:</h6>
-                        <p>'Collaborative and reciprocal engagement with the community in response to an authentic community
-                            need.' École Mondiale in collaboration with NGOs provides platforms for the students to get involved
-                            with their communities. Listed below are examples of NGO's that we connect with.</p>
-                        <ul class="listing-one">
-                            <li><a href="#">Sol’s Arc Sports Day preparation</a></li>
-                            <li>Sanskardham Annual day preparations</li>
-                            <li>Angel Express Teaching activities</li>
-                            <li>Sane Guruji Sports activities</li>
-                            <li><a href="#">Compete to Defeat</a></li>
-                            <li>Computer lessons to Asha Kiran students</li>
-                            <li>Computer lessons to C.H.I.P</li>
-                        </ul>
-                        <h6>Unheard Voices:</h6>
-                        <p>The Unheard voice is an event to spotlight the situation of the communities or strata of society less
-                            heard of, such as the transgender community and the Scavengers amidst us. Guest speakers and volunteers
-                            from these communities are invited to the school to highlight the situation.</p>
-                        <h6>Habitat for Humanity Karjat build project:</h6>
-                        <p>Once a year and mostly on a Saturday very early morning, the volunteer students of the DP program go to
-                            the nearby town of Karjat to literally get their hand dirty and help build houses for the villagers in
-                            the area.</p>
+                        {{-- Loop through each main section --}}
+                        @foreach($cas_service_programme as $section)
+                            <div class="cas-section">
+
+                                {{-- Title --}}
+                                @if(!empty($section->title))
+                                    <h6>{{ $section->title }}</h6>
+                                @endif
+
+                                @if(!empty($section->description))
+                                    @php
+                                        $description = $section->description;
+
+                                        if (!empty($section->detailed_sections)) {
+                                            $detailedSections = json_decode($section->detailed_sections, true);
+
+                                            foreach ($detailedSections as $event) {
+                                                $eventName = $event['event_name'] ?? null;
+                                                $slug = $event['slug'] ?? null;
+
+                                                if ($eventName && $slug) {
+                                                    // Normalize smart quotes and remove punctuation
+                                                    $normalizedEvent = strtolower(preg_replace("/[^\p{L}\p{N}\s]/u", '', str_replace(['’','‘','“','”'], ["'","'","\"","\""], $eventName)));
+
+                                                    // Get first 2-3 words
+                                                    $eventWords = preg_split('/\s+/', $normalizedEvent);
+                                                    $firstTwoWords = implode(' ', array_slice($eventWords, 0, 2));
+                                                    $firstThreeWords = implode(' ', array_slice($eventWords, 0, 3));
+
+                                                    // Replace in <li>
+                                                    $description = preg_replace_callback('/<li>(.*?)<\/li>/i', function($matches) use ($firstTwoWords, $firstThreeWords, $slug) {
+                                                        $liText = $matches[1];
+                                                        $normalizedLi = strtolower(preg_replace("/[^\p{L}\p{N}\s]/u", '', str_replace(['’','‘','“','”'], ["'","'","\"","\""], $liText)));
+
+                                                        foreach ([$firstThreeWords, $firstTwoWords] as $match) {
+                                                            if (!empty($match) && stripos($normalizedLi, $match) !== false) {
+                                                                // Wrap entire <li> text in link
+                                                                $liText = '<a href="'.route("frontend.creativity_detail", $slug).'">'.$liText.'</a>';
+                                                                break;
+                                                            }
+                                                        }
+
+                                                        return '<li>'.$liText.'</li>';
+                                                    }, $description);
+                                                }
+                                            }
+                                        }
+
+                                        $hasList = preg_match('/<ul>|<li>/', $description);
+                                    @endphp
+
+                                    @if($hasList)
+                                        <div class="listing-one">
+                                            {!! $description !!}
+                                        </div>
+                                    @else
+                                        {!! $description !!}
+                                    @endif
+                                @endif
+
+
+
+                            </div>
+                        @endforeach
                     </div>
                 </div>
                 </div>

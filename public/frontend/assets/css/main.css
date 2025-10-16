@@ -4934,9 +4934,9 @@ section,
   color: #11317B;
 }
 
-.creativity-service-programme-content-sec .listing-one {
+/* .creativity-service-programme-content-sec .listing-one {
   padding-left: 20px;
-}
+} */
 
 .creativity-service-programme-content-sec .listing-one li {
   color: #000000;
@@ -7137,4 +7137,42 @@ section,
   background-color: #ffcc28;
   color: #11317B;
   border: 1px solid #ffcc28;
+}
+
+
+/* ==== Coffee House ==== */
+.coffee-house-content-sec .coffee-house-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #11317B;
+  text-transform: capitalize;
+  margin-bottom: 12px;
+  margin-top: 20px;
+}
+
+.coffee-house-img-sec img {
+  border-radius: 10px;
+}
+
+.coffee-house-content-sec p {
+  color: #000000;
+}
+
+.coffee-house-content-sec p a {
+  color: #11317B !important;
+  font-weight: 600;
+}
+
+.coffee-house-content-sec p a:hover {
+  color: #ffcc28 !important;
+}
+
+.coffee-gallery .gallery-item {
+  overflow: hidden;
+  position: relative;
+}
+
+.coffee-gallery .gallery-item img {
+    border: 1px solid #11317B;
+    padding: 5px;
 }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 use Carbon\Carbon;
 use App\Models\User;
@@ -195,6 +196,8 @@ class CreativityController extends Controller
             'removed_gallery_images' => 'nullable|array',
         ]);
 
+        Log::info('Validated CAS Data:', $validated);
+
         // Handle main banner image
         $bannerImage = $activity->banner_image;
         if ($request->hasFile('image')) {
@@ -297,7 +300,8 @@ class CreativityController extends Controller
             'section_description' => $validated['section_description'] ?? $activity->section_description,
             'title'               => $validated['title'],
             'detailed_page'       => $validated['detailed_page'],
-            'description'         => $validated['description'] ?? null,
+            'description'         => $request->input('description'),
+
             'detailed_sections'   => json_encode($detailedSections),
             'modified_by'         => Auth::id(),
             'modified_at'         => now(),
