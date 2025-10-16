@@ -73,7 +73,7 @@
                   <li><a href="{{ route('frontend.primary_years_programme') }}">Primary Years</a></li>
                   <li><a href="{{ route('frontend.middle_years_programme') }}">Middle Years</a></li>
                   <li><a href="{{ route('frontend.diploma_programme') }}">Diploma</a></li>
-                  <li><a href="#">Creativity, Activity, Service</a></li>
+                  <li><a href="{{ route('frontend.cas_service_programme') }}">Creativity, Activity, Service</a></li>
                 </ul>
               </li>
               <li><a href="{{ route('frontend.policies') }}">Policies</a></li>

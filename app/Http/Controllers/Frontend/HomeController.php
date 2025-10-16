@@ -61,7 +61,7 @@ use App\Models\Curriculum;
 use App\Models\IBPrimary;
 use App\Models\IBMiddle;
 use App\Models\IBDiploma;
-
+use App\Models\CreativityActivity;
 
 
 class HomeController extends Controller
@@ -391,6 +391,13 @@ class HomeController extends Controller
         $curriculum_overview_banner = Curriculum ::wherenull('deleted_by')->first();
         $primary_banner = IBDiploma ::wherenull('deleted_by')->first();
         return view('frontend.diploma_programme', compact('curriculum_overview_banner','primary_banner'));
+    }
+
+    // ====  Creativity, Activity, Service
+    public function cas_service_programme() {
+        $cas_service_programme_banner = CreativityActivity ::wherenull('deleted_by')->first();
+        $cas_service_programme = CreativityActivity ::wherenull('deleted_by')->first();
+        return view('frontend.cas_service_programme', compact('cas_service_programme_banner','cas_service_programme'));
     }
 
 

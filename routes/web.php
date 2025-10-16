@@ -392,6 +392,9 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== IB Diploma Programme
     Route::get('/diploma-programme', [HomeController::class, 'diploma_programme'])->name('frontend.diploma_programme');
 
+    // ==== Creativity, Activity, Service
+    Route::get('/cas-service-programme', [HomeController::class, 'cas_service_programme'])->name('frontend.cas_service_programme');
+
 
 
 });
