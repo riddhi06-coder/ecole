@@ -57,6 +57,7 @@ use App\Http\Controllers\Backend\IBPrimaryController;
 use App\Http\Controllers\Backend\IBMiddleController;
 use App\Http\Controllers\Backend\IBDiplomaController;
 use App\Http\Controllers\Backend\CreativityController;
+use App\Http\Controllers\Backend\PrimaryYearsController;
 
 
 
@@ -250,6 +251,9 @@ Route::resource('manage-ib-diploma', IBDiplomaController::class);
 // ==== Manage Creativity, Activity, Service
 Route::resource('manage-creativity-activity', CreativityController::class);
 
+// ==== Manage IB Early Years & Primary Years Programme
+Route::resource('manage-pyp', PrimaryYearsController::class);
+
 
 
 
@@ -397,7 +401,5 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
 
     // ====  Creativity, Activity, Service Detail Page
     Route::get('/cas-service-programme/{slug}', [HomeController::class, 'creativity_detail'])->name('frontend.creativity_detail');
-
-
 
 });
