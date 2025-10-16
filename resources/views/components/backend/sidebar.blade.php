@@ -106,7 +106,7 @@
                 </li>
 
 
-                <li class="sidebar-list {{ request()->routeIs('manage-policies.index', 'manage-learner-profile.index', 'manage-student-support.index','mmanage-universities.index','manage-university-page.index','manage-pyp.index','manage-myp.index') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-policies.index', 'manage-learner-profile.index', 'manage-student-support.index','mmanage-universities.index','manage-university-page.index','manage-pyp.index','manage-myp.index','manage-diploma.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -137,6 +137,7 @@
                     <li><a href="{{ route('manage-policies.index') }}" class="{{ request()->routeIs('manage-policies.index') ? 'active' : '' }}">Policies</a></li>
                     <li><a href="{{ route('manage-pyp.index') }}" class="{{ request()->routeIs('manage-pyp.index') ? 'active' : '' }}">IB PYP</a></li>
                     <li><a href="{{ route('manage-myp.index') }}" class="{{ request()->routeIs('manage-myp.index') ? 'active' : '' }}">IB MYP</a></li>
+                    <li><a href="{{ route('manage-diploma.index') }}" class="{{ request()->routeIs('manage-diploma.index') ? 'active' : '' }}">IB Diploma</a></li>
                     <li><a href="{{ route('manage-student-support.index') }}" class="{{ request()->routeIs('manage-student-support.index') ? 'active' : '' }}">Student Support</a></li>
                     <li>
                         <a class="submenu-title {{ request()->routeIs('manage-university-page.*') ? 'active' : '' }}" href="#">
