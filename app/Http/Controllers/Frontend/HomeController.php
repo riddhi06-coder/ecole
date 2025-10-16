@@ -62,6 +62,9 @@ use App\Models\IBPrimary;
 use App\Models\IBMiddle;
 use App\Models\IBDiploma;
 use App\Models\CreativityActivity;
+use App\Models\Pyp;
+use App\Models\Myp;
+use App\Models\Diploma;
 
 
 class HomeController extends Controller
@@ -410,6 +413,23 @@ class HomeController extends Controller
         return view('frontend.creativity_detail', compact('activity'));
     }
 
+    // ==== IB Early Years & Primary Years Programme
+    public function ib_pyp_schools_mumbai() {
+        $cib_pyp_schools_mumbai_banner = Pyp ::wherenull('deleted_by')->first();
+        return view('frontend.ib_pyp_schools_mumbai', compact('cib_pyp_schools_mumbai_banner'));
+    }
+
+    // ==== IB Middle Years Programme
+    public function ib_myp_schools_mumbai() {
+        $ib_myp_schools_mumbai_banner = Myp ::wherenull('deleted_by')->first();
+        return view('frontend.ib_myp_schools_mumbai', compact('ib_myp_schools_mumbai_banner'));
+    }
+
+    // ==== IB Diploma Programme
+    public function ib_diploma_school_mumbai() {
+        $ib_diploma_school_mumbai_banner = Diploma ::wherenull('deleted_by')->first();
+        return view('frontend.ib_diploma_school_mumbai', compact('ib_diploma_school_mumbai_banner'));
+    }
 
 
 

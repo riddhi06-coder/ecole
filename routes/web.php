@@ -410,4 +410,13 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ====  Creativity, Activity, Service Detail Page
     Route::get('/cas-service-programme/{slug}', [HomeController::class, 'creativity_detail'])->name('frontend.creativity_detail');
 
+    // ==== IB Early Years & Primary Years Programme
+    Route::get('/ib-pyp-schools-mumbai', [HomeController::class, 'ib_pyp_schools_mumbai'])->name('frontend.ib_pyp_schools_mumbai');
+
+    // ==== IB Middle Years Programme
+    Route::get('/ib-myp-schools-mumbai', [HomeController::class, 'ib_myp_schools_mumbai'])->name('frontend.ib_myp_schools_mumbai');
+
+    // ==== IB Diploma Programme
+    Route::get('/ib-diploma-school-mumbai', [HomeController::class, 'ib_diploma_school_mumbai'])->name('frontend.ib_diploma_school_mumbai');
+
 });
