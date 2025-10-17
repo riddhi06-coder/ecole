@@ -347,6 +347,12 @@
                     '|',
                     'undo', 'redo', 'removeFormat', 'highlight', 'specialCharacters'
                 ],
+                table: {
+                    contentToolbar: [
+                        'tableColumn', 'tableRow', 'mergeTableCells', 
+                        'tableProperties', 'tableCellProperties'
+                    ]
+                },
                 heading: {
                     options: [
                         { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
@@ -376,8 +382,6 @@
             .catch(error => { console.error(error); });
         </script>
 
-
-
         <script>
             ClassicEditor.create(document.querySelector('#extra_info'), {
                 toolbar: [
@@ -395,6 +399,12 @@
                     '|',
                     'undo', 'redo', 'removeFormat', 'highlight', 'specialCharacters'
                 ],
+                table: {
+                    contentToolbar: [
+                        'tableColumn', 'tableRow', 'mergeTableCells', 
+                        'tableProperties', 'tableCellProperties'
+                    ]
+                },
                 heading: {
                     options: [
                         { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },

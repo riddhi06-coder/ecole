@@ -345,6 +345,12 @@
                     '|',
                     'undo', 'redo', 'removeFormat', 'highlight', 'specialCharacters'
                 ],
+                table: {
+                    contentToolbar: [
+                        'tableColumn', 'tableRow', 'mergeTableCells', 
+                        'tableProperties', 'tableCellProperties'
+                    ]
+                },
                 heading: {
                     options: [
                         { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
@@ -393,6 +399,12 @@
                     '|',
                     'undo', 'redo', 'removeFormat', 'highlight', 'specialCharacters'
                 ],
+                table: {
+                    contentToolbar: [
+                        'tableColumn', 'tableRow', 'mergeTableCells', 
+                        'tableProperties', 'tableCellProperties'
+                    ]
+                },
                 heading: {
                     options: [
                         { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
