@@ -262,6 +262,9 @@ Route::resource('manage-myp', MiddleYearsController::class);
 // ==== Manage IB Diploma Programme
 Route::resource('manage-diploma', DiplomaYearsController::class);
 
+// ==== Manage Bulletin Board
+Route::resource('manage-bulletin-category', BulletinCategoryController::class);
+
 
 
 

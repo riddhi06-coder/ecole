@@ -192,6 +192,25 @@
                 </li>
 
 
+
+                
+                <li class="sidebar-list {{ request()->routeIs('manage-bulletin-category.index', 'manage-career.index') ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"> </i>
+                  <a class="sidebar-link sidebar-title" href="#">
+                    <svg class="stroke-icon"> 
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                    </svg>
+                    <span>Bulletin Board</span>
+                  </a>
+                  <ul class="sidebar-submenu">
+                  <li><a href="{{ route('manage-bulletin-category.index') }}" class="{{ request()->routeIs('manage-bulletin-category.index') ? 'active' : '' }}">Category</a></li> 
+                  </ul>
+                </li>
+
+
                 <li class="sidebar-list {{ request()->routeIs('manage-university-bath.index', 'manage-career.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
