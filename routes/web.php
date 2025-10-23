@@ -430,4 +430,7 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== IB Diploma Programme
     Route::get('/ib-diploma-school-mumbai', [HomeController::class, 'ib_diploma_school_mumbai'])->name('frontend.ib_diploma_school_mumbai');
 
+    // ==== Bulletin Board
+    Route::get('/bulletin-board', [HomeController::class, 'bulletin_board'])->name('frontend.bulletin_board');
+
 });

@@ -65,6 +65,9 @@ use App\Models\CreativityActivity;
 use App\Models\Pyp;
 use App\Models\Myp;
 use App\Models\Diploma;
+use App\Models\BulletinListing;
+use App\Models\BulletinDetails;
+use App\Models\BulletinCategory;
 
 
 class HomeController extends Controller
@@ -431,6 +434,17 @@ class HomeController extends Controller
         return view('frontend.ib_diploma_school_mumbai', compact('ib_diploma_school_mumbai_banner'));
     }
 
+    // ====  Bulletin Board
+    public function bulletin_board() {
+        $bulletin_board = BulletinListing ::wherenull('deleted_by')->get();
+        $bulletin_categories = BulletinCategory::withCount(['listings'])->whereNull('deleted_by')->get();
+
+        $recent_posts = BulletinListing::whereNull('deleted_by')
+                        ->orderBy('inserted_at', 'desc')
+                        ->take(5)
+                        ->get();
+        return view('frontend.bulletin_board', compact('bulletin_board','bulletin_categories','recent_posts'));
+    }
 
 
 

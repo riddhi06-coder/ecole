@@ -28,7 +28,7 @@ class BulletinCategory extends Model
 
     public function listings()
     {
-        return $this->hasMany(BulletinListing::class, 'category_id');
+        return $this->hasMany(BulletinListing::class, 'category_id')->whereNull('deleted_by');
     }
 
     // BulletinCategory.php

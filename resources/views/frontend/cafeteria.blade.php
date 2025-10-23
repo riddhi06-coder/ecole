@@ -18,7 +18,7 @@
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <h1>{{  $cafeteria_banner->banner_heading ? $cafeteria_banner->banner_heading : 'What sets us apart?' }}</h1>
                     <ul class="bread-list">
-                    <li><a href="./">Home<i class="fa fa-angle-right"></i></a></li>
+                    <li><a href="{{ route('frontend.index') }}">Home<i class="fa fa-angle-right"></i></a></li>
                     <li><a href="javascript:void(0)">Campus life<i class="fa fa-angle-right"></i></a></li>
                     <li class="active"><a href="javascript:void(0)">{{  $cafeteria_banner->banner_heading ? $cafeteria_banner->banner_heading : 'What sets us apart?' }}</a></li>
                     </ul>

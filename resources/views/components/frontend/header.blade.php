@@ -104,7 +104,7 @@
             </ul>
           </li>
 
-          <li class="dropdown"><a href="#"><span>Bulletin Board</span> <i
+          <li class="dropdown"><a href="{{ route('frontend.bulletin_board') }}"><span>Bulletin Board</span> <i
                 class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="#">Announcements</a></li>
