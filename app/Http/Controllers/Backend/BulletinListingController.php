@@ -21,12 +21,15 @@ class BulletinListingController extends Controller
 
     public function index()
     {
-        $categories = BulletinCategory::whereHas('listings')
-                    ->with(['listings' => function($query) {
-                        $query->orderBy('article_date', 'desc');
-                    }])
-                    ->orderBy('category')
-                    ->get();
+        $categories = BulletinCategory::whereHas('listings', function($query) {
+                $query->whereNull('deleted_by'); 
+            })
+            ->with(['listings' => function($query) {
+                $query->whereNull('deleted_by')
+                    ->orderBy('article_date', 'desc');
+            }])
+            ->orderBy('category')
+            ->get();
 
         return view('backend.bulletin.listing.index', compact('categories'));
     }

@@ -47,12 +47,17 @@
                             </ol>
                         </nav>
 
-                        <a href="{{ route('manage-bulletin-listing.create') }}" class="btn btn-primary px-5 radius-30">+ Add Details</a>
+                        <!-- Button -->
+                        <div class="d-flex flex-column align-items-end">
+                            <a href="{{ route('manage-bulletin-listing.create') }}" class="btn btn-primary px-5 radius-30 mb-2">+ Add Details</a>
+                            
+                            <!-- Search Box directly below button -->
+                            <input type="text" id="searchInput" class="form-control" placeholder="Search articles..." style="max-width: 800px;">
+                        </div>
                     </div>
-
-
+                    
                     <div class="table-responsive custom-scrollbar">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" id="bulletinTable">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -65,14 +70,14 @@
                             <tbody>
                                 @php $sn = 1; @endphp
                                 @forelse($categories as $category)
-                                    <tr class="table-primary">
+                                    <tr class="table-primary category-row">
                                         <td colspan="5"><strong>{{ $category->category }}</strong></td>
                                     </tr>
 
                                     @forelse($category->listings as $listing)
-                                        <tr>
+                                        <tr class="listing-row">
                                             <td>{{ $sn++ }}</td>
-                                            <td>{{ $listing->article_name }}</td>
+                                            <td class="article-name">{{ $listing->article_name }}</td>
                                             <td>
                                                 @if($listing->thumbnail_image)
                                                     <img src="{{ asset('uploads/bulletin/' . $listing->thumbnail_image) }}" 
@@ -93,16 +98,17 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr>
+                                        <tr class="no-articles">
                                             <td colspan="5" class="text-center">No articles in this category.</td>
                                         </tr>
                                     @endforelse
                                 @empty
-                                    <tr>
+                                    <tr class="no-articles">
                                         <td colspan="5" class="text-center">No categories found.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
+
                         </table>
 
                     </div>
@@ -118,6 +124,49 @@
     </div>
 
         @include('components.backend.main-js')
+
+
+        <!-- JS Search -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const searchInput = document.getElementById('searchInput');
+                const table = document.getElementById('bulletinTable');
+
+                if (!table) return;
+
+                searchInput.addEventListener('input', function() {
+                    const filter = this.value.toLowerCase();
+                    const rows = Array.from(table.querySelectorAll('tbody tr'));
+
+                    let currentCategory = null;
+                    let categoryMatchesFilter = false;
+
+                    rows.forEach(row => {
+                        if (row.classList.contains('category-row')) {
+                            currentCategory = row;
+                            categoryMatchesFilter = row.textContent.toLowerCase().includes(filter);
+                            // Initially hide category, will show later if matches or has visible articles
+                            row.style.display = categoryMatchesFilter ? '' : 'none';
+                        } 
+                        else if (row.classList.contains('listing-row')) {
+                            const articleName = row.querySelector('.article-name').textContent.toLowerCase();
+                            const showRow = articleName.includes(filter) || categoryMatchesFilter;
+
+                            row.style.display = showRow ? '' : 'none';
+
+                            // If any listing is visible, show the category
+                            if (showRow && currentCategory) {
+                                currentCategory.style.display = '';
+                            }
+                        } 
+                        else if (row.classList.contains('no-articles')) {
+                            row.style.display = filter ? 'none' : '';
+                        }
+                    });
+                });
+            });
+        </script>
+
 
 </body>
 
