@@ -60,7 +60,7 @@ use App\Http\Controllers\Backend\CreativityController;
 use App\Http\Controllers\Backend\PrimaryYearsController;
 use App\Http\Controllers\Backend\MiddleYearsController;
 use App\Http\Controllers\Backend\DiplomaYearsController;
-
+use App\Http\Controllers\Backend\BulletinCategoryController;
 
 
 use App\Http\Controllers\Frontend\HomeController;;
