@@ -5,17 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BulletinCategory extends Model
+class BulletinListing extends Model
 {
     use HasFactory;
 
-    protected $table = 'bulletin_category';
+    protected $table = 'bulletin_listing';
     public $timestamps = false;
 
     protected $fillable = [
-        'banner_heading',
-        'banner_image',
-        'category',
+        'category_id',
+        'thumbnail_image',
+        'article_name',
+        'article_date',
+        'article_author',
+        'special_tags',
+        'short_desc',
         'slug',
 
         'inserted_at',
@@ -25,10 +29,4 @@ class BulletinCategory extends Model
         'deleted_at',
         'deleted_by',
     ];
-
-    public function listings()
-    {
-        return $this->hasMany(BulletinListing::class, 'category_id');
-    }
-
 }

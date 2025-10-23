@@ -194,7 +194,7 @@
 
 
                 
-                <li class="sidebar-list {{ request()->routeIs('manage-bulletin-category.index', 'manage-career.index') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('manage-bulletin-category.index', 'manage-bulletin-listing.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon"> 
@@ -207,6 +207,7 @@
                   </a>
                   <ul class="sidebar-submenu">
                   <li><a href="{{ route('manage-bulletin-category.index') }}" class="{{ request()->routeIs('manage-bulletin-category.index') ? 'active' : '' }}">Category</a></li> 
+                  <li><a href="{{ route('manage-bulletin-listing.index') }}" class="{{ request()->routeIs('manage-bulletin-listing.index') ? 'active' : '' }}">Listing</a></li> 
                   </ul>
                 </li>
 

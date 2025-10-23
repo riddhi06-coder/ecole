@@ -61,6 +61,10 @@ use App\Http\Controllers\Backend\PrimaryYearsController;
 use App\Http\Controllers\Backend\MiddleYearsController;
 use App\Http\Controllers\Backend\DiplomaYearsController;
 use App\Http\Controllers\Backend\BulletinCategoryController;
+use App\Http\Controllers\Backend\BulletinListingController;
+
+
+
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -262,8 +266,11 @@ Route::resource('manage-myp', MiddleYearsController::class);
 // ==== Manage IB Diploma Programme
 Route::resource('manage-diploma', DiplomaYearsController::class);
 
-// ==== Manage Bulletin Board
+// ==== Manage Bulletin Board Catgeory
 Route::resource('manage-bulletin-category', BulletinCategoryController::class);
+
+// ==== Manage Bulletin Board Listing
+Route::resource('manage-bulletin-listing', BulletinListingController::class);
 
 
 
