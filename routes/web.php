@@ -62,9 +62,7 @@ use App\Http\Controllers\Backend\MiddleYearsController;
 use App\Http\Controllers\Backend\DiplomaYearsController;
 use App\Http\Controllers\Backend\BulletinCategoryController;
 use App\Http\Controllers\Backend\BulletinListingController;
-
-
-
+use App\Http\Controllers\Backend\BulletinDetailsController;
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -272,6 +270,9 @@ Route::resource('manage-bulletin-category', BulletinCategoryController::class);
 // ==== Manage Bulletin Board Listing
 Route::resource('manage-bulletin-listing', BulletinListingController::class);
 
+// ==== Manage Bulletin Board Details
+Route::resource('manage-bulletin-details', BulletinDetailsController::class);
+Route::get('/bulletin/articles/{categoryId}', [App\Http\Controllers\Backend\BulletinDetailsController::class, 'getArticles'])->name('bulletin.getArticles');
 
 
 

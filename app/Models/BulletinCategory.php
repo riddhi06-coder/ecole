@@ -31,4 +31,10 @@ class BulletinCategory extends Model
         return $this->hasMany(BulletinListing::class, 'category_id');
     }
 
+    // BulletinCategory.php
+    public function details()
+    {
+        return $this->hasMany(BulletinDetails::class, 'category_id');
+    }
+
 }
