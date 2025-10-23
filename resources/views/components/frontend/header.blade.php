@@ -1,6 +1,7 @@
     @php
         $contact_us = \App\Models\ContactUs::whereNull('deleted_by')->first();
         $announcements = $contact_us && $contact_us->announcements ? json_decode($contact_us->announcements, true) : [];
+        $bulletin_category = \App\Models\BulletinCategory::whereNull('deleted_by')->get();
     @endphp
    
    <div class="top_announcement">
@@ -106,12 +107,15 @@
 
           <li class="dropdown"><a href="{{ route('frontend.bulletin_board') }}"><span>Bulletin Board</span> <i
                 class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#">Announcements</a></li>
-              <li><a href="#">News</a></li>
-              <li><a href="#">Events</a></li>
-              <li><a href="#">Blogs</a></li>
-            </ul>
+              <ul>
+                  @foreach($bulletin_categories as $category)
+                      <li>
+                          <a href="{{ route('frontend.bulletin_board_category_list', $category->slug) }}">
+                              {{ $category->category }}
+                          </a>
+                      </li>
+                  @endforeach
+              </ul>
           </li>
 
           <li class="dropdown"><a href="#"><span>Careers</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>

@@ -433,4 +433,7 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Bulletin Board
     Route::get('/bulletin-board', [HomeController::class, 'bulletin_board'])->name('frontend.bulletin_board');
 
+    // ==== Bulletin Board Category
+    Route::get('/bulletin-board/{category_slug}', [HomeController::class, 'bulletin_board_category_list'])->name('frontend.bulletin_board_category_list');
+
 });

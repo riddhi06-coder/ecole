@@ -98,7 +98,7 @@
                                 <ul>
                                     @foreach($bulletin_categories ?? [] as $category)
                                     <li>
-                                        <a href="#">
+                                        <a href="{{ route('frontend.bulletin_board_category_list', ['category_slug' => $category->slug]) }}">
                                             {{ $category->category }} 
                                             <span class="post_counter">{{ $category->listings_count }}</span>
                                         </a>
@@ -138,8 +138,7 @@
                             </div>
                         </div>
                     </div>
-
-
+                    
                 </div>
             </div>
         </section>

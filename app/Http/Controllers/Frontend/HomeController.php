@@ -447,6 +447,42 @@ class HomeController extends Controller
     }
 
 
+    // ====  Bulletin Board Category
+    public function bulletin_board_category_list($slug) {
+        // Get category
+        $category = BulletinCategory::where('slug', $slug)
+                    ->whereNull('deleted_by')
+                    ->firstOrFail();
+        //  dd($category);   
+
+        // Get bulletins for this category
+        $bulletin_board_category_list = BulletinListing::where('category_id', $category->id)
+                    ->whereNull('deleted_by')
+                    ->orderBy('inserted_at', 'desc')
+                    ->get();
+        // dd($bulletin_board_category_list);
+        
+
+        // Recent posts
+        $recent_posts = BulletinListing::whereNull('deleted_by')
+                            ->orderBy('inserted_at', 'desc')
+                            ->take(5)
+                            ->get();
+
+        // All categories
+        $bulletin_categories = BulletinCategory::withCount(['listings'])->whereNull('deleted_by')->get();
+
+        return view('frontend.bulletin_board_category_list', compact(
+            'category',
+            'bulletin_board_category_list',
+            'bulletin_categories',
+            'recent_posts'
+        ));
+    }
+
+
+
+
 
 
 
