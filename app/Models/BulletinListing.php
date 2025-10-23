@@ -29,4 +29,8 @@ class BulletinListing extends Model
         'deleted_at',
         'deleted_by',
     ];
+
+    public function category() {
+        return $this->belongsTo(BulletinCategory::class, 'category_id');
+    }
 }

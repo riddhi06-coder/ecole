@@ -436,7 +436,9 @@ class HomeController extends Controller
 
     // ====  Bulletin Board
     public function bulletin_board() {
-        $bulletin_board = BulletinListing ::wherenull('deleted_by')->get();
+        $bulletin_board = BulletinListing::with('category')
+                        ->whereNull('deleted_by')
+                        ->get();
         $bulletin_categories = BulletinCategory::withCount(['listings'])->whereNull('deleted_by')->get();
 
         $recent_posts = BulletinListing::whereNull('deleted_by')
@@ -445,7 +447,6 @@ class HomeController extends Controller
                         ->get();
         return view('frontend.bulletin_board', compact('bulletin_board','bulletin_categories','recent_posts'));
     }
-
 
     // ====  Bulletin Board Category
     public function bulletin_board_category_list($slug) {
@@ -478,6 +479,30 @@ class HomeController extends Controller
             'bulletin_categories',
             'recent_posts'
         ));
+    }
+
+    // ==== Bulletin Board Details
+    public function bulletin_board_details($category_slug, $article_slug)
+    {
+        // Fetch category first
+        $category = BulletinCategory::where('slug', $category_slug)
+                    ->whereNull('deleted_by')
+                    ->firstOrFail();
+
+        // Fetch article details from BulletinDetails table
+        $article = BulletinListing::where('slug', $article_slug)
+                    ->where('category_id', $category->id)
+                    ->whereNull('deleted_by')
+                    ->firstOrFail();
+
+        // Optional: fetch recent posts for the sidebar from BulletinDetails
+        $recent_posts = BulletinDetails::where('category_id', $category->id)
+                            ->whereNull('deleted_by')
+                            ->orderBy('inserted_at', 'desc')
+                            ->take(5)
+                            ->get();
+
+        return view('frontend.bulletin_board_details', compact('category', 'article', 'recent_posts'));
     }
 
 

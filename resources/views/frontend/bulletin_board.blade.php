@@ -38,7 +38,10 @@
                                     <div class="col-md-6 bull-bb-card-sec">
                                         <div class="bb-card-inner-sec">
                                             <div class="bb-img-sec">
-                                                <a href="#">
+                                                <a href="{{ route('frontend.bulletin_board_details', [
+                                                        'category_slug' => $bulletin->category->slug ?? '',
+                                                        'article_slug' => $bulletin->slug ?? ''
+                                                    ]) }}">
                                                     <img class="bb-img-main" 
                                                         src="{{ asset('uploads/bulletin/' . ($bulletin->thumbnail_image ?? 'default.webp')) }}" 
                                                         alt="{{ $bulletin->article_name }}">
@@ -51,12 +54,18 @@
                                             </div>
                                             <div class="bb-content-sec">
                                                 <h4>
-                                                    <a href="#">
+                                                    <a href="{{ route('frontend.bulletin_board_details', [
+                                                            'category_slug' => $bulletin->category->slug ?? '',
+                                                            'article_slug' => $bulletin->slug ?? ''
+                                                        ]) }}">
                                                         {{ $bulletin->article_name }}
                                                     </a>
                                                 </h4>
                                                 <p>
-                                                    <a href="#">
+                                                    <a href="{{ route('frontend.bulletin_board_details', [
+                                                            'category_slug' => $bulletin->category->slug ?? '',
+                                                            'article_slug' => $bulletin->slug ?? ''
+                                                        ]) }}">
                                                         {{ $bulletin->short_desc }}
                                                     </a>
                                                 </p>
@@ -118,7 +127,10 @@
                                             <img src="{{ asset('uploads/bulletin/' . $post->thumbnail_image) }}" alt="{{ $post->article_name }}">
                                         </div>
                                         <div class="blog-text headline">
-                                            <h3><a href="#">{{ $post->article_name }}</a></h3>
+                                            <h3><a href="{{ route('frontend.bulletin_board_details', [
+                                                        'category_slug' => $bulletin->category->slug ?? '',
+                                                        'article_slug' => $bulletin->slug ?? ''
+                                                    ]) }}">{{ $post->article_name }}</a></h3>
                                         </div>
                                     </div>
                                 @endforeach
@@ -138,7 +150,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </section>

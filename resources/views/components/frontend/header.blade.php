@@ -108,7 +108,7 @@
           <li class="dropdown"><a href="{{ route('frontend.bulletin_board') }}"><span>Bulletin Board</span> <i
                 class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-                  @foreach($bulletin_categories as $category)
+                  @foreach($bulletin_category as $category)
                       <li>
                           <a href="{{ route('frontend.bulletin_board_category_list', $category->slug) }}">
                               {{ $category->category }}
