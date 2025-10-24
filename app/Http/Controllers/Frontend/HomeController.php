@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
 
 use Illuminate\Support\Facades\DB;
 use App\Models\Banner;
@@ -82,8 +84,90 @@ class HomeController extends Controller
         $bulletin = BulletinBoard::whereNull('deleted_by')->get();
         $testimonials = Testimonial::whereNull('deleted_by')->get();
         $clients = Clients::whereNull('deleted_by')->get();
-        // dd($programmes);
-        return view('frontend.home', compact('home','programmes','festivities','features','bulletin','testimonials','clients'));
+
+
+        // === Fetch Univariety Alumni API
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => 'https://ags.univariety.com/common/v1/schoolapi/alumni-profile-card-notable',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => [
+                'api-key: 742rUs9xMOOEiKuC'
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        $alumniData = json_decode($response, true);
+
+
+        // === Attach related bulletin URLs to each festivity
+        foreach ($festivities as $festivity) {
+
+            if (stripos($festivity->heading, 'IB Continuum School') !== false) {
+                // Direct link for IB Continuum School
+                $festivity->url = route('frontend.accreditation_and_associations');
+            
+            } else {
+                // Try to find a related bulletin article by matching heading
+                $article = BulletinListing::where('article_name', 'like', '%' . $festivity->heading . '%')->first();
+
+                if ($article) {
+                
+                    // Get category from related listing or directly from category_id
+                    $category = BulletinCategory::find($article->category_id);
+                    $categorySlug = $category ? $category->slug : 'general';
+                    $articleSlug = $article->slug ?? Str::slug($article->article_name);
+
+                    // Build full route
+                    $festivity->url = route('frontend.bulletin_board_details', [
+                        'category_slug' => $categorySlug,
+                        'article_slug' => $articleSlug
+                    ]);
+
+                } else {
+          
+                    $festivity->url = 'javascript:void(0)';
+                }
+            }
+        }
+
+
+        // === Attach related bulletin URLs to each bulletin card
+        foreach ($bulletin as $item) {
+            $article = BulletinListing::where('article_name', 'like', '%' . $item->title . '%')->first();
+
+            if ($article) {
+                $category = BulletinCategory::find($article->category_id);
+                $categorySlug = $category ? $category->slug : 'general';
+                $articleSlug = $article->slug ?? Str::slug($article->article_name);
+
+                $item->url = route('frontend.bulletin_board_details', [
+                    'category_slug' => $categorySlug,
+                    'article_slug' => $articleSlug
+                ]);
+
+                Log::info('Bulletin card mapped:', [
+                    'title' => $item->title,
+                    'url' => $item->url
+                ]);
+            } else {
+                $item->url = 'javascript:void(0)';
+                Log::warning('No article found for bulletin card:', [
+                    'title' => $item->title
+                ]);
+            }
+        }
+
+
+        return view('frontend.home', compact('home','programmes','festivities','features','bulletin','testimonials','clients','alumniData'));
     }
 
     // === What sets us apart?

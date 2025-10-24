@@ -13,7 +13,8 @@
         <!-- Hero Section -->
         <section id="hero" class="hero section dark-background">
             <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
-                
+
+                <!-- Carousel items -->
                 @foreach($home as $index => $banner)
                     <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
                         <img src="{{ asset('uploads/home/' . $banner->banner_image) }}" alt="{{ $banner->alt_text ?? '' }}">
@@ -38,7 +39,6 @@
         </section>
         <!-- /Hero Section -->
 
-   
         <section class="programmes-offer-sec">
             <div class="container">
                 @if($programmes->isNotEmpty())
@@ -98,454 +98,135 @@
             </div>
         </section>
 
-
         <section class="admissions-enquiry-sec">
-        <div class="container">
-            <div class="row">
-            <div class="col-12 col-md-6">
-                <div class="admission-enquiry-form-sec">
-                <div class="section-title-two">
-                    <h2>Admissions Enquiry</h2>
-                    <p>For any queries regarding the admission process, please fill up the form below and we will get back
-                    to you as soon as possible.</p>
+            <div class="container">
+                <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="admission-enquiry-form-sec">
+                    <div class="section-title-two">
+                        <h2>Admissions Enquiry</h2>
+                        <p>For any queries regarding the admission process, please fill up the form below and we will get back
+                        to you as soon as possible.</p>
+                    </div>
+                    <form>
+                        <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                            <input type="text" class="form-control" id="name" placeholder="Enter Your Name" required>
+                            <label for="name">Name *</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                            <input type="email" class="form-control" id="email" placeholder="Enter Your Email" required>
+                            <label for="email">Email *</label>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="form-floating mb-3 mt-3">
+                        <input type="tel" class="form-control" id="phone" placeholder="Enter Your Phone" required>
+                        <label for="phone">Phone Number *</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                        <textarea class="form-control" id="message" placeholder="Type Your Message"
+                            style="height: 90px"></textarea>
+                        <label for="message">Message</label>
+                        </div>
+
+                        <div class="admission-euquiry-button-sec">
+                        <button type="submit" class="btn-submit admission-enqu-btn">Submit</button>
+                        </div>
+                    </form>
+                    </div>
                 </div>
-                <form>
-                    <div class="row g-3">
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                        <input type="text" class="form-control" id="name" placeholder="Enter Your Name" required>
-                        <label for="name">Name *</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                        <input type="email" class="form-control" id="email" placeholder="Enter Your Email" required>
-                        <label for="email">Email *</label>
-                        </div>
-                    </div>
-                    </div>
-
-                    <div class="form-floating mb-3 mt-3">
-                    <input type="tel" class="form-control" id="phone" placeholder="Enter Your Phone" required>
-                    <label for="phone">Phone Number *</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                    <textarea class="form-control" id="message" placeholder="Type Your Message"
-                        style="height: 90px"></textarea>
-                    <label for="message">Message</label>
-                    </div>
-
-                    <div class="admission-euquiry-button-sec">
-                    <button type="submit" class="btn-submit admission-enqu-btn">Submit</button>
-                    </div>
-                </form>
                 </div>
             </div>
-            </div>
-        </div>
         </section>
-
 
         <!----api based---->
         <section class="alumni-section">
-        <div class="container">
-            <div class="section-title-two">
-            <h2>École Mondiale World School Guiding Alumni</h2>
-            <p>We are proud of our alumni who are setting an example and motivating younger students. Here are some alumni
-                who are actively guiding current students by answering questions, conducting webinars, and much more.</p>
-            </div>
-            <div class="alumni-slider-sec">
-            <div class="owl-carousel owl-theme alumni-carousal-slide">
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/1.jpg" alt="Gauri Kanade">
-                    <h5>Suveer Katariya</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2010</span></li>
-                    <li><i class="tool"></i> <span>Business Management</span></li>
-                    <li><i class="cap"></i> <span>University of Miami</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/2.jpg" alt="Gauri Kanade">
-                    <h5>Aman Kothari</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2016</span></li>
-                    <li><i class="tool"></i> <span>Business Management</span></li>
-                    <li><i class="cap"></i> <span>Boston University</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/3.jpg" alt="Gauri Kanade">
-                    <h5>Gauri Kanade</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2016</span></li>
-                    <li><i class="tool"></i> <span>Humanities</span></li>
-                    <li><i class="cap"></i> <span>Rollins College</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/4.jpg" alt="Gauri Kanade">
-                    <h5>Aalika Shah</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2011</span></li>
-                    <li><i class="tool"></i> <span>Business Management</span></li>
-                    <li><i class="cap"></i> <span>Boston University</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/5.jpg" alt="Gauri Kanade">
-                    <h5>Nishka Kapur</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2013</span></li>
-                    <li><i class="tool"></i> <span>Fashion</span></li>
-                    <li><i class="cap"></i> <span>Fashion Institute of Design and Merchandising</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/6.png" alt="Gauri Kanade">
-                    <h5>Aarohi Agrawal</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2024</span></li>
-                    <li><i class="tool"></i> <span>Computer Science &amp; Information Technology</span></li>
-                    <li><i class="cap"></i> <span>University of Massachusetts Amherst</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/7.jpg" alt="Gauri Kanade">
-                    <h5>Kanav Kothari</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2018</span></li>
-                    <li><i class="tool"></i> <span>Law</span></li>
-                    <li><i class="cap"></i> <span>King's College London</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/8.jpg" alt="Gauri Kanade">
-                    <h5>Ishika Sumit Agarwal</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2020</span></li>
-                    <li><i class="tool"></i> <span>Business Management</span></li>
-                    <li><i class="cap"></i> <span>Narsee Monjee Institute of Management Studies, Mumbai</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/9.jpg" alt="Gauri Kanade">
-                    <h5>Dhrish Jain</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2020</span></li>
-                    <li><i class="tool"></i> <span>Business Management</span></li>
-                    <li><i class="cap"></i> <span>Babson College</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/10.png" alt="Gauri Kanade">
-                    <h5>Krttika Goel</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2021</span></li>
-                    <li><i class="tool"></i> <span>Engineering &amp; Technology</span></li>
-                    <li><i class="cap"></i> <span>Purdue University - Main Campus</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/11.png" alt="Gauri Kanade">
-                    <h5>Pratham Lohia</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2022</span></li>
-                    <li><i class="tool"></i> <span>Engineering &amp; Technology</span></li>
-                    <li><i class="cap"></i> <span>Middlesex University London</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/12.jpg" alt="Gauri Kanade">
-                    <h5>Zara Sharma</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2024</span></li>
-                    <li><i class="tool"></i> <span>Business Management</span></li>
-                    <li><i class="cap"></i> <span>University Of Edinburgh</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/13.jpg" alt="Gauri Kanade">
-                    <h5>Nishika Jethra</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2024</span></li>
-                    <li><i class="tool"></i> <span>Engineering &amp; Technology</span></li>
-                    <li><i class="cap"></i> <span>University of Illinois at Urbana-Champaign</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/14.jpg" alt="Gauri Kanade">
-                    <h5>Ansh Suri</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2022</span></li>
-                    <li><i class="tool"></i> <span>Business Management</span></li>
-                    <li><i class="cap"></i> <span>San Diego State University</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/15.jpg" alt="Gauri Kanade">
-                    <h5>Aaryaveer Somani</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2022</span></li>
-                    <li><i class="tool"></i> <span>Economics &amp; Commerce</span></li>
-                    <li><i class="cap"></i> <span>Purdue University - Main Campus</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/16.jpg" alt="Gauri Kanade">
-                    <h5>Rhushi Shah</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2015</span></li>
-                    <li><i class="tool"></i> <span>Economics &amp; Commerce</span></li>
-                    <li><i class="cap"></i> <span>University Of London</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/17.jpg" alt="Gauri Kanade">
-                    <h5>Vedant Kothari</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2020</span></li>
-                    <li><i class="tool"></i> <span>Engineering &amp; Technology</span></li>
-                    <li><i class="cap"></i> <span>King's College London</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/18.jpg" alt="Gauri Kanade">
-                    <h5>Alyce Christiansen</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2014</span></li>
-                    <li><i class="tool"></i> <span>Journalism, Media, PR &amp; Communication</span></li>
-                    <li><i class="cap"></i> <span>Queensland University of Technology (Gardens Point Campus)</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/19.jpg" alt="Gauri Kanade">
-                    <h5>Udit Dedhiya</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2015</span></li>
-                    <li><i class="tool"></i> <span>Law</span></li>
-                    <li><i class="cap"></i> <span>Jindal Global Law School</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/20.jpg" alt="Gauri Kanade">
-                    <h5>Mihir Parekh</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2009</span></li>
-                    <li><i class="tool"></i> <span>Engineering &amp; Technology</span></li>
-                    <li><i class="cap"></i> <span>University Of Warwick</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/21.jpg" alt="Gauri Kanade">
-                    <h5>Vihaan Kohli</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2017</span></li>
-                    <li><i class="tool"></i> <span>Business Management</span></li>
-                    <!-- <li><i class="cap"></i> <span></span></li> -->
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/22.jpg" alt="Gauri Kanade">
-                    <h5>Ahan Rajgor</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2016</span></li>
-                    <li><i class="tool"></i> <span>Business Management</span></li>
-                    <li><i class="cap"></i> <span>Rollins College</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/23.jpg" alt="Gauri Kanade">
-                    <h5>Sawan Bhandari</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2018</span></li>
-                    <li><i class="tool"></i> <span>Business Management</span></li>
-                    <li><i class="cap"></i> <span>University of Southern California</span></li>
-                    </ul>
-                </div>
-                </div>
-                <div class="alumni-card">
-                <div class="alumni-card-upper-sec">
-                    <img src="./assets/img/alumni/24.jpg" alt="Gauri Kanade">
-                    <h5>Yash Mandloi</h5>
-                </div>
-                <hr>
-                <div class="alumni-card-lower-sec">
-                    <ul>
-                    <li><i class="college"></i> <span>Ecole Mondiale World School, Mumbai, Batch 2024</span></li>
-                    <li><i class="tool"></i> <span>Economics &amp; Commerce</span></li>
-                    <li><i class="cap"></i> <span>Tufts University</span></li>
-                    </ul>
-                </div>
-                </div>
-            </div>
-            </div>
+            <div class="container">
+                <div class="section-title-two">
+                    <h2>École Mondiale World School Guiding Alumni</h2>
+                    <p>We are proud of our alumni who are setting an example and motivating younger students. Here are some alumni
+                        who are actively guiding current students by answering questions, conducting webinars, and much more.</p>
+                </div>
+                <div class="alumni-slider-sec">
+                    <div class="owl-carousel owl-theme alumni-carousal-slide">
+                        @if(!empty($alumniData['success']) && !empty($alumniData['data']))
+                            @foreach($alumniData['data'] as $alumnus)
+                            <div class="alumni-card">
+                                <div class="alumni-card-upper-sec">
+                                    <img src="{{ $alumnus['image_path'] }}" alt="{{ $alumnus['full_name'] }}">
+                                    <h5>{{ $alumnus['full_name'] }}</h5>
+                                </div>
+                                <hr>
+                                <div class="alumni-card-lower-sec">
+                                    <ul>
+                                        <li><i class="college"></i> 
+                                            <span>{{ $alumnus['campus_name'] }}, Batch {{ $alumnus['pass_out_year'] }}</span>
+                                        </li>
+                                        <li><i class="tool"></i> <span>{{ $alumnus['department'] }}</span></li>
+                                        <li><i class="cap"></i> <span>{{ $alumnus['institue_name'] }}</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            @endforeach
+                        @else
+                            <p>No alumni data available at the moment.</p>
+                        @endif
+                    </div>
 
-            <div class="alumni-uni-sec">
-            <div class="other_links_wrap">
-                <div class="other_links">
-                <h4 class="text-white">Alumni Guidance</h4>
-                <a class="btn-signUp" href="https://www.ecolemondiale.org/alumni-guidance">Know More</a>
                 </div>
-                <div class="other_links">
-                <h4 class="text-white">Success Stories</h4>
-                <a class="btn-signUp" href="https://www.ecolemondiale.org/success-stories">Know More</a>
-                </div>
-            </div>
-            <div class="powerBy justify-content-center">
-                <span class="text-white">Powered by</span>
-                <a href="https://univariety.com/" target="_blank"><img
-                    src="./assets/img/icons/univariety-white-logo.svg" /></a>
-            </div>
-            </div>
 
-        </div>
+                <div class="alumni-uni-sec">
+                    <div class="other_links_wrap">
+                        <div class="other_links">
+                            <h4 class="text-white">Alumni Guidance</h4>
+                            <a class="btn-signUp" href="https://www.ecolemondiale.org/alumni-guidance">Know More</a>
+                        </div>
+                        <div class="other_links">
+                            <h4 class="text-white">Success Stories</h4>
+                            <a class="btn-signUp" href="https://www.ecolemondiale.org/success-stories">Know More</a>
+                        </div>
+                    </div>
+                    <div class="powerBy justify-content-center">
+                        <span class="text-white">Powered by</span>
+                        <a href="https://univariety.com/" target="_blank"><img
+                                src="{{ asset('frontend/assets/img/icons/univariety-white-logo.svg') }}" /></a>
+                    </div>
+                </div>
+            </div>
         </section>
-
 
         <section class="latest-blog-one-sec">
             <div class="container">
                 <div class="latest-blog-carousel owl-carousel owl-theme">
-
                     @foreach($festivities as $festivity)
-                    <div class="item">
-                        <div class="lblo-card-sec">
-                            <div class="row">
-                                <div class="col-12 col-md-4">
-                                    <div class="la-blo-img-sec">
-                                        <img src="{{ asset('uploads/home/festivities/' . $festivity->image) }}" 
-                                            alt="{{ $festivity->heading }}">
+                        <div class="item">
+                            <div class="lblo-card-sec">
+                                <div class="row">
+                                    <div class="col-12 col-md-4">
+                                        <div class="la-blo-img-sec">
+                                            <img src="{{ asset('uploads/home/festivities/' . $festivity->image) }}" 
+                                                alt="{{ $festivity->heading }}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-md-8">
-                                    <div class="latest-blog-content-sec">
-                                        <h4>{{ $festivity->heading }}</h4>
-                                        <p>{{ $festivity->description }}</p>
-                                        <div class="latest-blog-btn-sec">
-                                            <a href="#" target="_blank" class="yellow-btn">Read More</a>
+                                    <div class="col-12 col-md-8">
+                                        <div class="latest-blog-content-sec">
+                                            <h4>{{ $festivity->heading }}</h4>
+                                            <p>{{ $festivity->description }}</p>
+                                            <div class="latest-blog-btn-sec">
+                                                <a href="{{ $festivity->url }}" target="_blank" class="yellow-btn">Read More</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
-
                 </div>
             </div>
         </section>
@@ -583,7 +264,6 @@
             </div>
         </section>
 
-
         <section class="bullet-board-sec">
             <div class="container">
                 <div class="row">
@@ -603,22 +283,22 @@
                             <div class="col-12 col-md-4 bullet-board-card-sec">
                                 <div class="bullet-board-card-inner-sec">
                                     <div class="bullet-board-img-sec">
-                                        <a href="#">
+                                        <a href="{{ $item->url }}" target="_blank">
                                             <img src="{{ asset('uploads/home/' . $item->image) }}" alt="{{ $item->title }}">
                                             <span class="bullet-board-date">{{ \Carbon\Carbon::parse($item->date)->format('d M') }}</span>
                                         </a>
                                     </div>
                                     <div class="bullet-board-content-sec">
                                         <h4>
-                                            <a href="#">{{ $item->title }}</a>
+                                            <a href="{{ $item->url }}" target="_blank">{{ $item->title }}</a>
                                         </h4>
                                         <p>
-                                            <a href="#">
+                                            <a href="{{ $item->url }}" target="_blank">
                                                 {{ \Illuminate\Support\Str::limit($item->bulletin_description, 150, '...') }}
                                             </a>
                                         </p>
                                         <div class="bullet-board-btn-sec">
-                                            <a href="#" class="btn-ecol btn">Read More</a>
+                                            <a href="{{ $item->url }}" target="_blank" class="btn-ecol btn">Read More</a>
                                         </div>
                                     </div>
                                 </div>
@@ -656,8 +336,6 @@
                 </div>
             </div>
         </section>
-
-
 
         <section class="client-section py-5 bg-light">
             <div class="container">
