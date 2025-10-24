@@ -84,13 +84,16 @@
                 <div class="col-md-4">
                     <div class="bb-side-bar-search-sec">
                         <h4 class="bb-sidebar-title">Search</h4>
+
                         <div class="bb-search_widget">
-                            <form action="#" method="GET">
-                                <input class="search-input" type="search" name="q" placeholder="Search Here">
-                                <button type="submit"><i class="fas fa-search"></i> </button>
+                            <form action="{{ route('frontend.bulletin_board_category_list', $category->slug) }}" method="GET">
+                                <input class="search-input" type="search" name="search" placeholder="Search Here" value="{{ request('q') }}">
+                                <button type="submit"><i class="fas fa-search"></i></button>
                             </form>
                         </div>
+                        
                     </div>
+
 
                     <!-- Categories -->
                     <div class="bb-side-bar-categories-sec">

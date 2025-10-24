@@ -93,12 +93,13 @@
                         <div class="bb-side-bar-search-sec">
                             <h4 class="bb-sidebar-title">Search</h4>
                             <div class="bb-search_widget">
-                                <form action="#" method="GET">
-                                    <input class="search-input" type="search" name="q" placeholder="Search Here">
-                                    <button type="submit"><i class="fas fa-search"></i> </button>
+                                <form action="{{ route('frontend.bulletin_board') }}" method="GET">
+                                    <input class="search-input" type="search" name="search" placeholder="Search Here" value="{{ request('q') }}">
+                                    <button type="submit"><i class="fas fa-search"></i></button>
                                 </form>
                             </div>
                         </div>
+
 
                         <!-- Categories -->
                         <div class="bb-side-bar-categories-sec">
@@ -128,9 +129,9 @@
                                         </div>
                                         <div class="blog-text headline">
                                             <h3><a href="{{ route('frontend.bulletin_board_details', [
-                                                        'category_slug' => $bulletin->category->slug ?? '',
-                                                        'article_slug' => $bulletin->slug ?? ''
-                                                    ]) }}">{{ $post->article_name }}</a></h3>
+                                                    'category_slug' => $post->category->slug ?? '',
+                                                    'article_slug'  => $post->slug ?? ''
+                                                ]) }}">{{ $post->article_name }}</a></h3>
                                         </div>
                                     </div>
                                 @endforeach

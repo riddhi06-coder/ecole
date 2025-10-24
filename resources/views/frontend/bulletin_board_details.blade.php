@@ -48,14 +48,23 @@
                             <div class="event-detail-content-sec">
                                 <h4 class="event-detail-title">{{ $bulletin_details->title ?? 'Event Title' }}</h4>
                             </div>
-                            <div class="event-detail-icon-sec">
-                                <p><i class="fa-solid fa-clock"></i> 
-                                    {{ \Carbon\Carbon::parse($bulletin_details->article_time_from)->format('h:i A') ?? '' }} 
-                                    To 
-                                    {{ \Carbon\Carbon::parse($bulletin_details->article_time_to)->format('h:i A') ?? '' }}
-                                </p>
-                                <p><i class="fa-solid fa-location-dot"></i> {{ $bulletin_details->location ?? '' }}</p>
-                            </div>
+                            @if($bulletin_details->article_time_from || $bulletin_details->article_time_to || $bulletin_details->location)
+                                <div class="event-detail-icon-sec">
+                                    @if($bulletin_details->article_time_from || $bulletin_details->article_time_to)
+                                        <p><i class="fa-solid fa-clock"></i> 
+                                            {{ $bulletin_details->article_time_from ? \Carbon\Carbon::parse($bulletin_details->article_time_from)->format('h:i A') : '' }} 
+                                            @if($bulletin_details->article_time_from && $bulletin_details->article_time_to)
+                                                To 
+                                            @endif
+                                            {{ $bulletin_details->article_time_to ? \Carbon\Carbon::parse($bulletin_details->article_time_to)->format('h:i A') : '' }}
+                                        </p>
+                                    @endif
+
+                                    @if($bulletin_details->location)
+                                        <p><i class="fa-solid fa-location-dot"></i> {{ $bulletin_details->location }}</p>
+                                    @endif
+                                </div>
+                            @endif
                         </div>
                         <div class="col-12 col-md-4">
                             <a class="progress-offers-btn" target="_blank" href="#"><i class="fa-regular fa-calendar"></i> Add To Calendar</a>
