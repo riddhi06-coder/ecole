@@ -59,7 +59,7 @@ class BulletinDetailsController extends Controller
             'location' => 'nullable|string|max:255',
             'article_time_from' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
             'article_time_to' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
-            'title' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
             'short_desc' => 'required|string',
         ], [
             'article_time_from.regex' => 'Start time must be in 12-hour format (e.g., 9:00 AM).',
@@ -73,7 +73,7 @@ class BulletinDetailsController extends Controller
             $image->move(public_path('uploads/bulletin'), $imageName);
             $validatedData['thumbnail_image'] = $imageName;
         }
-        
+
         // Optional: Convert 12-hour times to 24-hour format before saving, only if provided
         $validatedData['article_time_from'] = !empty($validatedData['article_time_from'])
             ? date("H:i", strtotime($validatedData['article_time_from']))
@@ -126,7 +126,7 @@ class BulletinDetailsController extends Controller
             'location' => 'nullable|string|max:255',
             'article_time_from' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
             'article_time_to' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
-            'title' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
             'short_desc' => 'required|string',
         ], [
             'article_time_from.regex' => 'Start time must be in 12-hour format (e.g., 9:00 AM).',

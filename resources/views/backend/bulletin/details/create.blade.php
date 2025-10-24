@@ -125,8 +125,8 @@
                                         
                                         <!--Title -->
                                         <div class="col-md-6">
-                                            <label class="form-label" for="title">Title <span class="txt-danger">*</span></label>
-                                            <input class="form-control" id="title" type="text" name="title" placeholder="Enter Title" required>
+                                            <label class="form-label" for="title">Title </label>
+                                            <input class="form-control" id="title" type="text" name="title" placeholder="Enter Title">
                                             <div class="invalid-feedback">Please enter a Title.</div>
                                         </div>
 

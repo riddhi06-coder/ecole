@@ -144,9 +144,9 @@
 
                                         <!-- Title -->
                                         <div class="col-md-6">
-                                            <label class="form-label" for="title">Title <span class="txt-danger">*</span></label>
+                                            <label class="form-label" for="title">Title </label>
                                             <input class="form-control" id="title" type="text" name="title"
-                                                value="{{ $detail->title }}" placeholder="Enter Title" required>
+                                                value="{{ $detail->title }}" placeholder="Enter Title">
                                             <div class="invalid-feedback">Please enter a Title.</div>
                                         </div>
 
