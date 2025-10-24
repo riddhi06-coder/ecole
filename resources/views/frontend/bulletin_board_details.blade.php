@@ -46,7 +46,7 @@
                     <div class="row">
                         <div class="col-12 col-md-8">
                             <div class="event-detail-content-sec">
-                                <h4 class="event-detail-title">{{ $bulletin_details->title ?? 'Event Title' }}</h4>
+                                <h4 class="event-detail-title">{{ $article->article_name ?? 'Event Title' }}</h4>
                             </div>
                             @if($bulletin_details->article_time_from || $bulletin_details->article_time_to || $bulletin_details->location)
                                 <div class="event-detail-icon-sec">
@@ -75,7 +75,7 @@
                 <div class="row">
                     <div class="col-12 col-md-12">
                         <div class="event-detail-content-sec">
-                            <h4 class="event-detail-title">Event Information</h4>
+                            <h4 class="event-detail-title">{{ $bulletin_details->title }}</h4>
                             {!! $bulletin_details->desc ?? '<p>No details available for this event.</p>' !!}
                         </div>
                     </div>

@@ -73,10 +73,15 @@ class BulletinDetailsController extends Controller
             $image->move(public_path('uploads/bulletin'), $imageName);
             $validatedData['thumbnail_image'] = $imageName;
         }
+        
+        // Optional: Convert 12-hour times to 24-hour format before saving, only if provided
+        $validatedData['article_time_from'] = !empty($validatedData['article_time_from'])
+            ? date("H:i", strtotime($validatedData['article_time_from']))
+            : null;
 
-        // Optional: Convert 12-hour times to 24-hour format before saving
-        $validatedData['article_time_from'] = date("H:i", strtotime($validatedData['article_time_from']));
-        $validatedData['article_time_to'] = date("H:i", strtotime($validatedData['article_time_to']));
+        $validatedData['article_time_to'] = !empty($validatedData['article_time_to'])
+            ? date("H:i", strtotime($validatedData['article_time_to']))
+            : null;
 
         // Map fields to your model
         $bulletinDetails = new BulletinDetails();
@@ -142,8 +147,13 @@ class BulletinDetailsController extends Controller
         }
 
         // Convert 12-hour times to 24-hour format
-        $bulletinDetails->article_time_from = date("H:i", strtotime($validatedData['article_time_from']));
-        $bulletinDetails->article_time_to = date("H:i", strtotime($validatedData['article_time_to']));
+        $bulletinDetails->article_time_from = !empty($validatedData['article_time_from']) 
+            ? date("H:i", strtotime($validatedData['article_time_from'])) 
+            : null;
+
+        $bulletinDetails->article_time_to = !empty($validatedData['article_time_to']) 
+            ? date("H:i", strtotime($validatedData['article_time_to'])) 
+            : null;
 
         // Update other fields
         $bulletinDetails->category_id = $validatedData['category'];
