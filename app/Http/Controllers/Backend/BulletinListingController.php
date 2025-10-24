@@ -144,6 +144,7 @@ class BulletinListingController extends Controller
         $listing->article_name = $validatedData['article_name'];
         $listing->article_date = $validatedData['article_date'];
         $listing->article_author = $validatedData['article_author'];
+        $listing->short_desc = $validatedData['short_desc'];
         $listing->special_tags = $validatedData['special_tags'] ?? null;
 
         // ✅ Update slug if article name changed

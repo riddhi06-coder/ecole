@@ -436,10 +436,6 @@ class HomeController extends Controller
 
     // ====  Bulletin Board
     public function bulletin_board(Request $request) {
-        // $bulletin_board = BulletinListing::with('category')
-        //                 ->whereNull('deleted_by')
-        //                 ->get();
-
 
         // Search keyword
         $search = $request->input('search');
@@ -475,6 +471,7 @@ class HomeController extends Controller
 
         // Search keyword
         $search = $request->input('search');
+        $tag = $request->input('tag');
 
         // Get bulletins for this category
         $bulletin_board_category_list = BulletinListing::where('category_id', $category->id)
@@ -485,6 +482,10 @@ class HomeController extends Controller
                             $q->where('article_name', 'like', "%{$search}%")
                             ->orWhere('short_desc', 'like', "%{$search}%");
                         });
+                    })
+                    ->when($tag, function($query, $tag) {
+                        // Filter only by special_tags if tag is clicked
+                        $query->where('special_tags', $tag);
                     })
                     ->orderBy('inserted_at', 'asc')
                     ->get();

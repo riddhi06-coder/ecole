@@ -116,8 +116,10 @@ class BulletinDetailsController extends Controller
 
     public function update(Request $request, $id)
     {
+       
         $bulletinDetails = BulletinDetails::findOrFail($id);
 
+        
         // Validate form inputs
         $validatedData = $request->validate([
             'category' => 'required|exists:bulletin_category,id',

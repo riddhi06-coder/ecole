@@ -140,6 +140,7 @@
 
                     <!-- Tags -->
                     @php
+                        // Only include items with non-empty tags
                         $tags = $bulletin_board_category_list->filter(function($item) {
                             return !empty($item->special_tags);
                         });
@@ -152,7 +153,8 @@
                                 <ul>
                                     @foreach($tags as $tag)
                                         <li>
-                                            <a href="{{ route('frontend.bulletin_board_category_list', ['category_slug' => $tag->category->slug ?? '']) }}">
+                                            <!-- Filter by tag only -->
+                                            <a href="{{ route('frontend.bulletin_board_category_list', $category->slug) }}?tag={{ urlencode($tag->special_tags) }}">
                                                 {{ $tag->special_tags }}
                                             </a>
                                         </li>
@@ -161,8 +163,6 @@
                             </div>
                         </div>
                     @endif
-
-
 
                 </div>
 
