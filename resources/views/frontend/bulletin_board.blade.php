@@ -140,16 +140,19 @@
                         </div>
 
                         <!-- Tags -->
-                        <div class="bb-tag-sec">
-                            <h4 class="bb-sidebar-title">Tags</h4>
-                            <div class="bb-popular_tag">
-                                <ul>
-                                    @foreach($bulletin_board ?? [] as $tag)
-                                    <li><a href="#">{{ $tag->special_tags }} </a></li>
-                                    @endforeach
-                                </ul>
+                        @if(!empty($bulletin_board->special_tags) && $bulletin_board->count())
+                            <div class="bb-tag-sec">
+                                <h4 class="bb-sidebar-title">Tags</h4>
+                                <div class="bb-popular_tag">
+                                    <ul>
+                                        @foreach($bulletin_board as $tag)
+                                            <li><a href="#">{{ $tag->special_tags }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        @endif
+
                     </div>
 
                 </div>

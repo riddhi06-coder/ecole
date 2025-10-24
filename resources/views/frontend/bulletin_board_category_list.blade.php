@@ -91,7 +91,7 @@
                                 <button type="submit"><i class="fas fa-search"></i></button>
                             </form>
                         </div>
-                        
+
                     </div>
 
 
@@ -139,7 +139,7 @@
                     @endif
 
                     <!-- Tags -->
-                    @if(!empty($bulletin_board_category_list) && $bulletin_board_category_list->count() > 0)
+                    @if(!empty($bulletin_board_category_list->special_tags) && $bulletin_board_category_list->count() > 0)
                         <div class="bb-tag-sec">
                             <h4 class="bb-sidebar-title">Tags</h4>
                             <div class="bb-popular_tag">
