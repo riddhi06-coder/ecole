@@ -63,6 +63,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Article Name</th>
+                                    <th>Image</th>
                                     <th>Location</th>
                                     <th>Action</th>
                                 </tr>
@@ -73,13 +74,20 @@
                                 @foreach($categories as $category)
                                     <!-- Category row -->
                                     <tr class="table-secondary category-row">
-                                        <td colspan="4"><strong>{{ $category->category }}</strong></td>
+                                        <td colspan="5"><strong>{{ $category->category }}</strong></td>
                                     </tr>
 
                                     @foreach($category->details as $detail)
                                         <tr class="listing-row">
                                             <td>{{ $sn++ }}</td>
                                             <td class="article-name">{{ $detail->title ?? $detail->article_name }}</td>
+                                            <td>
+                                                @if($detail->thumbnail_image)
+                                                    <img src="{{ asset('uploads/bulletin/' . $detail->thumbnail_image) }}" alt="{{ $detail->title ?? $detail->article_name }}" style="width: 120px; height: auto;">
+                                                @else
+                                                    N/A
+                                                @endif
+                                            </td>
                                             <td>{{ $detail->location ?? 'N/A' }}</td>
                                             <td>
                                                 <a href="{{ route('manage-bulletin-details.edit', $detail->id) }}" class="btn btn-sm btn-primary">Edit</a>
