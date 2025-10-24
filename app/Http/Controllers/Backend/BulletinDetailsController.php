@@ -57,8 +57,8 @@ class BulletinDetailsController extends Controller
             'article' => 'required|exists:bulletin_listing,id',
             'thumbnail_image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
             'location' => 'required|string|max:255',
-            'article_time_from' => ['required', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
-            'article_time_to' => ['required', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
+            'article_time_from' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
+            'article_time_to' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
             'title' => 'required|string|max:255',
             'short_desc' => 'required|string',
         ], [
@@ -119,8 +119,8 @@ class BulletinDetailsController extends Controller
             'article' => 'required|exists:bulletin_listing,id',
             'thumbnail_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'location' => 'required|string|max:255',
-            'article_time_from' => ['required', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
-            'article_time_to' => ['required', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
+            'article_time_from' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
+            'article_time_to' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
             'title' => 'required|string|max:255',
             'short_desc' => 'required|string',
         ], [

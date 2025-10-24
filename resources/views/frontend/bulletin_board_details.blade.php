@@ -11,18 +11,19 @@
 
      <main class="main">
 
-        <section class="ecolemon-breadcrumb-sec ecol-faq-breadcrumb-sec" style="background-image: url('frontend/assets/img/bg/bulletin-board-banner.webp'); 
+        <section class="ecolemon-breadcrumb-sec ecol-faq-breadcrumb-sec" style="background-image: url('{{ asset('uploads/bulletin/' . $category->banner_image) }}'); 
                 background-size: cover; 
                 background-position: center; 
                 background-repeat: no-repeat;">
             <div class="container">
                 <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <h1>{{ $article->title }}</h1>
+                    <h1>{{ $article->article_name }}</h1>
                     <ul class="bread-list">
                     <li><a href="{{ url('/') }}">Home<i class="fa fa-angle-right"></i></a></li>
                     <li><a href="{{ route('frontend.bulletin_board') }}">Bulletin Board<i class="fa fa-angle-right"></i></a></li>
-                    <li class="active"><a href="javascript:void(0)">{{ $article->title }}</a></li>
+                    <li><a href="{{ route('frontend.bulletin_board_category_list', ['category_slug' => $category->slug]) }}">{{ $category->category }}<i class="fa fa-angle-right"></i></a></li>
+                    <li class="active"><a href="javascript:void(0)">{{ $article->article_name }}</a></li>
                 </ul>
                 </div>
                 </div>
@@ -35,7 +36,7 @@
             <div class="row">
             <div class="col-12 col-md-12">
                 <div class="event-detail-img-sec">
-                <img src="assets/img/about-us/events-details-img.webp" class="img-fluid"
+                <img src="{{ asset('uploads/bulletin/'assets/img/about-us/events-details-img.webp" class="img-fluid"
                     alt="What sets us apart Image">
                 </div>
             </div>

@@ -123,17 +123,17 @@
 
                                         <!-- Article Time -->
                                         <div class="col-md-6">
-                                            <label class="form-label">Time <span class="txt-danger">*</span></label>
+                                            <label class="form-label">Time </label>
                                             <div class="d-flex align-items-center gap-2">
                                                 <div class="flex-fill">
                                                     <input class="form-control" id="article_time_from" type="text" name="article_time_from"
-                                                        value="{{ \Carbon\Carbon::parse($detail->article_time_from)->format('g:i A') }}" required>
+                                                        value="{{ \Carbon\Carbon::parse($detail->article_time_from)->format('g:i A') }}">
                                                     <small class="text-muted">From</small>
                                                     <div class="invalid-feedback">Please select start time.</div>
                                                 </div>
                                                 <div class="flex-fill">
                                                     <input class="form-control" id="article_time_to" type="text" name="article_time_to"
-                                                        value="{{ \Carbon\Carbon::parse($detail->article_time_to)->format('g:i A') }}" required>
+                                                        value="{{ \Carbon\Carbon::parse($detail->article_time_to)->format('g:i A') }}">
                                                     <small class="text-muted">To</small>
                                                     <div class="invalid-feedback">Please select end time.</div>
                                                 </div>

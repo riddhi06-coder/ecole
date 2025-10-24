@@ -106,9 +106,9 @@ class SafetyController extends Controller
             // ✅ Validate input
             $validated = $request->validate([
                 'banner_heading'   => 'required|string|max:255',
-                'image'            => 'required|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+                'image'            => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
                 'section_heading'  => 'required|string|max:255',
-                'section_image'    => 'required|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+                'section_image'    => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
                 'description'      => 'required|string|max:5000',
             ], [
                 'banner_heading.max'       => 'Banner Heading must not exceed 255 characters.',
