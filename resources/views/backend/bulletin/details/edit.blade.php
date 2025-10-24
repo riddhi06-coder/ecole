@@ -114,9 +114,9 @@
 
                                         <!-- Location -->
                                         <div class="col-md-6">
-                                            <label class="form-label" for="location">Location <span class="txt-danger">*</span></label>
+                                            <label class="form-label" for="location">Location </label>
                                             <input class="form-control" id="location" type="text" name="location"
-                                                value="{{ $detail->location }}" placeholder="Enter Location" required>
+                                                value="{{ $detail->location }}" placeholder="Enter Location">
                                             <div class="invalid-feedback">Please enter a Location.</div>
                                         </div>
 
