@@ -474,7 +474,7 @@ class HomeController extends Controller
         $search = $request->input('search');
         $tag = $request->input('tag');
 
-        dd($tag);
+        // dd($tag);
 
         // Get bulletins for this category
         $bulletin_board_category_list = BulletinListing::where('category_id', $category->id)
@@ -493,7 +493,7 @@ class HomeController extends Controller
                     ->orderBy('inserted_at', 'asc')
                     ->get();
 
-        dd($bulletin_board_category_list);
+        // dd($bulletin_board_category_list);
 
         // Recent posts (latest 5 in this category)
         $recent_posts = BulletinListing::where('category_id', $category->id)
