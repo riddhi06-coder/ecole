@@ -520,10 +520,11 @@ class HomeController extends Controller
                     ->where('category_id', $category->id)
                     ->whereNull('deleted_by')
                     ->firstOrFail();
+        // dd($article);
 
          // Optional: fetch recent posts for the sidebar from BulletinDetails
         $bulletin_details = BulletinDetails::where('category_id', $category->id)
-                            ->where('slug', $article_slug)
+                            ->where('article_id', $article->id) 
                             ->whereNull('deleted_by')
                             ->first();
         // dd($bulletin_details);
