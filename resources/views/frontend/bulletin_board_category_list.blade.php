@@ -66,7 +66,9 @@
                                     </div>
                                 </div>
                             @empty
-                                <p>No bulletins found for this category.</p>
+                                <div class="text-center">
+                                    <p>No bulletins found for this category.</p>
+                                </div>
                             @endforelse
 
                             @if($bulletin_board_category_list->count() > 6)
@@ -108,43 +110,49 @@
                     </div>
 
                     <!-- Recent Posts -->
-                    <div class="bb-sidebar-recent-blog-sec">
-                        <h4 class="bb-sidebar-title">Recent Posts</h4>
-                        <div class="bb-recent-blog-inner-sec">
-                            @foreach($recent_posts as $post)
-                                <div class="blog-img-content">
-                                    <div class="blog-img">
-                                        <img src="{{ asset('uploads/bulletin/' . $post->thumbnail_image) }}" alt="{{ $post->article_name }}">
+                    @if(!empty($recent_posts) && $recent_posts->count() > 0)
+                        <div class="bb-sidebar-recent-blog-sec">
+                            <h4 class="bb-sidebar-title">Recent Posts</h4>
+                            <div class="bb-recent-blog-inner-sec">
+                                @foreach($recent_posts as $post)
+                                    <div class="blog-img-content">
+                                        <div class="blog-img">
+                                            <img src="{{ asset('uploads/bulletin/' . ($post->thumbnail_image ?? 'default.webp')) }}" alt="{{ $post->article_name }}">
+                                        </div>
+                                        <div class="blog-text headline">
+                                            <h3>
+                                                <a href="{{ route('frontend.bulletin_board_details', [
+                                                    'category_slug' => $post->category->slug ?? '',
+                                                    'article_slug'  => $post->slug ?? ''
+                                                ]) }}">
+                                                    {{ $post->article_name }}
+                                                </a>
+                                            </h3>
+                                        </div>
                                     </div>
-                                    <div class="blog-text headline">
-                                        <h3><a href="{{ route('frontend.bulletin_board_details', [
-                                                'category_slug' => $post->category->slug ?? '',
-                                                'article_slug'  => $post->slug ?? ''
-                                            ]) }}">{{ $post->article_name }}</a>
-                                        </h3>
-                                    </div>
-                                </div>
-                            @endforeach
-
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     <!-- Tags -->
-                    <div class="bb-tag-sec">
-                        <h4 class="bb-sidebar-title">Tags</h4>
-                        <div class="bb-popular_tag">
-                            <ul>
-                                @foreach($bulletin_board_category_list ?? [] as $tag)
-                                    <li>
-                                        <a href="#">
-                                            {{ $tag->special_tags }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-
+                    @if(!empty($bulletin_board_category_list) && $bulletin_board_category_list->count() > 0)
+                        <div class="bb-tag-sec">
+                            <h4 class="bb-sidebar-title">Tags</h4>
+                            <div class="bb-popular_tag">
+                                <ul>
+                                    @foreach($bulletin_board_category_list as $tag)
+                                        <li>
+                                            <a href="{{ route('frontend.bulletin_board_category_list', ['category_slug' => $tag->category->slug ?? '']) }}">
+                                                {{ $tag->special_tags }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                    @endif
+
 
                 </div>
 

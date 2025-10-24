@@ -466,6 +466,7 @@ class HomeController extends Controller
 
         // Recent posts
         $recent_posts = BulletinListing::whereNull('deleted_by')
+                            ->where('category_id', $category->id)
                             ->orderBy('inserted_at', 'desc')
                             ->take(5)
                             ->get();
