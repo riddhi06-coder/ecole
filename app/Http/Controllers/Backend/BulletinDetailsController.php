@@ -60,7 +60,7 @@ class BulletinDetailsController extends Controller
             'article_time_from' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
             'article_time_to' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
             'title' => 'nullable|string|max:255',
-            'short_desc' => 'required|string',
+            'short_desc' => 'nullable|string',
         ], [
             'article_time_from.regex' => 'Start time must be in 12-hour format (e.g., 9:00 AM).',
             'article_time_to.regex' => 'End time must be in 12-hour format (e.g., 11:30 AM).',
@@ -129,7 +129,7 @@ class BulletinDetailsController extends Controller
             'article_time_from' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
             'article_time_to' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
             'title' => 'nullable|string|max:255',
-            'short_desc' => 'required|string',
+            'short_desc' => 'nullable|string',
         ], [
             'article_time_from.regex' => 'Start time must be in 12-hour format (e.g., 9:00 AM).',
             'article_time_to.regex' => 'End time must be in 12-hour format (e.g., 11:30 AM).',

@@ -152,8 +152,8 @@
 
                                         <!-- Short Description -->
                                         <div class="col-md-12 mb-3">
-                                            <label class="form-label" for="short_desc">Short Description <span class="txt-danger">*</span></label>
-                                            <textarea class="form-control editor" id="editor" name="short_desc" rows="5" required>{{ $detail->desc }}</textarea>
+                                            <label class="form-label" for="short_desc">Short Description </label>
+                                            <textarea class="form-control editor" id="editor" name="short_desc" rows="5">{{ $detail->desc }}</textarea>
                                         </div>
 
                                         <!-- Form Actions -->

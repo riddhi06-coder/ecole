@@ -464,6 +464,7 @@ class HomeController extends Controller
 
     // // ====  Bulletin Board Category
     public function bulletin_board_category_list(Request $request, $slug) {
+
         // Get category
         $category = BulletinCategory::where('slug', $slug)
                     ->whereNull('deleted_by')
@@ -472,6 +473,8 @@ class HomeController extends Controller
         // Search keyword
         $search = $request->input('search');
         $tag = $request->input('tag');
+
+        dd($tag);
 
         // Get bulletins for this category
         $bulletin_board_category_list = BulletinListing::where('category_id', $category->id)
@@ -484,11 +487,13 @@ class HomeController extends Controller
                         });
                     })
                     ->when($tag, function($query, $tag) {
-                        // Filter only by special_tags if tag is clicked
-                        $query->where('special_tags', $tag);
-                    })
+                            $query->whereRaw("FIND_IN_SET(?, special_tags)", [$tag]);
+                        })
+
                     ->orderBy('inserted_at', 'asc')
                     ->get();
+
+        dd($bulletin_board_category_list);
 
         // Recent posts (latest 5 in this category)
         $recent_posts = BulletinListing::where('category_id', $category->id)
