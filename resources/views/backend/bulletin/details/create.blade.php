@@ -199,7 +199,7 @@
                         return;
                     }
 
-                    fetch(`/bulletin/articles/${categoryId}`)
+                    fetch(`/ecole-mondiale/bulletin/articles/${categoryId}`)
                         .then(response => response.json())
                         .then(data => {
                             articleSelect.innerHTML = '<option value="">--- Select Article ---</option>';

@@ -208,7 +208,7 @@
                 let articleSelect = document.getElementById('article');
                 articleSelect.innerHTML = '<option value="">Loading...</option>';
 
-                fetch(`/bulletin/articles/${categoryId}`)
+                fetch(`/ecole-mondiale/bulletin/articles/${categoryId}`)
                     .then(res => res.json())
                     .then(data => {
                         articleSelect.innerHTML = '<option value="">--- Select Article ---</option>';
