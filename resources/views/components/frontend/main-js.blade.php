@@ -25,6 +25,24 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
   <!-- Main JS File -->
   <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
+
+    <!-- Script to auto-show modal after 10s -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      setTimeout(function () {
+        var myModal = new bootstrap.Modal(document.getElementById('videoModal'));
+        myModal.show();
+      }, 10000);
+      
+      var videoModal = document.getElementById('videoModal');
+      videoModal.addEventListener('hidden.bs.modal', function () {
+        var video = document.getElementById('popupVideo');
+        video.pause();
+        video.currentTime = 0;
+      });
+    });
+  </script>
+
   <script>
     $(".alumni-carousal-slide").owlCarousel({
       loop: true,
@@ -43,6 +61,7 @@
       navText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
     });
   </script>
+
   <script>
     $(".client-carousel").owlCarousel({
       loop: true,
@@ -60,6 +79,7 @@
       }
     });
   </script>
+
   <script>
     $(document).ready(function () {
       $(".emctesti-carousel").owlCarousel({
@@ -85,6 +105,7 @@
       });
     });
   </script>
+
   <script>
     var swiper = new Swiper(".mySwiper", {
       slidesPerView: 1,
@@ -122,6 +143,7 @@
       }
     });
   </script>
+
   <script>
     $('.latest-blog-carousel').owlCarousel({
       loop: true,

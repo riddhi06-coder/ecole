@@ -81,7 +81,32 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© 2025 École Mondiale | Brought to Life by <a href="https://www.matrixbricks.com/">Matrix Bricks</a></p>
+      <p>© {{ date('Y') }} École Mondiale | Brought to Life by <a href="https://www.matrixbricks.com/">Matrix Bricks</a></p>
     </div>
 
   </footer>
+
+
+    <!-- HomePage Popup -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered home-page-modal-pop-up-wrap">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+            <!-- Internal Video -->
+            <video id="popupVideo" class="w-100" autoplay muted loop playsinline>
+            <source src="{{ asset('frontend/assets/video/admissions-open.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+            </video>
+            
+            <div class="pop-up-btn-sec">
+                <a class="pop-up-btn" target="_blank" href="https://api.whatsapp.com/send/?phone=9326020914&text=Hello%20%C3%89cole%20Admissions%20Team%2C%0A%0AI%E2%80%99m%20interested%20in%20admissions%202026-27.&utm_source=website&utm_medium=cta&utm_campaign=admissions_whatsapp">Enquiry Now</a>
+                </div>
+            
+            
+        </div>
+        </div>
+    </div>
+    </div>

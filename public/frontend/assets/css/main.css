@@ -7227,3 +7227,35 @@ section,
 .event-details-one-sec .progress-offers-btn i {
     margin-right: 10px;
 }
+
+
+/*=======*/
+.pop-up-btn {
+  background: #f4bf14;
+  opacity: 1;
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #031947;
+  font-size: 16px;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  text-transform: capitalize;
+  padding: 0 20px 2px 20px;
+  border: 1px solid #FFCC28;
+  margin: 3px 3px 3px 3px;
+  border-radius: 25px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.pop-up-btn:hover {
+  color: #ffffff;
+}
+
+.home-page-modal-pop-up-wrap {
+    max-width: 450px !important;
+}
