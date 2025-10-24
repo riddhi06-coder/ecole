@@ -74,7 +74,7 @@
                                     </div>
                                     @empty
                                     <div class="col-12 text-center">
-                                        <p>No bulletin posts found.</p>
+                                        <p>No Bulletin Available.</p>
                                     </div>
                                 @endforelse
                             </div>
@@ -141,9 +141,8 @@
 
                         <!-- Tags -->
                         @php
-                            $tags = $bulletin_board->filter(function($item) {
-                                return !empty($item->special_tags);
-                            });
+                            // Get unique non-empty tags
+                            $tags = $bulletin_board->pluck('special_tags')->filter()->unique();
                         @endphp
 
                         @if($tags->count())
@@ -151,14 +150,17 @@
                                 <h4 class="bb-sidebar-title">Tags</h4>
                                 <div class="bb-popular_tag">
                                     <ul>
-                                        @foreach($tags as $tag)
-                                            <li><a href="#">{{ $tag->special_tags }}</a></li>
+                                        @foreach($tags as $tagItem)
+                                            <li>
+                                                <a href="{{ route('frontend.bulletin_board') }}?tag={{ urlencode($tagItem) }}">
+                                                    {{ $tagItem }}
+                                                </a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </div>
                             </div>
                         @endif
-
 
                     </div>
 

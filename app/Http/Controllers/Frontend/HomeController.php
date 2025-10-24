@@ -439,6 +439,7 @@ class HomeController extends Controller
 
         // Search keyword
         $search = $request->input('search');
+        $tag = $request->input('tag');
 
         // Fetch all bulletins, apply search filter if exists
         $bulletin_board = BulletinListing::with('category')
@@ -448,6 +449,9 @@ class HomeController extends Controller
                                 $q->where('article_name', 'like', "%{$search}%")
                                   ->orWhere('short_desc', 'like', "%{$search}%");
                             });
+                        })
+                        ->when($tag, function($query, $tag) {
+                            $query->whereRaw("FIND_IN_SET(?, special_tags)", [$tag]);
                         })
                         ->orderBy('inserted_at', 'asc')
                         ->get();
@@ -487,7 +491,7 @@ class HomeController extends Controller
                         });
                     })
                     ->when($tag, function($query, $tag) {
-                        $query->where('special_tags', 'like', "%{$tag}%");
+                        $query->whereRaw("FIND_IN_SET(?, special_tags)", [$tag]);
                     })
                     ->orderBy('inserted_at', 'asc')
                     ->get();

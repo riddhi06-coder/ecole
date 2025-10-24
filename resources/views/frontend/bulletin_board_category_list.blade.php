@@ -67,7 +67,7 @@
                                 </div>
                             @empty
                                 <div class="text-center">
-                                    <p>No bulletins found for this category.</p>
+                                    <p>No Bulletins Available.</p>
                                 </div>
                             @endforelse
 
@@ -154,7 +154,7 @@
                                     @foreach($tags as $tag)
                                         <li>
                                             <!-- Filter by tag only -->
-                                            <a href="{{ route('frontend.bulletin_board_category_list', $category->slug) }}?tag={{ urlencode($tag->special_tags) }}">
+                                            <a href="{{ route('frontend.bulletin_board_category_list', ['category_slug' => $tag->category->slug ?? '']) }}?tag={{ urlencode($tag->special_tags) }}">
                                                 {{ $tag->special_tags }}
                                             </a>
                                         </li>
