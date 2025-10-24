@@ -7,9 +7,7 @@
 
     @include('components.frontend.header')
 
-
-
-     <main class="main">
+    <main class="main">
 
         <section class="ecolemon-breadcrumb-sec ecol-faq-breadcrumb-sec" style="background-image: url('{{ asset('uploads/bulletin/' . $category->banner_image) }}'); 
                 background-size: cover; 
@@ -32,48 +30,49 @@
 
 
         <section class="event-detail-sec">
-        <div class="container">
-            <div class="row">
-            <div class="col-12 col-md-12">
-                <div class="event-detail-img-sec">
-                <img src="{{ asset('uploads/bulletin/'assets/img/about-us/events-details-img.webp" class="img-fluid"
-                    alt="What sets us apart Image">
-                </div>
-            </div>
-            </div>
-            
-            <div class="event-details-one-sec">
+
+            <div class="container">
                 <div class="row">
-                <div class="col-12 col-md-8">
-                <div class="event-detail-content-sec">
-                    <h4 class="event-detail-title">The Thrift Shift</h4>
-                </div>
-                <div class="event-detail-icon-sec">
-                    <p><i class="fa-solid fa-clock"></i> 05:00 PM To 06:00 PM</p>
-                    <p><i class="fa-solid fa-location-dot"></i> EMWS, Juhu</p>
+                    <div class="col-12 col-md-12">
+                        <div class="event-detail-img-sec">
+                            <img src="{{ asset('uploads/bulletin/' . ($bulletin_details->thumbnail_image ?? 'default.webp')) }}" 
+                                class="img-fluid" 
+                                alt="{{ $bulletin_details->title ?? 'Event Image' }}">
+                        </div>
+                    </div>
                 </div>
                 
-            </div>
-            <div class="col-12 col-md-4">
-                <a class="progress-offers-btn" target="_blank" href="#"><i class="fa-regular fa-calendar"></i> Add To Calendar</a>
-            </div>
-            </div>
-            </div>
-            
-            <div class="row">
-            <div class="col-12 col-md-12">
-                <div class="event-detail-content-sec">
-                <h4 class="event-detail-title">Event Information</h4>
-                <p>Grade 9 would like to cordially invite you to the ThriftShift Auction. As part of our group service project, The Thrift Shift, we have organised the renewal and modification of various donated clothing items.</p>
-                <p>Thank you for your support in our efforts to promote sustainability, assist children from the SOS village, and make the world a better place.</p>
-                    <p>We are excited to see you there on October 19th at 5:00 p.m. in the DP Canteen.</p>
+                <div class="event-details-one-sec">
+                    <div class="row">
+                        <div class="col-12 col-md-8">
+                            <div class="event-detail-content-sec">
+                                <h4 class="event-detail-title">{{ $bulletin_details->title ?? 'Event Title' }}</h4>
+                            </div>
+                            <div class="event-detail-icon-sec">
+                                <p><i class="fa-solid fa-clock"></i> 
+                                    {{ \Carbon\Carbon::parse($bulletin_details->article_time_from)->format('h:i A') ?? '' }} 
+                                    To 
+                                    {{ \Carbon\Carbon::parse($bulletin_details->article_time_to)->format('h:i A') ?? '' }}
+                                </p>
+                                <p><i class="fa-solid fa-location-dot"></i> {{ $bulletin_details->location ?? '' }}</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <a class="progress-offers-btn" target="_blank" href="#"><i class="fa-regular fa-calendar"></i> Add To Calendar</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="event-detail-content-sec">
+                            <h4 class="event-detail-title">Event Information</h4>
+                            {!! $bulletin_details->desc ?? '<p>No details available for this event.</p>' !!}
+                        </div>
+                    </div>
                 </div>
             </div>
-            </div>
-            
-            
-            
-        </div>
+
         </section>
 
     </main>

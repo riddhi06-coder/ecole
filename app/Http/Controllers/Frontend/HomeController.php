@@ -495,6 +495,12 @@ class HomeController extends Controller
                     ->whereNull('deleted_by')
                     ->firstOrFail();
 
+         // Optional: fetch recent posts for the sidebar from BulletinDetails
+        $bulletin_details = BulletinDetails::where('category_id', $category->id)
+                            ->whereNull('deleted_by')
+                            ->first();
+        // dd($bulletin_details);
+
         // Optional: fetch recent posts for the sidebar from BulletinDetails
         $recent_posts = BulletinDetails::where('category_id', $category->id)
                             ->whereNull('deleted_by')
@@ -502,7 +508,7 @@ class HomeController extends Controller
                             ->take(5)
                             ->get();
 
-        return view('frontend.bulletin_board_details', compact('category', 'article', 'recent_posts'));
+        return view('frontend.bulletin_board_details', compact('category', 'article', 'recent_posts','bulletin_details'));
     }
 
 

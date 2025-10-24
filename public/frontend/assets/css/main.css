@@ -7176,3 +7176,54 @@ section,
     border: 1px solid #11317B;
     padding: 5px;
 }
+
+
+/*==========*/
+.event-detail-content-sec .event-detail-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #11317B;
+  text-transform: capitalize;
+  margin-bottom: 12px;
+  margin-top: 20px;
+}
+
+.event-detail-img-sec img {
+  border-radius: 10px;
+}
+
+.event-detail-content-sec p {
+  color: #000000;
+}
+
+.event-detail-content-sec p a {
+  color: #11317B !important;
+  font-weight: 600;
+}
+
+.event-detail-content-sec p a:hover {
+  color: #ffcc28 !important;
+}
+
+.event-detail-img-sec img {
+    width: 100%;
+    height: auto;
+}
+
+.event-detail-icon-sec {
+    display: flex;
+    gap: 20px;
+}
+
+.event-detail-icon-sec p i {
+     color: #11317B;
+}
+
+.event-details-one-sec .row {
+    display: flex;
+    align-items: center;
+}
+
+.event-details-one-sec .progress-offers-btn i {
+    margin-right: 10px;
+}
