@@ -140,18 +140,25 @@
                         </div>
 
                         <!-- Tags -->
-                        @if(!empty($bulletin_board->special_tags) && $bulletin_board->count())
+                        @php
+                            $tags = $bulletin_board->filter(function($item) {
+                                return !empty($item->special_tags);
+                            });
+                        @endphp
+
+                        @if($tags->count())
                             <div class="bb-tag-sec">
                                 <h4 class="bb-sidebar-title">Tags</h4>
                                 <div class="bb-popular_tag">
                                     <ul>
-                                        @foreach($bulletin_board as $tag)
+                                        @foreach($tags as $tag)
                                             <li><a href="#">{{ $tag->special_tags }}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>
                             </div>
                         @endif
+
 
                     </div>
 

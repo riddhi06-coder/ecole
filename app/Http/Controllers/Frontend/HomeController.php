@@ -455,6 +455,7 @@ class HomeController extends Controller
                         })
                         ->orderBy('inserted_at', 'asc')
                         ->get();
+        // dd($bulletin_board);
 
         $bulletin_categories = BulletinCategory::withCount(['listings'])->whereNull('deleted_by')->get();
 

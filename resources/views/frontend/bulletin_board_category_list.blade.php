@@ -139,12 +139,18 @@
                     @endif
 
                     <!-- Tags -->
-                    @if(!empty($bulletin_board_category_list->special_tags) && $bulletin_board_category_list->count() > 0)
+                    @php
+                        $tags = $bulletin_board_category_list->filter(function($item) {
+                            return !empty($item->special_tags);
+                        });
+                    @endphp
+
+                    @if($tags->count())
                         <div class="bb-tag-sec">
                             <h4 class="bb-sidebar-title">Tags</h4>
                             <div class="bb-popular_tag">
                                 <ul>
-                                    @foreach($bulletin_board_category_list as $tag)
+                                    @foreach($tags as $tag)
                                         <li>
                                             <a href="{{ route('frontend.bulletin_board_category_list', ['category_slug' => $tag->category->slug ?? '']) }}">
                                                 {{ $tag->special_tags }}
@@ -155,6 +161,7 @@
                             </div>
                         </div>
                     @endif
+
 
 
                 </div>
