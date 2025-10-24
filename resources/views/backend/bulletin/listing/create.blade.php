@@ -119,8 +119,8 @@
 
                                         <!-- Short Description -->
                                         <div class="col-md-12 mb-3">
-                                            <label class="form-label" for="short_desc">Short Description <span class="txt-danger">*</span></label>
-                                            <textarea class="form-control" id="short_desc" name="short_desc" rows="5" placeholder="Enter Short Description" required></textarea>
+                                            <label class="form-label" for="short_desc">Short Description ></label>
+                                            <textarea class="form-control" id="short_desc" name="short_desc" rows="5" placeholder="Enter Short Description"></textarea>
                                         </div>
                 
 

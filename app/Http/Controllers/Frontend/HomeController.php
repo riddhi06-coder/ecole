@@ -487,9 +487,8 @@ class HomeController extends Controller
                         });
                     })
                     ->when($tag, function($query, $tag) {
-                            $query->whereRaw("FIND_IN_SET(?, special_tags)", [$tag]);
-                        })
-
+                        $query->where('special_tags', 'like', "%{$tag}%");
+                    })
                     ->orderBy('inserted_at', 'asc')
                     ->get();
 

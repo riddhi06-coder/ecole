@@ -49,7 +49,7 @@ class BulletinListingController extends Controller
             'article_date' => 'required|date',
             'article_author' => 'required|string|max:255',
             'special_tags' => 'nullable|string|max:255',
-            'short_desc' => 'required|string',
+            'short_desc' => 'nullable|string',
         ], [
             'category.required' => 'Please select a Category.',
             'category.exists' => 'Selected category is invalid.',
@@ -112,7 +112,7 @@ class BulletinListingController extends Controller
             'article_date' => 'required|date',
             'article_author' => 'required|string|max:255',
             'special_tags' => 'nullable|string|max:255',
-            'short_desc' => 'required|string',
+            'short_desc' => 'nullable|string',
         ], [
             'category.required' => 'Please select a Category.',
             'category.exists' => 'Selected category is invalid.',
