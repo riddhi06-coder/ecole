@@ -40,7 +40,10 @@
                                 <div class="col-md-6 bull-bb-card-sec">
                                     <div class="bb-card-inner-sec">
                                         <div class="bb-img-sec">
-                                            <a href="#">
+                                            <a href="{{ route('frontend.bulletin_board_details', [
+                                                    'category_slug' => $category->slug ?? '',
+                                                    'article_slug'  => $bulletin->slug ?? ''
+                                                ]) }}">
                                                 <img class="bb-img-main" src="{{ asset('uploads/bulletin/' . $bulletin->thumbnail_image) }}" alt="{{ $bulletin->title }}">
                                                 <span class="bb-date">{{ \Carbon\Carbon::parse($bulletin->inserted_at)->format('d M') }}</span>
                                                 <span class="bb-author-sec"><img src="{{ asset('frontend/assets/img/icons/user-icon.webp') }}" alt="User Icon"> By EMWS</span>
@@ -48,10 +51,16 @@
                                         </div>
                                         <div class="bb-content-sec">
                                             <h4>
-                                                <a href="#">{{ $bulletin->article_name }}</a>
+                                                <a href="{{ route('frontend.bulletin_board_details', [
+                                                    'category_slug' => $category->slug ?? '',
+                                                    'article_slug'  => $bulletin->slug ?? ''
+                                                ]) }}">{{ $bulletin->article_name }}</a>
                                             </h4>
                                             <p>
-                                                <a href="#">{{ $bulletin->short_desc  }}</a>
+                                                <a href="{{ route('frontend.bulletin_board_details', [
+                                                    'category_slug' => $category->slug ?? '',
+                                                    'article_slug'  => $bulletin->slug ?? ''
+                                                ]) }}">{{ $bulletin->short_desc  }}</a>
                                             </p>
                                         </div>
                                     </div>
@@ -68,8 +77,6 @@
                         </div>
                     </div>
                 </div>
-
-
 
                 <!-- Sidebar -->
                 <div class="col-md-4">
@@ -110,7 +117,11 @@
                                         <img src="{{ asset('uploads/bulletin/' . $post->thumbnail_image) }}" alt="{{ $post->article_name }}">
                                     </div>
                                     <div class="blog-text headline">
-                                        <h3><a href="#">{{ $post->article_name }}</a></h3>
+                                        <h3><a href="{{ route('frontend.bulletin_board_details', [
+                                                'category_slug' => $post->category->slug ?? '',
+                                                'article_slug'  => $post->slug ?? ''
+                                            ]) }}">{{ $post->article_name }}</a>
+                                        </h3>
                                     </div>
                                 </div>
                             @endforeach
