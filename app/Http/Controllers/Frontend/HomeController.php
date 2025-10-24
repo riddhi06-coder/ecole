@@ -453,7 +453,7 @@ class HomeController extends Controller
                                   ->orWhere('short_desc', 'like', "%{$search}%");
                             });
                         })
-                        ->orderBy('inserted_at', 'desc')
+                        ->orderBy('inserted_at', 'asc')
                         ->get();
 
         $bulletin_categories = BulletinCategory::withCount(['listings'])->whereNull('deleted_by')->get();
@@ -523,6 +523,7 @@ class HomeController extends Controller
 
          // Optional: fetch recent posts for the sidebar from BulletinDetails
         $bulletin_details = BulletinDetails::where('category_id', $category->id)
+                            ->where('slug', $article_slug)
                             ->whereNull('deleted_by')
                             ->first();
         // dd($bulletin_details);
