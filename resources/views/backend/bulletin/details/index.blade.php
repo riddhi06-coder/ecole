@@ -80,7 +80,7 @@
                                     @foreach($category->details as $detail)
                                         <tr class="listing-row">
                                             <td>{{ $sn++ }}</td>
-                                            <td class="article-name">{{ $detail->title ?? $detail->article_name }}</td>
+                                            <td class="article-name">{{ $detail->article->article_name ?? 'N/A' }}</td>
                                             <td>
                                                 @if($detail->thumbnail_image)
                                                     <img src="{{ asset('uploads/bulletin/' . $detail->thumbnail_image) }}" alt="{{ $detail->title ?? $detail->article_name }}" style="width: 120px; height: auto;">

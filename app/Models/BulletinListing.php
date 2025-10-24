@@ -33,4 +33,6 @@ class BulletinListing extends Model
     public function category() {
         return $this->belongsTo(BulletinCategory::class, 'category_id');
     }
+
+    
 }

@@ -31,4 +31,9 @@ class BulletinDetails extends Model
         'deleted_by',
     ];
 
+    public function article()
+    {
+        return $this->belongsTo(BulletinListing::class, 'article_id');
+    }
+
 }
