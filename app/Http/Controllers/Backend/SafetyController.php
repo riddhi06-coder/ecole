@@ -80,7 +80,7 @@ class SafetyController extends Controller
             $sports->save();
 
             return redirect()->route('manage-safety-security.index')
-                            ->with('message', 'Sports Activity record added successfully.');
+                            ->with('message', 'Record added successfully.');
 
         } catch (\Illuminate\Validation\ValidationException $ve) {
             throw $ve; // Let Laravel handle validation errors
@@ -160,7 +160,7 @@ class SafetyController extends Controller
             $sports->save();
 
             return redirect()->route('manage-safety-security.index')
-                            ->with('message', 'Sports Activity record updated successfully.');
+                            ->with('message', 'Record updated successfully.');
 
         } catch (\Illuminate\Validation\ValidationException $ve) {
             throw $ve; // Let Laravel handle validation errors
