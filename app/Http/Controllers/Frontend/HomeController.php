@@ -485,7 +485,7 @@ class HomeController extends Controller
                             ->orWhere('short_desc', 'like', "%{$search}%");
                         });
                     })
-                    ->orderBy('inserted_at', 'desc')
+                    ->orderBy('inserted_at', 'asc')
                     ->get();
 
         // Recent posts (latest 5 in this category)
