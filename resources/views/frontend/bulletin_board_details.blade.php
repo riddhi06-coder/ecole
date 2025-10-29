@@ -76,12 +76,15 @@
                 </div>
                 
                 <div class="row">
-                    <div class="col-12 col-md-12">
-                        <div class="event-detail-content-sec">
-                            <h4 class="event-detail-title">{{ $bulletin_details->title }}</h4>
-                            {!! $bulletin_details->desc ?? '<p>No details available for this event.</p>' !!}
+                    @if($bulletin_details->title || $bulletin_details->desc)
+                        <div class="col-12 col-md-12">
+                            <div class="event-detail-content-sec">
+                                <h4 class="event-detail-title">{{ $bulletin_details->title ?? '' }}</h4>
+                                {!! $bulletin_details->desc ?? '<p>No details available for this event.</p>' !!}
+                            </div>
                         </div>
-                    </div>
+                    @endif
+
                 </div>
             </div>
 
