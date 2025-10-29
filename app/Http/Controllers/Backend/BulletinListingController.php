@@ -148,14 +148,31 @@ class BulletinListingController extends Controller
         $listing->special_tags = $validatedData['special_tags'] ?? null;
 
         // ✅ Update slug if article name changed
-        $newSlug = Str::slug($validatedData['article_name']);
-        if ($newSlug !== $listing->slug) {
-            $count = BulletinListing::where('slug', 'like', $newSlug . '%')->where('id', '!=', $listing->id)->count();
+        // $newSlug = Str::slug($validatedData['article_name']);
+        // if ($newSlug !== $listing->slug) {
+        //     $count = BulletinListing::where('slug', 'like', $newSlug . '%')->where('id', '!=', $listing->id)->count();
+        //     if ($count > 0) {
+        //         $newSlug .= '-' . ($count + 1);
+        //     }
+        //     $listing->slug = $newSlug;
+        // }
+
+
+                // ✅ Check if article name changed before updating
+        if ($validatedData['article_name'] !== $listing->article_name) {
+            $newSlug = Str::slug($validatedData['article_name']);
+    
+            $count = BulletinListing::where('slug', 'like', $newSlug . '%')
+                ->where('id', '!=', $listing->id)
+                ->count();
+    
             if ($count > 0) {
                 $newSlug .= '-' . ($count + 1);
             }
+            dd($newSlug);
             $listing->slug = $newSlug;
         }
+
 
         $listing->modified_by = Auth::id();
         $listing->modified_at = Carbon::now();
