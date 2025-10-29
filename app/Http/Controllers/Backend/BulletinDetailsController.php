@@ -108,7 +108,7 @@ class BulletinDetailsController extends Controller
 
         // Fetch articles of selected category for populating "Article" dropdown
         $articles = BulletinListing::where('category_id', $detail->category_id)
-                    ->orderBy('article_name')
+                    ->orderBy('id')
                     ->get();
 
         return view('backend.bulletin.details.edit', compact('detail','categories','articles'));
