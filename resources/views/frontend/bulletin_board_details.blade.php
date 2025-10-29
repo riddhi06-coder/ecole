@@ -50,7 +50,7 @@
                             </div>
                             @if($bulletin_details->article_time_from || $bulletin_details->article_time_to)
                                 <div class="event-detail-icon-sec">
-                                    @if($bulletin_details->article_time_from || $bulletin_details->article_time_to)
+                                    @if($bulletin_details->article_time_from && $bulletin_details->article_time_to)
                                         <p><i class="fa-solid fa-clock"></i> 
                                             {{ $bulletin_details->article_time_from ? \Carbon\Carbon::parse($bulletin_details->article_time_from)->format('h:i A') : '' }} 
                                             @if($bulletin_details->article_time_from && $bulletin_details->article_time_to)
