@@ -76,7 +76,7 @@
                 </div>
                 
                 <div class="row">
-                    @if($bulletin_details && $bulletin_details->title && $bulletin_details->desc)
+                    @if($bulletin_details && $bulletin_details->title || $bulletin_details->desc)
                         <div class="col-12 col-md-12">
                             <div class="event-detail-content-sec">
                                 <h4 class="event-detail-title">{{ $bulletin_details->title ?? '' }}</h4>
