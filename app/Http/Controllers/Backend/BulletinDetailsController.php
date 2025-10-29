@@ -35,7 +35,7 @@ class BulletinDetailsController extends Controller
 
     public function create()
     {
-        $categories = BulletinCategory::orderBy('category')->wherenull('deleted_by')->get();
+        $categories = BulletinCategory::orderBy('id')->wherenull('deleted_by')->get();
         return view('backend.bulletin.details.create', compact('categories'));
     }
 
