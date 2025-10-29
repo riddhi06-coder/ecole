@@ -48,7 +48,7 @@
                             <div class="event-detail-content-sec">
                                 <h4 class="event-detail-title">{{ $article->article_name ?? 'Event Title' }}</h4>
                             </div>
-                            @if($bulletin_details->article_time_from || $bulletin_details->article_time_to || $bulletin_details->location)
+                            @if($bulletin_details->article_time_from || $bulletin_details->article_time_to)
                                 <div class="event-detail-icon-sec">
                                     @if($bulletin_details->article_time_from || $bulletin_details->article_time_to)
                                         <p><i class="fa-solid fa-clock"></i> 
