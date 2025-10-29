@@ -225,6 +225,7 @@
                     <span>Careers</span>
                   </a>
                   <ul class="sidebar-submenu">
+                  <li><a href="{{ route('manage-career.index') }}" class="{{ request()->routeIs('manage-career.index') ? 'active' : '' }}">Page Details</a></li> 
                   <li>
                       <a class="submenu-title {{ request()->routeIs('manage-teaching-jobs.*') ? 'active' : '' }}" href="#">
                           Career Opportunities
