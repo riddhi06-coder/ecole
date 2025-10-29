@@ -48,8 +48,9 @@
                             <div class="event-detail-content-sec">
                                 <h4 class="event-detail-title">{{ $article->article_name ?? 'Event Title' }}</h4>
                             </div>
-                            @if($bulletin_details->article_time_from && $bulletin_details->article_time_to)
+                            @if($bulletin_details && ($bulletin_details->article_time_from || $bulletin_details->article_time_to || $bulletin_details->location))
                                 <div class="event-detail-icon-sec">
+                                    {{-- Show Time if any time is present --}}
                                     @if($bulletin_details->article_time_from || $bulletin_details->article_time_to)
                                         <p><i class="fa-solid fa-clock"></i> 
                                             {{ $bulletin_details->article_time_from ? \Carbon\Carbon::parse($bulletin_details->article_time_from)->format('h:i A') : '' }} 
@@ -60,11 +61,13 @@
                                         </p>
                                     @endif
 
+                                    {{-- Show Location if available --}}
                                     @if($bulletin_details->location)
                                         <p><i class="fa-solid fa-location-dot"></i> {{ $bulletin_details->location }}</p>
                                     @endif
                                 </div>
                             @endif
+
                         </div>
                         <div class="col-12 col-md-4">
                             <a class="progress-offers-btn" target="_blank" href="#"><i class="fa-regular fa-calendar"></i> Add To Calendar</a>
