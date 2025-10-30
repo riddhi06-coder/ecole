@@ -102,8 +102,8 @@
                                         
                                         <!--Article Author -->
                                         <div class="col-md-6">
-                                            <label class="form-label" for="article_author">Article Author <span class="txt-danger">*</span></label>
-                                            <input class="form-control" id="article_author" type="text" name="article_author" placeholder="Enter Article Author" required>
+                                            <label class="form-label" for="article_author">Article Author</label>
+                                            <input class="form-control" id="article_author" type="text" name="article_author" placeholder="Enter Article Author">
                                             <div class="invalid-feedback">Please enter a Article Author.</div>
                                         </div>
 

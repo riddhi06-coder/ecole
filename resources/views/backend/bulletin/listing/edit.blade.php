@@ -110,10 +110,10 @@
 
                                         <!-- Article Author -->
                                         <div class="col-md-6">
-                                            <label class="form-label" for="article_author">Article Author <span class="txt-danger">*</span></label>
+                                            <label class="form-label" for="article_author">Article Author </label>
                                             <input class="form-control" id="article_author" type="text" name="article_author" 
                                                 placeholder="Enter Article Author" 
-                                                value="{{ old('article_author', $category->article_author) }}" required>
+                                                value="{{ old('article_author', $category->article_author) }}" >
                                             <div class="invalid-feedback">Please enter an Article Author.</div>
                                         </div>
 

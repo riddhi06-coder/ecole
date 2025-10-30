@@ -47,7 +47,7 @@ class BulletinListingController extends Controller
             'thumbnail_image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
             'article_name' => 'required|string|max:255',
             'article_date' => 'required|date',
-            'article_author' => 'required|string|max:255',
+            'article_author' => 'nullable|string|max:255',
             'special_tags' => 'nullable|string|max:255',
             'short_desc' => 'nullable|string',
         ], [
@@ -110,7 +110,7 @@ class BulletinListingController extends Controller
             'thumbnail_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'article_name' => 'required|string|max:255',
             'article_date' => 'required|date',
-            'article_author' => 'required|string|max:255',
+            'article_author' => 'nullable|string|max:255',
             'special_tags' => 'nullable|string|max:255',
             'short_desc' => 'nullable|string',
         ], [
