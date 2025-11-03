@@ -63,6 +63,9 @@ use App\Http\Controllers\Backend\DiplomaYearsController;
 use App\Http\Controllers\Backend\BulletinCategoryController;
 use App\Http\Controllers\Backend\BulletinListingController;
 use App\Http\Controllers\Backend\BulletinDetailsController;
+use App\Http\Controllers\Backend\JobPostingController;
+
+
 
 
 use App\Http\Controllers\Frontend\HomeController;;
@@ -224,6 +227,9 @@ Route::resource('manage-policies', PolicyController::class);
 
 // ==== Manage Teaching Job Opportunities
 Route::resource('manage-teaching-jobs', TeachingJobsController::class);
+
+// ==== Manage Teaching Job Posting
+Route::resource('manage-job-postings', JobPostingController::class);
 
 // ==== Manage Non-Teaching Job Opportunities
 Route::resource('manage-nonteaching-jobs', NonTeachingJobsController::class);

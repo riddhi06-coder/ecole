@@ -225,7 +225,7 @@
                     <span>Careers</span>
                   </a>
                   <ul class="sidebar-submenu">
-                  <li><a href="{{ route('manage-career.index') }}" class="{{ request()->routeIs('manage-career.index') ? 'active' : '' }}">Page Details</a></li> 
+                  <li><a href="{{ route('manage-career.index') }}" class="{{ request()->routeIs('manage-career.index','manage-job-postings.index') ? 'active' : '' }}">Page Details</a></li> 
                   <li>
                       <a class="submenu-title {{ request()->routeIs('manage-teaching-jobs.*') ? 'active' : '' }}" href="#">
                           Career Opportunities
@@ -237,6 +237,7 @@
                           <li><a href="{{ route('manage-nonteaching-jobs.index') }}">Non Teaching Job</a></li>
                       </ul>
                   </li>
+                  <li><a href="{{ route('manage-job-postings.index') }}" class="{{ request()->routeIs('manage-job-postings.index') ? 'active' : '' }}">Jobs Posting</a></li> 
                     <li><a href="{{ route('manage-university-bath.index') }}" class="{{ request()->routeIs('manage-university-bath.index') ? 'active' : '' }}">University of Bath</a></li> 
                   </ul>
                 </li>
