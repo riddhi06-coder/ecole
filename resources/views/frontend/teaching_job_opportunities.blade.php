@@ -43,7 +43,7 @@
                         <p>{!! $teaching_job_opportunities_banner->description !!}</p>
                     </div>
                     <div class="teaching-job-opp-btn-sec">
-                        <a href="#" class="btn-ecol btn">Apply Now</a>
+                        <a href="{{ route('frontend.teaching_job_opportunities_form') }}" class="btn-ecol btn">Apply Now</a>
                     </div>
                 </div>
                 </div>

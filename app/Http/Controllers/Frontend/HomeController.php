@@ -70,6 +70,7 @@ use App\Models\Diploma;
 use App\Models\BulletinListing;
 use App\Models\BulletinDetails;
 use App\Models\BulletinCategory;
+use App\Models\JobPosting;
 
 
 class HomeController extends Controller
@@ -248,7 +249,27 @@ class HomeController extends Controller
     // ====  Apply For Admission
     public function apply_for_admission() {
         $apply_for_admission = ApplyAdmission::wherenull('deleted_by')->first();
-        return view('frontend.apply_for_admission', compact('apply_for_admission'));
+
+        $countries = DB::table('countries')
+            ->orderBy('id', 'asc')
+            ->get();
+
+
+        $nationality = DB::table('countries')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        // ✅ Generate dynamic academic years (previous, current, upcoming)
+        $currentYear = date('Y');
+        $nextYear = $currentYear + 1;
+
+        $academicYears = [
+            ($currentYear) . ' - ' . $nextYear,
+            ($nextYear) . ' - ' . ($nextYear + 1),
+        ];
+
+
+        return view('frontend.apply_for_admission', compact('apply_for_admission','countries','academicYears','nationality'));
     }
 
     // ====  Schedule A Visit For Admission
@@ -411,10 +432,156 @@ class HomeController extends Controller
         return view('frontend.teaching_job_opportunities', compact('teaching_job_opportunities_banner'));
     }
 
+    // ==== Teaching Job Opportunities Form
+    public function teaching_job_opportunities_form(Request $request)
+    {
+        // ✅ Step 1: Get the last segment of the URL
+        $categorySlug = $request->segment(count($request->segments()));
+
+
+        // ✅ Step 1.1: Remove the last word (e.g., "form" from "teaching-job-opportunities-form")
+        $slugParts = explode('-', $categorySlug);
+        if (count($slugParts) > 1) {
+            array_pop($slugParts); // remove last word
+        }
+        $cleanedSlug = implode('-', $slugParts);
+
+        // ✅ Step 2: Fetch teaching categories from Career model
+        $career = Career::first();
+        $jobCategoryId = null;
+
+        if ($career && $career->teaching_details) {
+            $decoded = json_decode($career->teaching_details, true);
+
+            foreach ($decoded as $index => $item) {
+                $slug = Str::slug($item['title']);
+
+                if (Str::contains($cleanedSlug, $slug) || $slug === $cleanedSlug) {
+                    $jobCategoryId = $index + 1;
+                    break;
+                }
+            }
+        }
+
+        // ✅ Step 3: Get banner data
+        $teaching_job_opportunities_banner = ManageTeachingJob::whereNull('deleted_by')->first();
+
+        // ✅ Step 4: Fetch job postings based on matched category
+        $teaching_job_opportunities_form_banner = collect();
+
+        if ($jobCategoryId) {
+            $teaching_job_opportunities_form_banner = JobPosting::where('job_category_id', $jobCategoryId)
+                ->whereNull('deleted_by')
+                ->get();
+        } else {
+            Log::warning('⚠️ No matching job category found even after cleanup', ['cleaned_slug' => $cleanedSlug]);
+        }
+
+        return view('frontend.teaching_job_opportunities_form', compact(
+            'teaching_job_opportunities_form_banner',
+            'teaching_job_opportunities_banner'
+        ));
+    }
+
     // ====  Non-Teaching Job Opportunities
     public function non_teaching_job_opportunities() {
         $non_teaching_job_opportunities_banner = ManageNonTeachingJob ::wherenull('deleted_by')->first();
         return view('frontend.non_teaching_job_opportunities', compact('non_teaching_job_opportunities_banner'));
+    }
+
+    // ==== Non-Teaching Job Opportunities Form
+    public function non_teaching_job_opportunities_form(Request $request)
+    {
+        Log::info('🟢 Entered non_teaching_job_opportunities_form method.');
+
+        // ✅ Step 1: Get the last segment of the URL
+        $categorySlug = $request->segment(count($request->segments()));
+        Log::info('📍 Raw category slug from URL', ['categorySlug' => $categorySlug]);
+
+        // ✅ Step 1.1: Remove the last word
+        $slugParts = explode('-', $categorySlug);
+        if (count($slugParts) > 1) {
+            array_pop($slugParts);
+        }
+        $cleanedSlug = implode('-', $slugParts);
+        Log::info('🧹 Cleaned slug after removing last word', ['cleanedSlug' => $cleanedSlug]);
+
+        // ✅ Step 1.2: Extract first 3 words
+        $slugWords = explode('-', $cleanedSlug);
+        $firstThree = implode(' ', array_slice($slugWords, 0, 3));
+        $firstThreeSlug = implode('-', array_slice($slugWords, 0, 3));
+        Log::info('🪄 Matching first 3 words', ['firstThree' => $firstThree, 'firstThreeSlug' => $firstThreeSlug]);
+
+        // ✅ Step 2: Fetch non-teaching categories
+        $career = Career::first();
+        $jobCategoryId = null;
+
+        if ($career && $career->teaching_details) {
+            $decoded = json_decode($career->teaching_details, true);
+            if (is_array($decoded)) {
+                foreach ($decoded as $index => $item) {
+                    if (!isset($item['title'])) continue;
+
+                    // Normalize strings — remove hyphens, multiple spaces
+                    $title = strtolower(preg_replace('/[-\s]+/', ' ', $item['title']));
+                    $slug = strtolower(preg_replace('/[-\s]+/', ' ', Str::slug($item['title'])));
+                    $compareText = strtolower(preg_replace('/[-\s]+/', ' ', $firstThree));
+                    $compareSlug = strtolower(preg_replace('/[-\s]+/', ' ', $firstThreeSlug));
+
+                    Log::debug('🔍 Comparing normalized text', [
+                        'title' => $title,
+                        'slug' => $slug,
+                        'compareText' => $compareText,
+                        'compareSlug' => $compareSlug
+                    ]);
+
+                    // ✅ Match if normalized text matches partially
+                    if (
+                        str_contains($title, $compareText) ||
+                        str_contains($slug, $compareSlug)
+                    ) {
+                        $jobCategoryId = $index + 1;
+                        Log::info('✅ Match found using normalized comparison', [
+                            'matched_title' => $item['title'],
+                            'jobCategoryId' => $jobCategoryId
+                        ]);
+                        break;
+                    }
+                }
+            } else {
+                Log::warning('⚠️ non_teaching_details is not a valid JSON array');
+            }
+        } else {
+            Log::warning('⚠️ No non_teaching_details found in Career model or Career record missing');
+        }
+
+        // ✅ Step 3: Get banner data
+        $non_teaching_job_opportunities_banner = ManageTeachingJob::whereNull('deleted_by')->first();
+
+        // ✅ Step 4: Fetch job postings
+        $non_teaching_job_opportunities_form_banner = collect();
+
+        if ($jobCategoryId) {
+            $non_teaching_job_opportunities_form_banner = JobPosting::where('job_category_id', $jobCategoryId)
+                ->whereNull('deleted_by')
+                ->get();
+
+            Log::info('📋 Job postings fetched successfully', [
+                'jobCategoryId' => $jobCategoryId,
+                'count' => $non_teaching_job_opportunities_form_banner->count()
+            ]);
+        } else {
+            Log::warning('⚠️ No matching non-teaching job category found', [
+                'firstThreeSlug' => $firstThreeSlug
+            ]);
+        }
+
+        // ✅ Step 5: Return correct variables
+        Log::info('🚀 Returning non_teaching_job_opportunities_form view');
+        return view('frontend.non_teaching_job_opportunities_form', compact(
+            'non_teaching_job_opportunities_form_banner',
+            'non_teaching_job_opportunities_banner'
+        ));
     }
 
     // ====  IB Learner Profile

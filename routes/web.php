@@ -397,8 +397,14 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     // ==== Teaching Job Opportunities
     Route::get('/vacancy/teaching-job-opportunities', [HomeController::class, 'teaching_job_opportunities'])->name('frontend.teaching_job_opportunities');
 
+    // ==== Teaching Job Opportunities Form
+    Route::get('/vacancy/teaching-job-opportunities-form', [HomeController::class, 'teaching_job_opportunities_form'])->name('frontend.teaching_job_opportunities_form');
+
     // ==== Non-Teaching Job Opportunities
     Route::get('/vacancy/non-teaching-job-opportunities', [HomeController::class, 'non_teaching_job_opportunities'])->name('frontend.non_teaching_job_opportunities');
+
+    // ==== Non-Teaching Job Opportunities Form 
+    Route::get('/vacancy/non-teaching-job-opportunities-form', [HomeController::class, 'non_teaching_job_opportunities_form'])->name('frontend.non_teaching_job_opportunities_form');
 
     // ==== IB Learner Profile
     Route::get('/academics/ib-learner-profile', [HomeController::class, 'ib_learner_profile'])->name('frontend.ib_learner_profile');

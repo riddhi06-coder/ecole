@@ -7078,6 +7078,21 @@ section,
   border: 1px solid #ffcc28;
 }
 
+
+.teaching-btn-sec {
+    background: #ffcc28;
+    border: none;
+}
+
+.teaching-btn-sec:hover {
+    background: #11317B;
+}
+
+.teaching-form-btn-sec {
+    display: flex;
+    gap: 20px;
+}
+
 /* ======== */
 .non-teaching-job-opp-content-sec .non-teaching-job-opp-title {
   font-size: 32px;

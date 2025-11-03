@@ -2,6 +2,8 @@
 <html lang="en">
 
     @include('components.frontend.head')
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
 
 <body>
 
@@ -30,42 +32,47 @@
         <section class="apply-for-admission-one-sec">
             <div class="container">
                 <div class="row">
-                <div class="col-12 col-md-12">
-                    <div class="apply-for-admission-content-sec">
-                    <p> {!! $schedule_a_visit_for_admission->description !!} </p>
-                    <p>Fill up the application form below. The mandatory fields are marked with an *</p>
+                    
+                    <div class="col-12 col-md-12">
+                        <div class="apply-for-admission-content-sec">
+                        <p> {!! $schedule_a_visit_for_admission->description !!} </p>
+                        <p>Fill up the application form below. The mandatory fields are marked with an *</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="apply-for-admission-choose-sec">
-                    <div class="form-check applyforad-choose-form-check">
-                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
-                        <label class="form-check-label" for="radioDefault1">
-                        Apply for admission
-                        </label>
+
+                    <div class="col-12 col-md-4">
+                        <div class="apply-for-admission-choose-sec">
+                        <div class="form-check applyforad-choose-form-check">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="apply_for_admission" checked>
+                            <label class="form-check-label" for="apply_for_admission">
+                            Apply for admission
+                            </label>
+                        </div>
+                        </div>
                     </div>
+
+                    <div class="col-12 col-md-4">
+                        <div class="apply-for-admission-choose-sec">
+                        <div class="form-check applyforad-choose-form-check">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="schedule_a_visit" checked>
+                            <label class="form-check-label" for="schedule_a_visit">
+                            Schedule a visit for admission
+                            </label>
+                        </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="apply-for-admission-choose-sec">
-                    <div class="form-check applyforad-choose-form-check">
-                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                        <label class="form-check-label" for="radioDefault2">
-                        Schedule a visit for admission
-                        </label>
+
+                    <div class="col-12 col-md-4">
+                        <div class="apply-for-admission-choose-sec">
+                        <div class="form-check applyforad-choose-form-check">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="enquiry_for_admission">
+                            <label class="form-check-label" for="enquiry_for_admission">
+                            Enquiry About admission
+                            </label>
+                        </div>
+                        </div>
                     </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="apply-for-admission-choose-sec">
-                    <div class="form-check applyforad-choose-form-check">
-                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault3">
-                        <label class="form-check-label" for="radioDefault3">
-                        Enquiry About admission
-                        </label>
-                    </div>
-                    </div>
-                </div>
+
                 </div>
             </div>
         </section>
@@ -741,6 +748,42 @@
     @include('components.frontend.footer')
 
     @include('components.frontend.main-js')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+
+    <script>
+        // Father's Mobile
+        const fatherInput = document.querySelector("#fatherMobile");
+        window.intlTelInput(fatherInput, {
+        initialCountry: "in",
+        preferredCountries: ["in", "us", "gb"],
+        separateDialCode: true
+        });
+
+        // Mother's Mobile
+        const motherInput = document.querySelector("#motherMobile");
+        window.intlTelInput(motherInput, {
+        initialCountry: "in",
+        preferredCountries: ["in", "us", "gb"],
+        separateDialCode: true
+        });
+
+        // Father's Residence/Office
+        const fatherResInput = document.querySelector("#fatherResidence");
+        window.intlTelInput(fatherResInput, {
+        initialCountry: "in",
+        preferredCountries: ["in", "us", "gb"],
+        separateDialCode: true
+        });
+
+        // Mother's Residence/Office
+        const motherResInput = document.querySelector("#motherResidence");
+        window.intlTelInput(motherResInput, {
+        initialCountry: "in",
+        preferredCountries: ["in", "us", "gb"],
+        separateDialCode: true
+        });
+    </script>
 
 
 </body>
