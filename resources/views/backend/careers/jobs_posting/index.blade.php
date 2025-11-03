@@ -69,7 +69,7 @@
                                 <div class="card-body">
                                     @php
                                         // Filter job postings by current category ID
-                                        $categoryJobs = $jobPostings->where('job_category_id', $category['id']);
+                                        $categoryJobs = $jobPostings->where('job_category_id', $category['id'])->values();
                                     @endphp
 
                                     @if($categoryJobs->count() > 0)
