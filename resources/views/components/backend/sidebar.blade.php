@@ -68,8 +68,7 @@
                   </ul>
                 </li>
 
-              
-              
+               
                 <li class="sidebar-list {{ request()->routeIs('manage-what-sets-us-apart.index', 'manage-vision-mission.index', 'manage-message-from-principal.index','manage-governance.index','manage-faculty-and-staff.index','manage-school-calendar.index','manage-about-testimonials.index','manage-child-safeguarding-policy.index','manage-about-alumni.index','manage-accredation-association.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
@@ -169,7 +168,6 @@
                 </li>
 
 
-
                 <li class="sidebar-list {{ request()->routeIs('manage-virtual-tour.index', 'manage-media-center.index', 'manage-ib-visual.index','manage-technology.index','manage-sports-activities.index','manage-service-learning.index','manage-safety-security.index','manage-bus-service.index','manage-other-facilities.index','manage-stuco.index','manage-cafeteria.index','manage-gallery-images.index','manage-gallery-videos.index') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
@@ -204,8 +202,6 @@
                   
                   </ul>
                 </li>
-
-
 
                 
                 <li class="sidebar-list {{ request()->routeIs('manage-bulletin-category.index', 'manage-bulletin-listing.index','manage-bulletin-details.index') ? 'active' : '' }}">
@@ -254,6 +250,20 @@
                   <li><a href="{{ route('manage-job-postings.index') }}" class="{{ request()->routeIs('manage-job-postings.index') ? 'active' : '' }}">Jobs Posting</a></li> 
                     <li><a href="{{ route('manage-university-bath.index') }}" class="{{ request()->routeIs('manage-university-bath.index') ? 'active' : '' }}">University of Bath</a></li> 
                   </ul>
+                </li>
+
+
+                <li class="sidebar-list {{ request()->routeIs('manage-addmission-enquiries.index') ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"></i>
+                  <a class="sidebar-link" href="{{ route('manage-addmission-enquiries.index') }}">
+                    <svg class="stroke-icon"> 
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
+                    </svg>
+                    <span>Admission Enquiries</span>
+                  </a>
                 </li>
 
 

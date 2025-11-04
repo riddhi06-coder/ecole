@@ -65,7 +65,7 @@ use App\Http\Controllers\Backend\BulletinListingController;
 use App\Http\Controllers\Backend\BulletinDetailsController;
 use App\Http\Controllers\Backend\JobPostingController;
 use App\Http\Controllers\Backend\GradesController;
-
+use App\Http\Controllers\Backend\AdmissionEnquiriesController;
 
 
 use App\Http\Controllers\Frontend\HomeController;
@@ -283,6 +283,9 @@ Route::get('/bulletin/articles/{categoryId}', [App\Http\Controllers\Backend\Bull
 
 // ==== Manage Grades Master
 Route::resource('manage-grades', GradesController::class);
+
+// ==== Manage Admission Enquiries
+Route::resource('manage-addmission-enquiries', AdmissionEnquiriesController::class);
 
 // ======================= Frontend =========================================
 
