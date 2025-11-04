@@ -800,7 +800,10 @@ class HomeController extends Controller
         return view('frontend.bulletin_board_details', compact('category', 'article', 'recent_posts','bulletin_details'));
     }
 
-
+    // ==== Thankyouu
+    public function thank_you() {
+        return view('frontend.thank_you');
+    }
 
 
 

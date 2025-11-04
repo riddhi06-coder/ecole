@@ -7274,3 +7274,41 @@ section,
 .home-page-modal-pop-up-wrap {
     max-width: 450px !important;
 }
+
+
+/* ===== Thank You Page ===== */
+.thank-you-content-sec .thank-you-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #11317B;
+  text-transform: capitalize;
+  margin-bottom: 0;
+  margin-top: 20px;
+}
+
+.thank-you-img-sec,
+.thank-you-content-sec,
+.thank-you-btn-sec {
+    text-align: center;
+}
+
+.thank-you-apart-sec .row {
+    justify-content: center;
+}
+
+.thank-you-img-sec img {
+    width: 300px;
+}
+
+.thank-you-content-sec p {
+  color: #000000;
+}
+
+.thank-you-content-sec p a {
+  color: #11317B !important;
+  font-weight: 600;
+}
+
+.thank-you-content-sec p a:hover {
+  color: #ffcc28 !important;
+}

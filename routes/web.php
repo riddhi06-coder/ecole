@@ -68,7 +68,8 @@ use App\Http\Controllers\Backend\JobPostingController;
 
 
 
-use App\Http\Controllers\Frontend\HomeController;;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\AdmissionFormController;
 
 // =========================================================================== Backend Routes
 
@@ -450,5 +451,11 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
 
     // ==== Bulletin Board Details
     Route::get('/bulletin-board/{category_slug}/{article_slug}', [HomeController::class, 'bulletin_board_details'])->name('frontend.bulletin_board_details');
+
+    // ==== Admission Form Submission
+    Route::post('/apply-for-admission/store', [AdmissionFormController::class, 'store'])->name('admission.store');
+
+    // ==== Thankyou Page
+    Route::get('/thank-you', [HomeController::class, 'thank_you'])->name('thank.you');
 
 });
