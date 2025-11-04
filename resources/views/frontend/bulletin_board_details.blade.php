@@ -75,17 +75,43 @@
                     </div>
                 </div>
                 
+                @php
+                    $description = $bulletin_details->desc ?? '';
+
+                    // ✅ Detect if <figure class="table"> exists and wrap it with Bootstrap styling
+                    if (strpos($description, '<figure class="table">') !== false) {
+                        $description = preg_replace(
+                            '/<figure class="table">([\s\S]*?)<\/figure>/i',
+                            '<div class="table-responsive"><table class="table table-bordered table-hover mb-0">$1</table></div>',
+                            $description
+                        );
+                    }
+                @endphp
+
                 <div class="row">
-                    @if( $bulletin_details->title || $bulletin_details->desc)
+                    @if($bulletin_details->title || $bulletin_details->desc)
                         <div class="col-12 col-md-12">
                             <div class="event-detail-content-sec">
-                                <h4 class="event-detail-title">{{ $bulletin_details->title ?? '' }}</h4>
-                                {!! $bulletin_details->desc ?? '<p>No details available for this event.</p>' !!}
+                                @if($bulletin_details->title)
+                                    <h4 class="event-detail-title">{{ $bulletin_details->title }}</h4>
+                                @endif
+
+                                @php
+                                    // Clean and replace <figure><table> with your Bootstrap table structure
+                                    $desc = $bulletin_details->desc;
+                                    $desc = str_replace(
+                                        ['<figure class="table"><table>', '</table></figure>'],
+                                        ['<table class="table table-bordered table-hover"><tbody>', '</tbody></table>'],
+                                        $desc
+                                    );
+                                @endphp
+
+                                {!! $desc ?? '<p>No details available for this event.</p>' !!}
                             </div>
                         </div>
                     @endif
-
                 </div>
+
             </div>
 
         </section>
