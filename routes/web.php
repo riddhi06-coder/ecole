@@ -64,7 +64,7 @@ use App\Http\Controllers\Backend\BulletinCategoryController;
 use App\Http\Controllers\Backend\BulletinListingController;
 use App\Http\Controllers\Backend\BulletinDetailsController;
 use App\Http\Controllers\Backend\JobPostingController;
-
+use App\Http\Controllers\Backend\GradesController;
 
 
 
@@ -281,7 +281,8 @@ Route::resource('manage-bulletin-listing', BulletinListingController::class);
 Route::resource('manage-bulletin-details', BulletinDetailsController::class);
 Route::get('/bulletin/articles/{categoryId}', [App\Http\Controllers\Backend\BulletinDetailsController::class, 'getArticles'])->name('bulletin.getArticles');
 
-
+// ==== Manage Grades Master
+Route::resource('manage-grades', GradesController::class);
 
 // ======================= Frontend =========================================
 
