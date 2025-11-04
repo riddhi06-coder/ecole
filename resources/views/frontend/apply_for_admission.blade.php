@@ -476,6 +476,23 @@
 
 
                 if (isValid) {
+
+
+                    const form = document.getElementById("applyAdmissionForm");
+                    const submitButtons = form.querySelectorAll("button[type='submit'], button[type='button']");
+
+                    submitButtons.forEach((btn) => {
+                        btn.disabled = true;
+                        btn.classList.add("disabled");
+                        btn.style.opacity = "0.6";
+
+                        // ✅ Change text only if it's NOT the Proceed to Payment button
+                        if (!btn.textContent.trim().toLowerCase().includes("proceed to payment")) {
+                            btn.textContent = "Submitting...";
+                        }
+                    });
+
+
                     // Before submission, set hidden fields for country codes
                     const fatherMobile = window.intlTelInputGlobals.getInstance(document.querySelector("#fatherMobile"));
                     const motherMobile = window.intlTelInputGlobals.getInstance(document.querySelector("#motherMobile"));
@@ -509,6 +526,7 @@
             }
         });
     </script>
+
 
 
 

@@ -275,13 +275,52 @@ class HomeController extends Controller
     // ====  Schedule A Visit For Admission
     public function schedule_a_visit_for_admission() {
         $schedule_a_visit_for_admission = ScheduleVisit::wherenull('deleted_by')->first();
-        return view('frontend.schedule_a_visit_for_admission', compact('schedule_a_visit_for_admission'));
+
+        $countries = DB::table('countries')
+            ->orderBy('id', 'asc')
+            ->get();
+
+
+        $nationality = DB::table('countries')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        // ✅ Generate dynamic academic years (previous, current, upcoming)
+        $currentYear = date('Y');
+        $nextYear = $currentYear + 1;
+
+        $academicYears = [
+            ($currentYear) . ' - ' . $nextYear,
+            ($nextYear) . ' - ' . ($nextYear + 1),
+        ];
+
+        return view('frontend.schedule_a_visit_for_admission', compact('schedule_a_visit_for_admission','countries','academicYears','nationality'));
     }
 
     // ====  Enquiry About Admission
     public function enquiry_about_admission() {
         $enquiry_about_admission = EnquiryAdmission::wherenull('deleted_by')->first();
-        return view('frontend.enquiry_about_admission', compact('enquiry_about_admission'));
+
+        $countries = DB::table('countries')
+            ->orderBy('id', 'asc')
+            ->get();
+
+
+        $nationality = DB::table('countries')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        // ✅ Generate dynamic academic years (previous, current, upcoming)
+        $currentYear = date('Y');
+        $nextYear = $currentYear + 1;
+
+        $academicYears = [
+            ($currentYear) . ' - ' . $nextYear,
+            ($nextYear) . ' - ' . ($nextYear + 1),
+        ];
+
+
+        return view('frontend.enquiry_about_admission', compact('enquiry_about_admission','countries','academicYears','nationality'));
     }
 
     // ==== Admission Criteria and Process
