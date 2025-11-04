@@ -140,22 +140,29 @@
 
                     <!-- Tags -->
                     @php
-                        // Only include items with non-empty tags
-                        $tags = $bulletin_board_category_list->filter(function($item) {
-                            return !empty($item->special_tags);
-                        });
+                        // Step 1: Collect all comma-separated tags from non-empty entries
+                        $allTags = $bulletin_board_category_list
+                            ->filter(function($item) {
+                                return !empty($item->special_tags);
+                            })
+                            ->flatMap(function($item) {
+                                // Step 2: Split and trim each tag
+                                return collect(explode(',', $item->special_tags))->map(fn($t) => trim($t))
+                                    ->filter(); // remove empty after trimming
+                            })
+                            ->unique() // Step 3: Remove duplicate tags
+                            ->values(); // reset keys
                     @endphp
 
-                    @if($tags->count())
+                    @if($allTags->count())
                         <div class="bb-tag-sec">
                             <h4 class="bb-sidebar-title">Tags</h4>
                             <div class="bb-popular_tag">
                                 <ul>
-                                    @foreach($tags as $tag)
+                                    @foreach($allTags as $tag)
                                         <li>
-                                            <!-- Filter by tag only -->
-                                            <a href="{{ route('frontend.bulletin_board_category_list', ['category_slug' => $tag->category->slug ?? '']) }}?tag={{ urlencode($tag->special_tags) }}">
-                                                {{ $tag->special_tags }}
+                                            <a href="{{ route('frontend.bulletin_board_category_list', ['category_slug' => $bulletin_board_category_list->first()->category->slug ?? '']) }}?tag={{ urlencode($tag) }}">
+                                                {{ $tag }}
                                             </a>
                                         </li>
                                     @endforeach
@@ -163,6 +170,7 @@
                             </div>
                         </div>
                     @endif
+
 
                 </div>
 

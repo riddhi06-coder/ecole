@@ -141,16 +141,24 @@
 
                         <!-- Tags -->
                         @php
-                            // Get unique non-empty tags
-                            $tags = $bulletin_board->pluck('special_tags')->filter()->unique();
+                            // Step 1: Get all tags as a single collection
+                            $allTags = $bulletin_board->pluck('special_tags')
+                                ->filter() // remove null or empty
+                                ->flatMap(function($tags) {
+                                    // Step 2: Split comma-separated tags and trim spaces
+                                    return array_map('trim', explode(',', $tags));
+                                })
+                                ->filter() // remove any empty values after trim
+                                ->unique() // Step 3: Ensure only unique tags
+                                ->values(); // reset keys
                         @endphp
 
-                        @if($tags->count())
+                        @if($allTags->count())
                             <div class="bb-tag-sec">
                                 <h4 class="bb-sidebar-title">Tags</h4>
                                 <div class="bb-popular_tag">
                                     <ul>
-                                        @foreach($tags as $tagItem)
+                                        @foreach($allTags as $tagItem)
                                             <li>
                                                 <a href="{{ route('frontend.bulletin_board') }}?tag={{ urlencode($tagItem) }}">
                                                     {{ $tagItem }}
@@ -161,6 +169,7 @@
                                 </div>
                             </div>
                         @endif
+
 
                     </div>
 
