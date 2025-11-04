@@ -367,11 +367,11 @@
 
     </script>
 
-    <!----- Fetching Country code for mobile nos---->
+    <!----- Fetching Country code for mobile nos ---->
     <script>
         $(document).ready(function () {
 
-            // 🧹 Remove existing error message on typing or changing
+            // 🧹 Remove existing error message when typing/selecting
             $(document).on("input change", "input, select, textarea", function () {
                 $(this).removeClass("is-invalid");
                 $(this).next(".error-message").remove();
@@ -387,10 +387,11 @@
                 this.value = this.value.replace(/\D/g, '');
             });
 
-            // 🧾 Validate on submit
-            $(".apply-other-info-btn button[type='submit']").on("click", function (e) {
+            // 🧾 Validate on both buttons
+            $(".apply-other-info-btn button").on("click", function (e) {
                 e.preventDefault();
                 let isValid = true;
+                const clickedButton = $(this).text().trim(); // Detect which button was clicked
 
                 $(".error-message").remove();
                 $("input, select, textarea").removeClass("is-invalid");
@@ -420,7 +421,6 @@
                             isValid = false;
                         }
                     }
-                    
                     // ✅ Pincode validation (only integers)
                     else if (nameAttr === "pincode" || field.attr("id") === "pincode") {
                         if (!/^\d+$/.test(value)) {
@@ -428,7 +428,6 @@
                             isValid = false;
                         }
                     }
-
                     // ✅ Name validation
                     else if (nameAttr?.includes("name") && !/^[A-Za-z\s]+$/.test(value)) {
                         showError(field, fieldName + " must contain only letters");
@@ -437,9 +436,13 @@
                 });
 
                 if (isValid) {
-                    alert("✅ Form submitted successfully!");
-                    // Replace this with your actual form submission
-                    // $('form').submit();
+                    if (clickedButton === "Submit as Enquiry") {
+                        alert("✅ Enquiry submitted successfully!");
+                        // $('form').submit();
+                    } else if (clickedButton === "Proceed to Payment") {
+                        alert("✅ Proceeding to payment...");
+                        // Redirect or trigger payment logic here
+                    }
                 }
             });
 
@@ -455,6 +458,7 @@
             }
         });
     </script>
+
 
 
 
