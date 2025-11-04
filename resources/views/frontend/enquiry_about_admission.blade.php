@@ -153,21 +153,9 @@
                                 <div class="col-md-6">
                                     <select class="form-select" id="join_grade" name="join_grade" required>
                                         <option value="" selected disabled>Grade to join *</option>
-                                        <option value="2">Nursery</option>
-                                        <option value="3">Kindergarten 1</option>
-                                        <option value="4">Kindergarten 2</option>
-                                        <option value="5">Grade 1</option>
-                                        <option value="6">Grade 2</option>
-                                        <option value="7">Grade 3</option>
-                                        <option value="8">Grade 4</option>
-                                        <option value="9">Grade 5</option>
-                                        <option value="10">Grade 6</option>
-                                        <option value="11">Grade 7</option>
-                                        <option value="12">Grade 8</option>
-                                        <option value="13">Grade 9</option>
-                                        <option value="14">Grade 10</option>
-                                        <option value="15">Grade 11</option>
-                                        <option value="16">Grade 12</option>
+                                        @foreach($grades as $grade)
+                                            <option value="{{ $grade->id }}">{{ $grade->grade }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -458,14 +446,47 @@
 
 
                 // ✅ Grade comparison: Present Grade must be less than Grade to Join
-                const presentGrade = parseInt($("#grade").val());
-                const joinGrade = parseInt($("#join_grade").val());
+                const presentGradeText = $("#grade option:selected").text().trim();
+                const joinGradeText = $("#join_grade option:selected").text().trim();
 
-                if (!isNaN(presentGrade) && !isNaN(joinGrade) && presentGrade >= joinGrade) {
+                // Static order list (includes all grades in logical order)
+                const gradeOrder = [
+                    "Playschool",
+                    "Nursery",
+                    "Kindergarten 1",
+                    "Kindergarten 2",
+                    "Grade 1",
+                    "Grade 2",
+                    "Grade 3",
+                    "Grade 4",
+                    "Grade 5",
+                    "Grade 6",
+                    "Grade 7",
+                    "Grade 8",
+                    "Grade 9",
+                    "Grade 10",
+                    "Grade 11",
+                    "Grade 12",
+                    "Not Applicable"
+                ];
+
+                // Dynamic grade list from DB (Blade-injected)
+                const dynamicGradeOrder = @json($grades->pluck('grade')->toArray());
+
+                // Combine both (ensuring order from static list but allowing DB data)
+                const fullGradeOrder = gradeOrder.filter(g => dynamicGradeOrder.includes(g) || gradeOrder.includes(g));
+
+                const presentIndex = fullGradeOrder.indexOf(presentGradeText);
+                const joinIndex = fullGradeOrder.indexOf(joinGradeText);
+
+                // Compare based on grade sequence, not IDs
+                if (presentIndex !== -1 && joinIndex !== -1 && presentIndex >= joinIndex) {
                     showError($("#join_grade"), "Grade to join must be higher than Present Grade");
                     isValid = false;
                 }
 
+
+                
                 // ✅ reCAPTCHA validation
                 // const captchaResponse = grecaptcha.getResponse();
                 // if (!captchaResponse) {

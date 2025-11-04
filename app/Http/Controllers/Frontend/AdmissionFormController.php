@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\AdmissionDetails;
-
+use App\Models\Grades;
 
 class AdmissionFormController extends Controller
 {
@@ -156,23 +156,7 @@ class AdmissionFormController extends Controller
 
 
             // ✅ Step 3: Prepare data for email
-            $gradeNames = [
-                2 => 'Nursery',
-                3 => 'Kindergarten 1',
-                4 => 'Kindergarten 2',
-                5 => 'Grade 1',
-                6 => 'Grade 2',
-                7 => 'Grade 3',
-                8 => 'Grade 4',
-                9 => 'Grade 5',
-                10 => 'Grade 6',
-                11 => 'Grade 7',
-                12 => 'Grade 8',
-                13 => 'Grade 9',
-                14 => 'Grade 10',
-                15 => 'Grade 11',
-                16 => 'Grade 12',
-            ];
+            $gradeName = Grades::where('id', $admission->join_grade)->value('grade'); // This returns only the grade name
 
 
             // ✅ Step 3: Trigger Email
@@ -180,7 +164,7 @@ class AdmissionFormController extends Controller
                 'student_name' => $admission->student_name,
                 'father_name' => $validated['f_name'],
                 'mother_name' => $validated['m_name'],
-                'grade' => $gradeNames[$admission->join_grade] ?? 'N/A',
+                'grade'        => $gradeName ?? 'N/A',
                 'form_type' => $request->input('form_type'),
             ];
 

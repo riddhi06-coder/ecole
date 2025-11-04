@@ -71,6 +71,9 @@ use App\Models\BulletinListing;
 use App\Models\BulletinDetails;
 use App\Models\BulletinCategory;
 use App\Models\JobPosting;
+use App\Models\Grades;
+
+
 
 
 class HomeController extends Controller
@@ -259,6 +262,9 @@ class HomeController extends Controller
             ->orderBy('id', 'asc')
             ->get();
 
+        $grades = Grades::orderBy('id', 'asc')->get();
+
+
         // ✅ Generate dynamic academic years (previous, current, upcoming)
         $currentYear = date('Y');
         $nextYear = $currentYear + 1;
@@ -269,7 +275,7 @@ class HomeController extends Controller
         ];
 
 
-        return view('frontend.apply_for_admission', compact('apply_for_admission','countries','academicYears','nationality'));
+        return view('frontend.apply_for_admission', compact('apply_for_admission','countries','academicYears','nationality','grades'));
     }
 
     // ====  Schedule A Visit For Admission
@@ -285,6 +291,9 @@ class HomeController extends Controller
             ->orderBy('id', 'asc')
             ->get();
 
+
+        $grades = Grades::orderBy('id', 'asc')->get();
+
         // ✅ Generate dynamic academic years (previous, current, upcoming)
         $currentYear = date('Y');
         $nextYear = $currentYear + 1;
@@ -294,7 +303,7 @@ class HomeController extends Controller
             ($nextYear) . ' - ' . ($nextYear + 1),
         ];
 
-        return view('frontend.schedule_a_visit_for_admission', compact('schedule_a_visit_for_admission','countries','academicYears','nationality'));
+        return view('frontend.schedule_a_visit_for_admission', compact('schedule_a_visit_for_admission','countries','academicYears','nationality','grades'));
     }
 
     // ====  Enquiry About Admission
@@ -310,6 +319,8 @@ class HomeController extends Controller
             ->orderBy('id', 'asc')
             ->get();
 
+        $grades = Grades::orderBy('id', 'asc')->get();
+
         // ✅ Generate dynamic academic years (previous, current, upcoming)
         $currentYear = date('Y');
         $nextYear = $currentYear + 1;
@@ -320,7 +331,7 @@ class HomeController extends Controller
         ];
 
 
-        return view('frontend.enquiry_about_admission', compact('enquiry_about_admission','countries','academicYears','nationality'));
+        return view('frontend.enquiry_about_admission', compact('enquiry_about_admission','countries','academicYears','nationality','grades'));
     }
 
     // ==== Admission Criteria and Process
