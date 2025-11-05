@@ -72,9 +72,44 @@ class AdmissionEnquiriesController extends Controller
         return view('backend.addmission_enquiries.index', compact('admission'));
     }
 
-
-    public function create(Request $request)
+    public function show($id)
     {
-        return view('backend.addmission_enquiries.create');
+        $admission = DB::table('admission_details as a')
+            ->leftJoin('countries as c', 'a.country_id', '=', 'c.id')
+            ->leftJoin('grades as g', 'a.join_grade', '=', 'g.id')
+            ->where('a.id', $id)
+            ->select(
+                'a.id',
+                'a.student_name',
+                'a.dob',
+                'a.address',
+                'a.city',
+                'a.pincode',
+                'a.present_school',
+                'a.grade',
+                'a.join_grade',
+                'a.year',
+                'a.form_type',
+
+                'a.father_details',
+                'a.mother_details',
+                'a.passport_type',
+                'a.foregin_passport_type',
+                'a.specific_learning',
+                'a.heard_from',
+                'a.wish_you_know',
+                'c.name as country_name',
+                'c.nationality as nationality_name',
+                'g.grade as join_grade_name'
+            )
+            ->first();
+
+        if (!$admission) {
+            abort(404, 'Admission record not found.');
+        }
+
+        return view('backend.addmission_enquiries.show', compact('admission'));
     }
+
+
 }

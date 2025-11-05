@@ -89,7 +89,7 @@
                                         <td>{{ $item->join_grade_name ?? '-' }}</td>
                                         <td>{{ $item->country_name ?? '-' }}</td>
                                         <td>{{ $item->nationality_name ?? '-' }}</td>
-                                        <td><a href="#" class="btn btn-primary btn-sm">View</a></td>
+                                        <td><a href="{{ route('manage-addmission-enquiries.show', $item->id) }}" class="btn btn-primary btn-sm">View</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

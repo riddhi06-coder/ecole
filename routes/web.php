@@ -286,6 +286,8 @@ Route::resource('manage-grades', GradesController::class);
 
 // ==== Manage Admission Enquiries
 Route::resource('manage-addmission-enquiries', AdmissionEnquiriesController::class);
+Route::get('/manage-addmission-enquiries/{id}', [AdmissionController::class, 'show'])->name('manage-addmission-enquiries.show');
+
 
 // ======================= Frontend =========================================
 
