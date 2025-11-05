@@ -50,6 +50,7 @@ class AdmissionEnquiriesController extends Controller
         if ($request->ajax()) {
             $html = '';
             foreach ($admission as $key => $item) {
+                $viewUrl = route('manage-addmission-enquiries.show', $item->id);
                 $html .= '<tr>
                     <td>'.($key + 1).'</td>
                     <td>'.($item->student_name ?? '-').'</td>
@@ -58,7 +59,7 @@ class AdmissionEnquiriesController extends Controller
                     <td>'.($item->join_grade_name ?? '-').'</td>
                     <td>'.($item->country_name ?? '-').'</td>
                     <td>'.($item->nationality_name ?? '-').'</td>
-                    <td><a href="#" class="btn btn-primary btn-sm">View</a></td>
+                    <td><a href="'.$viewUrl.'" class="btn btn-primary btn-sm">View</a></td>
                 </tr>';
             }
 

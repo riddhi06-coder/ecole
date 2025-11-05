@@ -287,9 +287,9 @@
                                     <textarea class="form-control" rows="3" placeholder="What do you wish to know?" id="wish_you_know" name="wish_you_know"></textarea>
                                 </div>
 
-                                <div class="col-md-12">
+                                <!-- <div class="col-md-12">
                                     <img src="{{ asset('frontend/assets/img/logo/cc-avenue.webp') }}" alt="CC Avenue" class="img-fluid">
-                                </div>
+                                </div> -->
 
                                 <!-- 🧩 Add reCAPTCHA Section -->
                                 <!-- <div class="form-group col-12">
