@@ -38,6 +38,7 @@
                   <div class="card-body">
 
                     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
@@ -47,24 +48,25 @@
                             </ol>
                         </nav>
 
-                        
+                        <div class="col-md-6">
+                            <select id="formTypeFilter" name="form_type" class="form-select">
+                                <option value="">-- Filter by Form Type --</option>
+                                <option value="1">Application for Admission</option>
+                                <option value="2">Schedule a Visit</option>
+                                <option value="3">Enquiry for Admission</option>
+                            </select>
+                        </div>
+
                     </div>
+
+                    <div class="d-flex justify-content-end mb-3">
+                        <input type="text" id="tableSearch" class="form-control w-25" placeholder="Search...">
+                    </div>
+
 
                     <div class="table-responsive custom-scrollbar mt-5">
 
-                    
-                        <div class="flex-grow-1 d-flex justify-content-center mb-3">
-                            <div class="col-md-6">
-                                <select id="formTypeFilter" name="form_type" class="form-select">
-                                    <option value="">-- Filter by Form Type --</option>
-                                    <option value="1">Application for Admission</option>
-                                    <option value="2">Schedule a Visit</option>
-                                    <option value="3">Enquiry for Admission</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <table class="display" id="basic-1">
+                        <table class="table table-bordered table-bordered" id="bulletinTable">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -92,7 +94,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-
+                        
                     </div>
                   </div>
                 </div>
@@ -129,6 +131,23 @@
                 });
             });
         </script>
+
+        <script>
+            document.getElementById('tableSearch').addEventListener('keyup', function() {
+                var searchValue = this.value.toLowerCase();
+                var rows = document.querySelectorAll('#admissionTableBody tr');
+
+                rows.forEach(function(row) {
+                    var text = row.textContent.toLowerCase();
+                    if (text.includes(searchValue)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        </script>
+
 
 
 </body>
