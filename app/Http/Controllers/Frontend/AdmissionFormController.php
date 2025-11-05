@@ -209,6 +209,10 @@ class AdmissionFormController extends Controller
         }
     }
 
+    public function proceed_to_payment(Request $request)
+    {
+        return view('frontend.proceed_to_payment');
+    }
 
 
 }

@@ -66,6 +66,8 @@ use App\Http\Controllers\Backend\BulletinDetailsController;
 use App\Http\Controllers\Backend\JobPostingController;
 use App\Http\Controllers\Backend\GradesController;
 use App\Http\Controllers\Backend\AdmissionEnquiriesController;
+use App\Http\Controllers\Backend\BrochureDetailsController;
+
 
 
 use App\Http\Controllers\Frontend\HomeController;
@@ -288,6 +290,13 @@ Route::resource('manage-grades', GradesController::class);
 Route::resource('manage-addmission-enquiries', AdmissionEnquiriesController::class);
 Route::get('/manage-addmission-enquiries/{id}', [AdmissionController::class, 'show'])->name('manage-addmission-enquiries.show');
 
+// ==== Manage Brochure Admission Details
+Route::resource('manage-brochure-details', BrochureDetailsController::class);
+
+
+
+
+
 
 // ======================= Frontend =========================================
 
@@ -457,11 +466,14 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
 
     // ==== Bulletin Board Details
     Route::get('/bulletin-board/{category_slug}/{article_slug}', [HomeController::class, 'bulletin_board_details'])->name('frontend.bulletin_board_details');
+    
+    // ==== Thankyou Page
+    Route::get('/thank-you', [HomeController::class, 'thank_you'])->name('thank.you');
 
     // ==== Admission Form Submission
     Route::post('/apply-for-admission/store', [AdmissionFormController::class, 'store'])->name('admission.store');
 
-    // ==== Thankyou Page
-    Route::get('/thank-you', [HomeController::class, 'thank_you'])->name('thank.you');
+    // ==== Proceed to Payment
+    Route::get('/proceed-to-payment', [AdmissionFormController::class, 'proceed_to_payment'])->name('frontend.proceed_to_payment');
 
 });

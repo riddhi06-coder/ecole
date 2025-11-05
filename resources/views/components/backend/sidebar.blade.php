@@ -45,6 +45,20 @@
                   </a>
                 </li>
 
+
+                <li class="sidebar-list {{ request()->routeIs('manage-brochure-details.index') ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"></i>
+                  <a class="sidebar-link" href="{{ route('manage-brochure-details.index') }}">
+                    <svg class="stroke-icon"> 
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-bonus-kit') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-bonus-kit') }}"></use>
+                    </svg>
+                    <span>Add. Brochure Details</span>
+                  </a>
+                </li>
+
                 
                 <li class="sidebar-list {{ request()->routeIs('manage-banner-details.index', 'manage-programme-offered.index', 'manage-home-festivities.index','manage-home-features.index','manage-bulletin-board.index','manage-testimonials.index','manage-clients') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
@@ -262,7 +276,7 @@
                     <svg class="fill-icon">
                       <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
                     </svg>
-                    <span>Admission Enquiries</span>
+                    <span>Admission Enquiry</span>
                   </a>
                 </li>
 
