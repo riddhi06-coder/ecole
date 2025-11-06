@@ -34,6 +34,11 @@ class AdmissionDetails extends Model
         'heard_from',
         'wish_you_know',
 
+        'order_id',
+        't_id',
+        'amount',
+
+
         'inserted_at',
         'inserted_by',
         'modified_at',

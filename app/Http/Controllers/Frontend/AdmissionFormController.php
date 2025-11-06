@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\AdmissionDetails;
 use App\Models\Grades;
+use App\Models\BrochureDetail;
 
 class AdmissionFormController extends Controller
 {
@@ -337,11 +338,88 @@ class AdmissionFormController extends Controller
     public function showPayment($id)
     {
         $admission = AdmissionDetails::findOrFail($id);
+
         $order_id = '#EWMS_' . rand(100000, 999999);
         $t_id = rand(10000000, 99999999);
 
-        return view('frontend.proceed_to_payment', compact('order_id', 't_id', 'admission'));
+        $countries = DB::table('countries')
+            ->orderBy('id', 'asc')
+            ->get();
+
+
+        $brochure = BrochureDetail::first();
+        $feesData = json_decode($brochure->fees, true); 
+
+        $amount = 0;
+        foreach ($feesData as $fee) {
+            if ($fee['passport_type'] == $admission->passport_type) {
+                $amount = $fee['amount'];
+                break;
+            }
+        }
+
+        $admission->update([
+            'order_id' => $order_id,
+            't_id'     => $t_id,
+            'amount'   => $amount,
+        ]);
+
+        return view('frontend.proceed_to_payment', compact('order_id', 't_id', 'admission', 'amount','countries'));
     }
+
+    public function redirectToCCAvenue(Request $request)
+    {
+        $data = $request->all();
+
+        $merchant_id = env('CCAV_MERCHANT_ID');      // LIVE Merchant ID
+        $access_code = env('CCAV_ACCESS_CODE');      // LIVE Access Code
+        $working_key = env('CCAV_WORKING_KEY');      // LIVE Working Key
+
+        $parameters = [
+            'merchant_id' => $merchant_id,
+            'order_id' => $data['order_id'],
+            'currency' => 'INR',
+            'amount' => $data['amount'],
+            'redirect_url' => route('ccavenue.response'),
+            'cancel_url' => route('ccavenue.response'),
+            'billing_name' => $data['billing_name'],
+            'billing_address' => $data['billing_address'],
+            'billing_city' => $data['billing_city'],
+            'billing_state' => $data['billing_state'],
+            'billing_zip' => $data['billing_zip'],
+            'billing_country' => $data['billing_country'],
+            'billing_tel' => $data['billing_phone'],
+            'billing_email' => $data['billing_email'],
+            // shipping fields if needed
+        ];
+
+        $encrypted_data = $this->encryptCCAvenueData($parameters, $working_key);
+
+        $ccavenue_url = 'https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction';
+
+        return view('frontend.ccavenue-redirect', compact('encrypted_data', 'access_code', 'ccavenue_url'));
+    }
+
+    // Encryption function
+    private function encryptCCAvenueData($data, $working_key) {
+        $merchant_data = '';
+        foreach ($data as $key => $value) {
+            $merchant_data .= $key . '=' . $value . '&';
+        }
+        $merchant_data = rtrim($merchant_data, '&');
+
+        $encrypted_data = openssl_encrypt(
+            $merchant_data,
+            'AES-128-CBC',
+            pack("a16", $working_key),
+            OPENSSL_RAW_DATA,
+            pack("a16", $working_key)
+        );
+
+        return bin2hex($encrypted_data);
+    }
+
+
 
 
 
