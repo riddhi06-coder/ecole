@@ -610,24 +610,46 @@
                     isValid = false;
                 }
 
+
+                // ✅ reCAPTCHA validation
+                // const captchaResponse = grecaptcha.getResponse();
+                // if (!captchaResponse) {
+                //     const captchaContainer = $(".g-recaptcha");
+                //     captchaContainer.after('<div class="error-message text-danger small mt-1">Please verify that you are not a robot</div>');
+                //     isValid = false;
+                // }
+
+
                 if (!isValid) return false;
 
                 // ✅ Prepare AJAX data
                 const form = $("#applyAdmissionForm");
                 const formData = form.serializeArray();
 
-                // Add extra hidden data (like mobile country codes)
+                // ✅ intlTelInput Instances
                 const fatherMobile = window.intlTelInputGlobals.getInstance(document.querySelector("#fatherMobile"));
                 const motherMobile = window.intlTelInputGlobals.getInstance(document.querySelector("#motherMobile"));
                 const fatherResidence = window.intlTelInputGlobals.getInstance(document.querySelector("#fatherResidence"));
                 const motherResidence = window.intlTelInputGlobals.getInstance(document.querySelector("#motherResidence"));
 
+                // Use same instances for office numbers (as in enquiry)
+                const fatherOffTel = fatherResidence;
+                const motherOffTel = motherResidence;
+
+                // ✅ Assign values to your actual hidden inputs
+                $("#f_mobile_code").val(fatherMobile.getSelectedCountryData().dialCode);
+                $("#m_mobile_code").val(motherMobile.getSelectedCountryData().dialCode);
+                $("#f_offtel_code").val(fatherOffTel.getSelectedCountryData().dialCode);
+                $("#m_offtel_code").val(motherOffTel.getSelectedCountryData().dialCode);
+
+                // ✅ Update formData accordingly
                 formData.push(
-                    { name: "fatherMobileCode", value: fatherMobile.getSelectedCountryData().dialCode },
-                    { name: "motherMobileCode", value: motherMobile.getSelectedCountryData().dialCode },
-                    { name: "fatherResidenceCode", value: fatherResidence.getSelectedCountryData().dialCode },
-                    { name: "motherResidenceCode", value: motherResidence.getSelectedCountryData().dialCode }
+                    { name: "f_mobile_code", value: fatherMobile.getSelectedCountryData().dialCode },
+                    { name: "m_mobile_code", value: motherMobile.getSelectedCountryData().dialCode },
+                    { name: "f_offtel_code", value: fatherOffTel.getSelectedCountryData().dialCode },
+                    { name: "m_offtel_code", value: motherOffTel.getSelectedCountryData().dialCode }
                 );
+
 
                 // Optional form type logic
                 const selectedRadio = $("input[name='radioDefault']:checked");
@@ -647,11 +669,6 @@
                         btn.prop("disabled", false).text("Proceed to Payment");
 
                         if (response.status === "success") {
-                            alert(
-                                "Order Created Successfully!\n" +
-                                "Order ID: " + response.order_id + "\n" +
-                                "Transaction ID: " + response.t_id
-                            );
 
                             // Optionally redirect or open payment page
                             if (response.redirect_url) {
