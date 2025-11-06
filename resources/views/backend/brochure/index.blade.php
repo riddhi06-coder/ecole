@@ -56,12 +56,55 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Policy Title</th>
+                                <th>Brochure</th>
+                                <th>Fees</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                               
+                                @foreach ($brochures as $key => $item)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>
+                                            @if($item->brochure)
+                                                <a href="{{ asset($item->brochure) }}" target="_blank">
+                                                    View PDF
+                                                </a>
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+
+                                        <td>
+                                            @php
+                                                $fees = json_decode($item->fees, true);
+                                            @endphp
+
+                                            @if(!empty($fees))
+                                                <ul class="list-unstyled mb-0">
+                                                    @foreach($fees as $fee)
+                                                        <li>
+                                                            <strong>
+                                                                {{ $fee['passport_type'] == 1 ? 'Indian Passport' : 'Foreign Passport' }}
+                                                            </strong>: ₹{{ $fee['amount'] }}
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('manage-brochure-details.edit', $item->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                            <form action="{{ route('manage-brochure-details.destroy', $item->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Are you sure you want to delete this brochure?')">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
