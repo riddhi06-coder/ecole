@@ -156,7 +156,7 @@ class AdmissionFormController extends Controller
 
 
             // ✅ Step 3: Prepare data for email
-            $gradeName = Grades::where('id', $admission->join_grade)->value('grade'); // This returns only the grade name
+            $gradeName = Grades::where('id', $admission->join_grade)->value('grade'); 
 
 
             // ✅ Step 3: Trigger Email
@@ -211,7 +211,26 @@ class AdmissionFormController extends Controller
 
     public function proceed_to_payment(Request $request)
     {
-        return view('frontend.proceed_to_payment');
+        dd($request);
+
+          // Validate incoming data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string',
+            'city' => 'required|string|max:255',
+            'country' => 'required',
+            'pincode' => 'required|numeric',
+            'father_mobile' => 'required|string',
+            'father_email' => 'required|email',
+        ]);
+
+        // Generate unique order ID (#EWMS_randomdigits)
+        $order_id = '#EWMS_' . rand(100000, 999999);
+
+        // Generate transaction ID (random numeric)
+        $t_id = rand(10000000, 99999999);
+
+        return view('frontend.proceed_to_payment', compact('order_id','t_id'));
     }
 
 

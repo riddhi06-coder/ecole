@@ -76,7 +76,7 @@ class IBPrimaryController extends Controller
     public function update(Request $request, $id)
     {
         // ✅ Find the curriculum record
-        $curriculum = Curriculum::findOrFail($id);
+        $curriculum = IBPrimary::findOrFail($id);
 
         // ✅ Validation
         $validated = $request->validate([

@@ -86,6 +86,7 @@
 
                 <section class="apply-for-admission-form-sec">
                     <div class="container">
+
                             <div class="apply-for-admission-student-details-sec">
                                 <h4 class="afas-details-title">Student Details</h4>
                                 <div class="row g-3">
@@ -298,12 +299,13 @@
                                     </div> -->
 
                                     <div class="col-md-12 apply-other-info-btn">
-                                        <button type="submit" class="btn">Submit as Enquiry</button>
-                                        <button type="button" class="btn">Proceed to Payment</button>
+                                        <button type="submit" class="btn" id="heyy">Submit as Enquiry</button>
+                                        <button type="button" id="proceedToPaymentBtn" class="btn">Proceed to Payment</button>
                                     </div>
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 </section>
             
@@ -394,7 +396,7 @@
             });
 
             // 🧾 Validate on both buttons
-            $(".apply-other-info-btn button").on("click", function (e) {
+            $("#heyy").on("click", function (e) {
                 e.preventDefault(); // temporarily prevent submission for validation
                 let isValid = true;
                 const clickedButton = $(this).text().trim(); // Detect which button was clicked
@@ -531,6 +533,7 @@
                 }
             });
 
+
             // 🧩 Helper functions
             function showError(field, message) {
                 field.addClass("is-invalid");
@@ -543,6 +546,143 @@
             }
         });
     </script>
+
+
+
+    <script>
+        $(document).ready(function () {
+            // When Proceed to Payment button is clicked
+            $('#proceedToPaymentBtn').on('click', function (e) {
+                e.preventDefault();
+
+                let isValid = true;
+                $(".error-message").remove();
+                $("input, select, textarea").removeClass("is-invalid");
+
+                // ✅ Run same validation logic as form submission
+                $("input[required], select[required], textarea[required]").each(function () {
+                    const field = $(this);
+                    const value = field.val()?.trim();
+                    const type = field.attr("type");
+                    const nameAttr = field.attr("name");
+                    const placeholder = field.attr("placeholder") || field.find("option:selected").text();
+                    const fieldName = placeholder.replace("*", "").replace(":", "").trim();
+
+                    if (!value) {
+                        showError(field, fieldName + " is required");
+                        isValid = false;
+                    } else if (type === "email" && !validateEmail(value)) {
+                        showError(field, "Please enter a valid " + fieldName);
+                        isValid = false;
+                    } else if (type === "tel" && nameAttr !== "pincode") {
+                        if (value.length < 10 || value.length > 15 || !/^\d+$/.test(value)) {
+                            showError(field, "Please enter a valid " + fieldName + " (10–15 digits only)");
+                            isValid = false;
+                        }
+                    } else if (nameAttr === "pincode" || field.attr("id") === "pincode") {
+                        if (!/^\d+$/.test(value)) {
+                            showError(field, fieldName + " must contain only numbers");
+                            isValid = false;
+                        }
+                    } else if (nameAttr?.includes("name") && !/^[A-Za-z\s]+$/.test(value)) {
+                        showError(field, fieldName + " must contain only letters");
+                        isValid = false;
+                    }
+                });
+
+                // ✅ Grade comparison
+                const presentGradeText = $("#grade option:selected").text().trim();
+                const joinGradeText = $("#join_grade option:selected").text().trim();
+                const gradeOrder = [
+                    "Playschool", "Nursery", "Kindergarten 1", "Kindergarten 2",
+                    "Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5",
+                    "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10",
+                    "Grade 11", "Grade 12", "Not Applicable"
+                ];
+                const dynamicGradeOrder = @json($grades->pluck('grade')->toArray());
+                const fullGradeOrder = gradeOrder.filter(g => dynamicGradeOrder.includes(g) || gradeOrder.includes(g));
+
+                const presentIndex = fullGradeOrder.indexOf(presentGradeText);
+                const joinIndex = fullGradeOrder.indexOf(joinGradeText);
+
+                if (presentIndex !== -1 && joinIndex !== -1 && presentIndex >= joinIndex) {
+                    showError($("#join_grade"), "Grade to join must be higher than Present Grade");
+                    isValid = false;
+                }
+
+                if (!isValid) return false;
+
+                // ✅ Prepare AJAX data
+                const form = $("#applyAdmissionForm");
+                const formData = form.serializeArray();
+
+                // Add extra hidden data (like mobile country codes)
+                const fatherMobile = window.intlTelInputGlobals.getInstance(document.querySelector("#fatherMobile"));
+                const motherMobile = window.intlTelInputGlobals.getInstance(document.querySelector("#motherMobile"));
+                const fatherResidence = window.intlTelInputGlobals.getInstance(document.querySelector("#fatherResidence"));
+                const motherResidence = window.intlTelInputGlobals.getInstance(document.querySelector("#motherResidence"));
+
+                formData.push(
+                    { name: "fatherMobileCode", value: fatherMobile.getSelectedCountryData().dialCode },
+                    { name: "motherMobileCode", value: motherMobile.getSelectedCountryData().dialCode },
+                    { name: "fatherResidenceCode", value: fatherResidence.getSelectedCountryData().dialCode },
+                    { name: "motherResidenceCode", value: motherResidence.getSelectedCountryData().dialCode }
+                );
+
+                // Optional form type logic
+                const selectedRadio = $("input[name='radioDefault']:checked");
+                const formType = selectedRadio.data("type") || 1;
+                formData.push({ name: "form_type", value: formType });
+
+                // ✅ Disable button during processing
+                const btn = $(this);
+                btn.prop("disabled", true).text("Processing...");
+
+                // ✅ AJAX call
+                $.ajax({
+                    url: "{{ route('frontend.proceed_to_payment') }}",
+                    method: "POST",
+                    data: formData,
+                    success: function (response) {
+                        btn.prop("disabled", false).text("Proceed to Payment");
+
+                        if (response.status === "success") {
+                            alert(
+                                "Order Created Successfully!\n" +
+                                "Order ID: " + response.order_id + "\n" +
+                                "Transaction ID: " + response.t_id
+                            );
+
+                            // Optionally redirect or open payment page
+                            if (response.redirect_url) {
+                                window.location.href = response.redirect_url;
+                            }
+                        } else {
+                            alert(response.message || "Something went wrong. Please try again.");
+                        }
+                    },
+                    error: function (xhr) {
+                        btn.prop("disabled", false).text("Proceed to Payment");
+                        console.error(xhr.responseText);
+                        alert("Something went wrong. Please try again.");
+                    }
+                });
+            });
+
+            // Helper functions
+            function showError(field, message) {
+                field.addClass("is-invalid");
+                if (!field.next(".error-message").length) {
+                    field.after('<div class="error-message text-danger small mt-1">' + message + '</div>');
+                }
+            }
+            function validateEmail(email) {
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(email);
+            }
+        });
+    </script>
+
 
 
 

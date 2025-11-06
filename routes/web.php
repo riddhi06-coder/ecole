@@ -474,6 +474,6 @@ Route::group(['prefix'=> '', 'middleware'=>[\App\Http\Middleware\PreventBackHist
     Route::post('/apply-for-admission/store', [AdmissionFormController::class, 'store'])->name('admission.store');
 
     // ==== Proceed to Payment
-    Route::get('/proceed-to-payment', [AdmissionFormController::class, 'proceed_to_payment'])->name('frontend.proceed_to_payment');
+    Route::post('/proceed-to-payment', [AdmissionFormController::class, 'proceed_to_payment'])->name('frontend.proceed_to_payment');
 
 });
