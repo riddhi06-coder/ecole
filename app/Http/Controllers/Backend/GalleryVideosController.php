@@ -21,7 +21,7 @@ class GalleryVideosController extends Controller
 
     public function index()
     {
-        $galleryVideos = GalleryVideo::wherenull('deleted_by')->get();
+        $galleryVideos = GalleryVideo::wherenull('deleted_by')->orderby('id', 'desc')->get();
         return view('backend.campus.gallery_video.index', compact('galleryVideos'));
     }
 

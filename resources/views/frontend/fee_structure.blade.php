@@ -34,7 +34,23 @@
                 <div class="row">
                     <div class="col-12 col-md-12">
                         <div class="fee-structure-content-sec">
-                            <h4 class="fee-structure-title">{{  $fee_structure_banner->section_heading ? $fee_structure_banner->section_heading : 'What sets us apart?' }}</h4>
+                            
+                            <div class="fees-stru-title-button-custom-sec">
+                                <div class="row">
+                                    <div class="col-12 col-md-4">
+                                        <h4 class="fee-structure-title">{{  $fee_structure_banner->section_heading ? $fee_structure_banner->section_heading : 'What sets us apart?' }}</h4>
+                                    </div>
+                                    <div class="col-12 col-md-8">
+                                        <div class="fees-structure-title-btn-custom-sp-sec">
+                                            <a class="progress-offers-btn" target="_blank" href="https://ecolemondiale.org/public/frontend/assets/pdf/3Grayquest-Flyer-1.pdf">
+                                                With Grayquest, pay your child’s school fees in easy monthly instalments
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
                             <p><strong>{{  $fee_structure_banner->section_description ? $fee_structure_banner->section_description : 'What sets us apart?' }}</strong></p>
 
                             @foreach($fee_structure as $fee)

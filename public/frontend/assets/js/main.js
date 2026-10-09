@@ -21,8 +21,8 @@
 
   function mobileNavToogle() {
     document.querySelector('body').classList.toggle('mobile-nav-active');
-    mobileNavToggleBtn.classList.toggle('bi-list');
-    mobileNavToggleBtn.classList.toggle('bi-x');
+    mobileNavToggleBtn.classList.toggle('fa-bars');
+    mobileNavToggleBtn.classList.toggle('fa-xmark');
   }
   mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
 
@@ -84,7 +84,18 @@
   /**
    * Animation on scroll function and init
    */
-  function aosInit() {
+//   function aosInit() {
+//     AOS.init({
+//       duration: 600,
+//       easing: 'ease-in-out',
+//       once: true,
+//       mirror: false
+//     });
+//   }
+//   window.addEventListener('load', aosInit);
+
+window.addEventListener('load', function () {
+  if (typeof AOS !== 'undefined') {
     AOS.init({
       duration: 600,
       easing: 'ease-in-out',
@@ -92,7 +103,7 @@
       mirror: false
     });
   }
-  window.addEventListener('load', aosInit);
+});
 
   /**
    * Auto generate the carousel indicators
@@ -110,9 +121,15 @@
   /**
    * Initiate glightbox
    */
+//   const glightbox = GLightbox({
+//     selector: '.glightbox'
+//   });
+
+if (typeof GLightbox !== 'undefined') {
   const glightbox = GLightbox({
     selector: '.glightbox'
   });
+}
 
   /**
    * Init isotope layout and filters
@@ -150,7 +167,7 @@
   /**
    * Initiate Pure Counter
    */
-  new PureCounter();
+//   new PureCounter();
 
   /**
    * Animate the skills items on reveal

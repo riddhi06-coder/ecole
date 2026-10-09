@@ -47,7 +47,7 @@
                                 // Only apply yellow-bg to first cell of first 3 rows (adjust as needed)
                                 if (in_array($rowIndex, [1,2,3])) { 
                                     // Add class to first <td>
-                                    $rowContent = preg_replace('/<td(.*?)>/', '<td$1 class="yellow-bg">', $rowContent, 1);
+                                    $rowContent = preg_replace('/<td(.*?)>/', '<td$1 class="yellow-bg curri-yellow-tab-bg">', $rowContent, 1);
 
                                     // Add class to first <th>
                                     $rowContent = preg_replace('/<th(.*?)>/', '<th$1 class="yellow-bg">', $rowContent, 1);

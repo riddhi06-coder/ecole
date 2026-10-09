@@ -76,12 +76,33 @@
 
 
                                          <!-- Video URL -->
-                                        <div class="col-md-12">
-                                            <label class="form-label" for="video_url">Video URL <span class="txt-danger">*</span></label>
-                                            <input class="form-control" id="video_url" type="text" name="video_url"  required placeholder="Enter Video URL">
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="video_url">Youtube Video URL </label>
+                                            <input class="form-control" id="video_url" type="text" name="video_url"  placeholder="Enter Video URL">
                                             <div class="invalid-feedback">Please enter a Video URL.</div>
                                         </div>
 
+
+                                        <!-- Video Upload -->
+                                       <div class="col-md-6">
+                                            <label class="form-label" for="video_upload">Video Upload</label>
+                                            <input class="form-control" id="video_upload" type="file" name="video_upload" accept="video/*">
+                                            <small class="text-secondary"><b>Note: The file size should be less than 300MB.</b></small>
+                                            <br>
+                                            <small class="text-secondary"><b>Note: Allowed video formats: .mp4, .mov, .avi, .wmv, .mkv, .webm.</b></small>
+
+                                            <div class="invalid-feedback">Please upload a video.</div>
+                                            
+                                        </div>
+                                        
+                                        
+                                        <!-- Video Preview -->
+                                        <div class="col-md-6 mt-3">
+                                            <video id="video_preview" width="100%" height="400" controls style="display:none;">
+                                                <source id="video_preview_src" src="" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </div>
       
                                       
                                         <!-- Form Actions -->
@@ -131,6 +152,21 @@
                     preview.classList.add('d-none'); // hide if no file
                 }
             }
+            
+            
+            document.getElementById('video_upload').addEventListener('input', function () {
+                let url = this.value.trim();
+                let video = document.getElementById('video_preview');
+                let source = document.getElementById('video_preview_src');
+                
+                if (url !== "") {
+                    source.src = url;
+                    video.style.display = "block";
+                    video.load(); // refresh preview
+                } else {
+                    video.style.display = "none";
+                }
+            });
         </script>
 
 

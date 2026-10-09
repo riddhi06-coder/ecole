@@ -1,32 +1,23 @@
-#/vendor/
+cat > .gitignore << 'EOF'
+*.zip
+*.rar
+*.tar
+*.gz
+
+storage/logs/*
+storage/logs/*.log
+
 node_modules/
-npm-debug.log
-yarn-error.log
+vendor/
+vendor_bkp/
 
-# Laravel 4 specific
-bootstrap/compiled.php
-#app/storage/
+backup_05_12_2025/
+old_version_12_01_2026/
 
-# Laravel 5 & Lumen specific
-#public/storage
-public/hot
+public/uploads/
+public/invoices/
+public/frontend/assets/video/video.mp4
 
-# Laravel 5 & Lumen specific with changed public path
-public_html/storage
-public_html/hot
-
-storage/*.key
+error_log
 .env
-Homestead.yaml
-Homestead.json
-/.vagrant
-.phpunit.result.cache
-
-/public/build
-/storage/pail
-.env.backup
-.env.production
-.phpactor.json
-auth.json
-
-
+EOF

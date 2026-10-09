@@ -4,6 +4,12 @@
     @include('components.frontend.head')
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
+    
+    <style>
+        .swal-title-red {
+            color: #d33 !important;
+        }
+    </style>
 
 <body>
 
@@ -78,6 +84,7 @@
 
                         <!-- Hidden input to store numeric form_type -->
                         <input type="hidden" id="form_type" name="form_type" value="2">
+                                    <input type="hidden" id="utm" name="utm">
 
                     </div>
                 </div>
@@ -162,7 +169,7 @@
                                 <!-- Academic Year & Nationality -->
                                 <div class="col-md-6">
                                     <select class="form-select" id="year" name="year" required>
-                                        <option value="" selected disabled>Seeking Admission for Academic Year</option>
+                                        <option value="" selected disabled>Seeking Admission for Academic Year*</option>
                                         @foreach($academicYears as $year)
                                             <option value="{{ $year }}">{{ $year }}</option>
                                         @endforeach
@@ -171,7 +178,7 @@
 
                                 <div class="col-md-6">
                                     <select class="form-select" id="nationality" name="nationality" required>
-                                        <option value="" selected disabled>Nationality</option>
+                                        <option value="" selected disabled>Nationality*</option>
                                         @foreach($nationality as $item)
                                             <option value="{{ $item->id }}">{{ $item->nationality }}</option>
                                         @endforeach
@@ -276,7 +283,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <input type="text" class="form-control" placeholder="Please share if your child has any specific learning needs / development considerations:" id="specific_learning" name="specific_learning" required>
+                                    <input type="text" class="form-control" placeholder="Please share if your child has any specific learning needs / development considerations:*" id="specific_learning" name="specific_learning" required>
                                 </div>
 
                                 <div class="col-md-12">
@@ -291,10 +298,18 @@
                                     <img src="{{ asset('frontend/assets/img/logo/cc-avenue.webp') }}" alt="CC Avenue" class="img-fluid">
                                 </div> -->
 
-                                <!-- 🧩 Add reCAPTCHA Section -->
-                                <!-- <div class="form-group col-12">
-                                    <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
-                                </div> -->
+                               <div class="row">
+                                    <div class="col-12 mt-3 text-left" style="margin-bottom: 10px;">
+                                        <div class="d-inline-block">
+                                            <div class="g-recaptcha"
+                                                 data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-12 text-left">
+                                        <span id="captchaError" class="error-text" style="color:red;"></span>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-12 apply-other-info-btn">
                                     <button type="submit" class="btn">Submit as Enquiry</button>
@@ -320,6 +335,7 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!----- Fetching Country code for mobile nos---->
     <script>
@@ -395,142 +411,296 @@
             });
 
             // 🧾 Validate on both buttons
-            $(".apply-other-info-btn button").on("click", function (e) {
-                e.preventDefault(); // temporarily prevent submission for validation
-                let isValid = true;
-                const clickedButton = $(this).text().trim(); // Detect which button was clicked
+            // $(".apply-other-info-btn button").on("click", function (e) {
+            //     e.preventDefault(); // temporarily prevent submission for validation
+            //     let isValid = true;
+            //     const clickedButton = $(this).text().trim(); // Detect which button was clicked
 
+            //     $(".error-message").remove();
+            //     $("input, select, textarea").removeClass("is-invalid");
+
+            //     $("input[required], select[required], textarea[required]").each(function () {
+            //         const field = $(this);
+            //         const value = field.val()?.trim();
+            //         const type = field.attr("type");
+            //         const nameAttr = field.attr("name");
+            //         const placeholder = field.attr("placeholder") || field.find("option:selected").text();
+            //         const fieldName = placeholder.replace("*", "").replace(":", "").trim();
+
+            //         // ✅ Required field check
+            //         if (!value) {
+            //             showError(field, fieldName + " is required");
+            //             isValid = false;
+            //         }
+            //         // ✅ Email validation
+            //         else if (type === "email" && !validateEmail(value)) {
+            //             showError(field, "Please enter a valid " + fieldName);
+            //             isValid = false;
+            //         }
+            //         // ✅ Mobile number validation
+            //         else if (type === "tel" && nameAttr !== "pincode") {
+            //             if (value.length < 10 || value.length > 15 || !/^\d+$/.test(value)) {
+            //                 showError(field, "Please enter a valid " + fieldName + " (10–15 digits only)");
+            //                 isValid = false;
+            //             }
+            //         }
+            //         // ✅ Pincode validation (only integers)
+            //         else if (nameAttr === "pincode" || field.attr("id") === "pincode") {
+            //             if (!/^\d+$/.test(value)) {
+            //                 showError(field, fieldName + " must contain only numbers");
+            //                 isValid = false;
+            //             }
+            //         }
+            //         // ✅ Name validation
+            //         else if (nameAttr?.includes("name") && !/^[A-Za-z\s]+$/.test(value)) {
+            //             showError(field, fieldName + " must contain only letters");
+            //             isValid = false;
+            //         }
+            //     });
+
+
+            //     // ✅ Grade comparison: Present Grade must be less than Grade to Join
+            //     // ✅ Grade comparison using static + dynamic grade names
+            //     const presentGradeText = $("#grade option:selected").text().trim();
+            //     const joinGradeText = $("#join_grade option:selected").text().trim();
+
+            //     // Static order list (includes all grades in logical order)
+            //     const gradeOrder = [
+            //         "Playschool",
+            //         "Nursery",
+            //         "Kindergarten 1",
+            //         "Kindergarten 2",
+            //         "Grade 1",
+            //         "Grade 2",
+            //         "Grade 3",
+            //         "Grade 4",
+            //         "Grade 5",
+            //         "Grade 6",
+            //         "Grade 7",
+            //         "Grade 8",
+            //         "Grade 9",
+            //         "Grade 10",
+            //         "Grade 11",
+            //         "Grade 12",
+            //         "Not Applicable"
+            //     ];
+
+            //     // Dynamic grade list from DB (Blade-injected)
+            //     const dynamicGradeOrder = @json($grades->pluck('grade')->toArray());
+
+            //     // Combine both (ensuring order from static list but allowing DB data)
+            //     const fullGradeOrder = gradeOrder.filter(g => dynamicGradeOrder.includes(g) || gradeOrder.includes(g));
+
+            //     const presentIndex = fullGradeOrder.indexOf(presentGradeText);
+            //     const joinIndex = fullGradeOrder.indexOf(joinGradeText);
+
+            //     // Compare based on grade sequence, not IDs
+            //     if (presentIndex !== -1 && joinIndex !== -1 && presentIndex >= joinIndex) {
+            //         showError($("#join_grade"), "Grade to join must be higher than Present Grade");
+            //         isValid = false;
+            //     }
+
+
+            //      /* ---------- CAPTCHA VALIDATION ---------- */
+            //     let captchaResponse = grecaptcha.getResponse();
+            
+            //     if (captchaResponse.length === 0) {
+            //         let captchaError = document.getElementById('captchaError');
+            //         if (captchaError) {
+            //             captchaError.textContent = "Please verify that you are not a robot.";
+            //         }
+            //         isValid = false;
+            //     }
+
+
+            //     if (isValid) {
+
+
+            //         const form = document.getElementById("schedulevisitForm");
+
+            //         if (form) {
+            //             // Target only the "Submit as Enquiry" button
+            //             const enquiryButton = form.querySelector("button[type='submit']");
+
+            //             if (enquiryButton && enquiryButton.textContent.trim().toLowerCase().includes("submit as enquiry")) {
+            //                 enquiryButton.disabled = true;
+            //                 enquiryButton.classList.add("disabled");
+            //                 enquiryButton.style.opacity = "0.6";
+            //                 enquiryButton.textContent = "Submitting...";
+            //             }
+            //         }
+
+            //         // Before submission, set hidden fields for country codes
+            //         const fatherMobile = window.intlTelInputGlobals.getInstance(document.querySelector("#fatherMobile"));
+            //         const motherMobile = window.intlTelInputGlobals.getInstance(document.querySelector("#motherMobile"));
+            //         const fatherResidence = window.intlTelInputGlobals.getInstance(document.querySelector("#fatherResidence"));
+            //         const motherResidence = window.intlTelInputGlobals.getInstance(document.querySelector("#motherResidence"));
+
+            //         $("#fatherMobileCode").val(fatherMobile.getSelectedCountryData().dialCode);
+            //         $("#motherMobileCode").val(motherMobile.getSelectedCountryData().dialCode);
+            //         $("#fatherResidenceCode").val(fatherResidence.getSelectedCountryData().dialCode);
+            //         $("#motherResidenceCode").val(motherResidence.getSelectedCountryData().dialCode);
+
+            //         // 🧭 Detect which button clicked and set hidden input for form type
+            //         const selectedRadio = $("input[name='radioDefault']:checked");
+            //         const formType = selectedRadio.data("type") || 1;
+            //         $("#form_type").val(formType);
+
+            //         // ✅ Now submit form normally
+            //         $("form")[0].submit();
+            //     }
+            // });
+            
+            
+            $(".apply-other-info-btn button").on("click", function (e) {
+                e.preventDefault();
+            
+                let isValid = true;
+                let errorList = []; // 🆕 collect all errors
+                let emptyCount = 0;
+            
                 $(".error-message").remove();
                 $("input, select, textarea").removeClass("is-invalid");
-
-                $("input[required], select[required], textarea[required]").each(function () {
+            
+                const requiredFields = $("input[required], select[required], textarea[required]");
+            
+                requiredFields.each(function () {
                     const field = $(this);
                     const value = field.val()?.trim();
                     const type = field.attr("type");
                     const nameAttr = field.attr("name");
                     const placeholder = field.attr("placeholder") || field.find("option:selected").text();
                     const fieldName = placeholder.replace("*", "").replace(":", "").trim();
-
-                    // ✅ Required field check
+            
                     if (!value) {
                         showError(field, fieldName + " is required");
+                        errorList.push(fieldName + " is required");
+                        emptyCount++;
                         isValid = false;
                     }
-                    // ✅ Email validation
                     else if (type === "email" && !validateEmail(value)) {
                         showError(field, "Please enter a valid " + fieldName);
+                        errorList.push("Invalid " + fieldName);
                         isValid = false;
                     }
-                    // ✅ Mobile number validation
                     else if (type === "tel" && nameAttr !== "pincode") {
                         if (value.length < 10 || value.length > 15 || !/^\d+$/.test(value)) {
-                            showError(field, "Please enter a valid " + fieldName + " (10–15 digits only)");
+                            showError(field, "Please enter a valid " + fieldName);
+                            errorList.push("Invalid " + fieldName);
                             isValid = false;
                         }
                     }
-                    // ✅ Pincode validation (only integers)
                     else if (nameAttr === "pincode" || field.attr("id") === "pincode") {
                         if (!/^\d+$/.test(value)) {
                             showError(field, fieldName + " must contain only numbers");
+                            errorList.push(fieldName + " must be numeric");
                             isValid = false;
                         }
                     }
-                    // ✅ Name validation
                     else if (nameAttr?.includes("name") && !/^[A-Za-z\s]+$/.test(value)) {
                         showError(field, fieldName + " must contain only letters");
+                        errorList.push("Invalid " + fieldName);
                         isValid = false;
                     }
                 });
-
-
-                // ✅ Grade comparison: Present Grade must be less than Grade to Join
-                // ✅ Grade comparison using static + dynamic grade names
+            
+                // ✅ Grade validation
                 const presentGradeText = $("#grade option:selected").text().trim();
                 const joinGradeText = $("#join_grade option:selected").text().trim();
-
-                // Static order list (includes all grades in logical order)
+            
                 const gradeOrder = [
-                    "Playschool",
-                    "Nursery",
-                    "Kindergarten 1",
-                    "Kindergarten 2",
-                    "Grade 1",
-                    "Grade 2",
-                    "Grade 3",
-                    "Grade 4",
-                    "Grade 5",
-                    "Grade 6",
-                    "Grade 7",
-                    "Grade 8",
-                    "Grade 9",
-                    "Grade 10",
-                    "Grade 11",
-                    "Grade 12",
-                    "Not Applicable"
+                    "Playschool","Nursery","Kindergarten 1","Kindergarten 2",
+                    "Grade 1","Grade 2","Grade 3","Grade 4","Grade 5",
+                    "Grade 6","Grade 7","Grade 8","Grade 9","Grade 10",
+                    "Grade 11","Grade 12","Not Applicable"
                 ];
-
-                // Dynamic grade list from DB (Blade-injected)
+            
                 const dynamicGradeOrder = @json($grades->pluck('grade')->toArray());
-
-                // Combine both (ensuring order from static list but allowing DB data)
                 const fullGradeOrder = gradeOrder.filter(g => dynamicGradeOrder.includes(g) || gradeOrder.includes(g));
-
+            
                 const presentIndex = fullGradeOrder.indexOf(presentGradeText);
                 const joinIndex = fullGradeOrder.indexOf(joinGradeText);
-
-                // Compare based on grade sequence, not IDs
-                if (presentIndex !== -1 && joinIndex !== -1 && presentIndex >= joinIndex) {
-                    showError($("#join_grade"), "Grade to join must be higher than Present Grade");
+            
+                if (presentIndex !== -1 && joinIndex !== -1 && presentIndex > joinIndex) {
+                    showError($("#join_grade"), "Grade to join must be same or higher than Present Grade");
+                    errorList.push("Grade to join must be same or higher than Present Grade");
                     isValid = false;
                 }
-
-
-                // ✅ reCAPTCHA validation
-                // const captchaResponse = grecaptcha.getResponse();
-                // if (!captchaResponse) {
-                //     const captchaContainer = $(".g-recaptcha");
-                //     captchaContainer.after('<div class="error-message text-danger small mt-1">Please verify that you are not a robot</div>');
-                //     isValid = false;
-                // }
-
-
-
-                if (isValid) {
-
-
-                    const form = document.getElementById("schedulevisitForm");
-
-                    if (form) {
-                        // Target only the "Submit as Enquiry" button
-                        const enquiryButton = form.querySelector("button[type='submit']");
-
-                        if (enquiryButton && enquiryButton.textContent.trim().toLowerCase().includes("submit as enquiry")) {
-                            enquiryButton.disabled = true;
-                            enquiryButton.classList.add("disabled");
-                            enquiryButton.style.opacity = "0.6";
-                            enquiryButton.textContent = "Submitting...";
-                        }
-                    }
-
-                    // Before submission, set hidden fields for country codes
-                    const fatherMobile = window.intlTelInputGlobals.getInstance(document.querySelector("#fatherMobile"));
-                    const motherMobile = window.intlTelInputGlobals.getInstance(document.querySelector("#motherMobile"));
-                    const fatherResidence = window.intlTelInputGlobals.getInstance(document.querySelector("#fatherResidence"));
-                    const motherResidence = window.intlTelInputGlobals.getInstance(document.querySelector("#motherResidence"));
-
-                    $("#fatherMobileCode").val(fatherMobile.getSelectedCountryData().dialCode);
-                    $("#motherMobileCode").val(motherMobile.getSelectedCountryData().dialCode);
-                    $("#fatherResidenceCode").val(fatherResidence.getSelectedCountryData().dialCode);
-                    $("#motherResidenceCode").val(motherResidence.getSelectedCountryData().dialCode);
-
-                    // 🧭 Detect which button clicked and set hidden input for form type
-                    const selectedRadio = $("input[name='radioDefault']:checked");
-                    const formType = selectedRadio.data("type") || 1;
-                    $("#form_type").val(formType);
-
-                    // ✅ Now submit form normally
-                    $("form")[0].submit();
+            
+                // ✅ CAPTCHA
+                let captchaResponse = grecaptcha.getResponse();
+                if (captchaResponse.length === 0) {
+                    errorList.push("Please verify captcha");
+                    isValid = false;
                 }
+            
+                // 🆕 POPUP LOGIC
+                if (!isValid) {
+                    let message = "";
+            
+                    // If most fields empty → generic message
+                    if (emptyCount > requiredFields.length * 0.6) {
+                        message = "Please fill out all required fields.";
+                    } else {
+                        message = errorList.join("\n");
+                    }
+            
+                    const formattedMessage = `
+                        <div style="text-align:left; font-size:14px; color:#000;">
+                            <p style="margin-bottom:8px; font-weight:600; color:#d33;">
+                                Please fix the following errors:
+                            </p>
+                            <ul style="padding-left:18px; margin:0;">
+                                ${errorList.map(err => `<li style="margin-bottom:4px;">${err}</li>`).join("")}
+                            </ul>
+                        </div>
+                    `;
+                    
+                    Swal.fire({
+                        icon: "error",
+                        titleText: "Form Errors",   // use text instead of HTML
+                        html: formattedMessage,
+                    
+                        showCloseButton: true,
+                    
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#d33",
+                    
+                        customClass: {
+                            title: 'swal-title-red'
+                        }
+                    });
+                    return;
+                }
+            
+                // ✅ Continue submission (your existing code)
+                const form = document.getElementById("schedulevisitForm");
+            
+                if (form) {
+                    const enquiryButton = form.querySelector("button[type='submit']");
+                    if (enquiryButton && enquiryButton.textContent.trim().toLowerCase().includes("submit as enquiry")) {
+                        enquiryButton.disabled = true;
+                        enquiryButton.classList.add("disabled");
+                        enquiryButton.style.opacity = "0.6";
+                        enquiryButton.textContent = "Submitting...";
+                    }
+                }
+            
+                const fatherMobile = window.intlTelInputGlobals.getInstance(document.querySelector("#fatherMobile"));
+                const motherMobile = window.intlTelInputGlobals.getInstance(document.querySelector("#motherMobile"));
+                const fatherResidence = window.intlTelInputGlobals.getInstance(document.querySelector("#fatherResidence"));
+                const motherResidence = window.intlTelInputGlobals.getInstance(document.querySelector("#motherResidence"));
+            
+                $("#fatherMobileCode").val(fatherMobile.getSelectedCountryData().dialCode);
+                $("#motherMobileCode").val(motherMobile.getSelectedCountryData().dialCode);
+                $("#fatherResidenceCode").val(fatherResidence.getSelectedCountryData().dialCode);
+                $("#motherResidenceCode").val(motherResidence.getSelectedCountryData().dialCode);
+            
+                const selectedRadio = $("input[name='radioDefault']:checked");
+                const formType = selectedRadio.data("type") || 1;
+                $("#form_type").val(formType);
+            
+                $("form")[0].submit();
             });
 
             // 🧩 Helper functions
@@ -547,5 +717,27 @@
     </script>
 
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const params = new URLSearchParams(window.location.search);
+
+    const utm_source   = params.get("utm_source")   || "";
+    const utm_medium   = params.get("utm_medium")   || "";
+    const utm_campaign = params.get("utm_campaign") || "";
+    const utm_term     = params.get("utm_term")     || "";
+    const utm_content  = params.get("utm_content")  || "";
+
+    let utmString = 
+        "utm_source=" + utm_source +
+        "&utm_medium=" + utm_medium +
+        "&utm_campaign=" + utm_campaign +
+        "&utm_term=" + utm_term +
+        "&utm_content=" + utm_content;
+
+    document.getElementById("utm").value = utmString;
+
+});
+</script>
 </body>
 </html>

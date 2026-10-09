@@ -133,7 +133,7 @@
                                         <!-- Organization Description -->
                                         <div class="col-md-12">
                                             <label class="form-label" for="org_desc">Organization Description</label>
-                                            <textarea class="form-control" id="org_desc" name="org_desc" rows="4" placeholder="Enter Organization Description">{{ old('org_desc', $accredation->org_desc) }}</textarea>
+                                            <textarea class="form-control" id="editor" name="org_desc" rows="4" placeholder="Enter Organization Description">{{ old('org_desc', $accredation->org_desc) }}</textarea>
                                             <div class="invalid-feedback">Please enter Organization Description.</div>
                                         </div>
 

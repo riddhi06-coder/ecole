@@ -93,17 +93,42 @@
                                         </div>
 
                                         <!-- Video URL -->
-                                        <div class="col-md-12">
-                                            <label class="form-label" for="video_url">Video URL <span class="txt-danger">*</span></label>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="video_url">Video URL </label>
                                             <input class="form-control" 
                                                 id="video_url" 
                                                 type="text" 
                                                 name="video_url"  
                                                 value="{{ old('video_url', $virtual->video_url) }}"
-                                                required 
+                                                 
                                                 placeholder="Enter Video URL">
                                             <div class="invalid-feedback">Please enter a Video URL.</div>
                                         </div>
+                                        
+                                        
+                                        <!-- Video Upload -->
+                                        <div class="col-md-6 mt-3">
+                                            <label class="form-label" for="video_upload">Video Upload</label>
+                                            <input class="form-control" id="video_upload" type="file" name="video_upload" accept="video/*">
+                                        
+                                            <small class="text-secondary"><b>Note: The file size should be less than 300MB.</b></small>
+                                            <br>
+                                            <small class="text-secondary"><b>Note: Allowed video formats: .mp4, .mov, .avi, .wmv, .mkv, .webm.</b></small>
+                                        
+                                            <div class="invalid-feedback">Please upload a video.</div>
+                                        
+                                            <!-- Preview directly below upload -->
+                                            <div class="mt-3">
+                                                <video id="video_preview" width="100%" height="300" controls
+                                                    style="{{ !empty($virtual->video_upload) ? '' : 'display:none;' }}">
+                                                    <source id="video_preview_src"
+                                                        src="{{ !empty($virtual->video_upload) ? asset('uploads/campus-life/videos/'.$virtual->video_upload) : '' }}"
+                                                        type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </div>
+                                        </div>
+
 
                                         <!-- Form Actions -->
                                         <div class="col-12 text-end">
@@ -153,6 +178,19 @@
                     preview.classList.add('d-none'); // hide if no file
                 }
             }
+            
+            document.getElementById('video_upload').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                const video = document.getElementById('video_preview');
+                const source = document.getElementById('video_preview_src');
+            
+                if (file) {
+                    const url = URL.createObjectURL(file);
+                    source.src = url;
+                    video.style.display = "block";
+                    video.load();
+                }
+            });
         </script>
 
 

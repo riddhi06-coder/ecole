@@ -38,6 +38,21 @@ return [
         'site_key' => env('RECAPTCHA_SITE_KEY'),
         'secret_key' => env('RECAPTCHA_SECRET_KEY'),
     ],
+    
+        
+   'grayquest' => [
+        'base_url' => env('GRAYQUEST_BASE_URL', 'https://erp-api.grayquest.com/v1'),
+        'client_id' => env('ERP_CLIENT_ID'),
+        'client_secret' => env('ERP_CLIENT_SECRET'),
+        'api_key' => env('ERP_API_KEY'),
+        'webhook_base_url' => env('GRAYQUEST_WEBHOOK_BASE_URL'),
+    ],
+    
+    'razorpay' => [
+        'key'    => env('RAZORPAY_KEY'),
+        'secret' => env('RAZORPAY_SECRET'),
+    ],
+
 
 
 ];

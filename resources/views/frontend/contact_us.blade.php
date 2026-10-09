@@ -2,6 +2,15 @@
 <html lang="en">
 
     @include('components.frontend.head')
+    
+    <style>
+        .error-text {
+            color: red;
+            font-size: 14px;
+            margin-top: 3px;
+            display: block;
+        }
+    </style>
 
 <body>
 
@@ -42,13 +51,13 @@
                             <div class="cont-content-sec">
                                 <h4>Phone</h4>
                                 <p>
-                                    <a href="tel:{{ $contact_us->contact_number }}">
-                                        {{ $contact_us->contact_number }}
+                                    <a href="tel:+91{{ $contact_us->contact_number }}">
+                                        +91 {{ $contact_us->contact_number }}
                                     </a>
                                 </p>
                                 <p>
-                                    <a href="tel:{{ $contact_us->other_contact_number }}">
-                                        {{ $contact_us->other_contact_number }}
+                                    <a href="tel:+91{{ $contact_us->other_contact_number }}">
+                                        +91 {{ $contact_us->other_contact_number }}
                                     </a> 
                                 </p>
                             </div>
@@ -113,32 +122,64 @@
                         <p>If you have any questions for us, please fill up the form below and we will get back to you as soon
                         as
                         possible.</p>
-                        <form>
-                        <div class="contact-form-input-sec">
-                            <input type="text" class="form-control" id="name" placeholder="Enter Name" required>
-                        </div>
-                        <div class="contact-form-input-sec">
-                            <input type="email" class="form-control" id="email" placeholder="Enter Email" required>
-                        </div>
-                        <div class="contact-form-input-sec">
-                            <input type="tel" class="form-control" id="phone" placeholder="Enter Phone number" required>
-                        </div>
-                        <div class="contact-form-input-sec">
-                            <select class="form-select" id="enquiry" required>
-                            <option value="">Type of Enquiry*</option>
-                            <option value="general-enquiry">General Enquiry</option>
-                            <option value="employment-enquiry">Employment Enquiry</option>
-                            <option value="admission-enquiry">Admission Enquiry</option>
-                            </select>
-                        </div>
-                        <div class="contact-form-input-sec">
-                            <textarea class="form-control" id="message" rows="4" placeholder="Message"></textarea>
-                        </div>
+                        
+                        <form id="contactForm" action="{{ route('contact.store') }}" method="POST">
+                            @csrf
+                        
+                           
+                            <input type="hidden" name="form_type" value="contact">
+                            
+                            <div class="contact-form-input-sec">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name*">
+                                <span class="error-text" id="nameError"></span>
+                            </div>
+                        
+                            <div class="contact-form-input-sec">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email*">
+                                <span class="error-text" id="emailError"></span>
+                            </div>
+                        
+                            <div class="contact-form-input-sec">
+                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Phone number*">
+                                <span class="error-text" id="phoneError"></span>
+                            </div>
+                                <input type="hidden" id="utm" name="utm">
+                                <div class="contact-form-input-sec">
+                                <select class="form-select" id="enquiry" name="enquiry_type">
+                                    <option value="">Type of Enquiry*</option>
+                                    <option value="General">General Enquiry</option>
+                                    <option value="Employment">Employment Enquiry</option>
+                                    <option value="Admission">Admission Enquiry</option>
+                                </select>
+                                <span class="error-text" id="enquiryError"></span>
+                            </div>
+                        
+                            <div class="contact-form-input-sec">
+                                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Message"></textarea>
+                            </div>
+                            
+                            
+                            <div class="row">
+                                <div class="col-12 mt-3 text-center" style="margin-bottom: 10px;">
+                                    <div class="d-inline-block">
+                                        <div class="g-recaptcha"
+                                             data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 text-center">
+                                    <span id="captchaError" class="error-text" style="color:red;"></span>
+                                </div>
+                            </div>
 
-                        <div class="contact-form-btn-sec">
-                            <button type="submit" class="contact-form-btn">Submit</button>
-                        </div>
+                    
+                        
+                            <div class="contact-form-btn-sec">
+                                <button type="submit" class="contact-form-btn">Submit</button>
+                            </div>
                         </form>
+
+                        
                     </div>
                     </div>
                 </div>
@@ -157,13 +198,98 @@
             @endif
         </section>
 
-
     </main>
 
     @include('components.frontend.footer')
 
     @include('components.frontend.main-js')
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 
-</body>
+    <script>
+    
+    
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+        
+            document.querySelectorAll('.error-text').forEach(el => el.textContent = "");
+        
+            let name = document.getElementById('name').value.trim();
+            let email = document.getElementById('email').value.trim();
+            let phone = document.getElementById('phone').value.trim();
+            let enquiry = document.getElementById('enquiry').value.trim();
+        
+            let nameRegex = /^[A-Za-z\s]+$/;
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let phoneRegex = /^[0-9]{10,15}$/;
+        
+            let isValid = true;
+        
+            if (!nameRegex.test(name)) {
+                document.getElementById('nameError').textContent = "Enter a valid name (only letters).";
+                isValid = false;
+            }
+        
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').textContent = "Enter a valid email address.";
+                isValid = false;
+            }
+        
+            if (!phoneRegex.test(phone)) {
+                document.getElementById('phoneError').textContent = "Enter valid 10–15 digit phone.";
+                isValid = false;
+            }
+        
+            if (enquiry === "") {
+                document.getElementById('enquiryError').textContent = "Please select enquiry type.";
+                isValid = false;
+            }
+            
+             /* ---------- CAPTCHA VALIDATION ---------- */
+            let captchaResponse = grecaptcha.getResponse();
+        
+            if (captchaResponse.length === 0) {
+                let captchaError = document.getElementById('captchaError');
+                if (captchaError) {
+                    captchaError.textContent = "Please verify that you are not a robot.";
+                }
+                isValid = false;
+            }
+
+        
+            if (!isValid) {
+                e.preventDefault();
+            } else {
+                // Disable Button & Change Text
+                const submitBtn = document.querySelector('.contact-form-btn');
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Submitting...";
+                submitBtn.style.opacity = "0.7";
+                submitBtn.style.cursor = "not-allowed";
+            }
+        });
+    </script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const params = new URLSearchParams(window.location.search);
+
+    const utm_source   = params.get("utm_source")   || "";
+    const utm_medium   = params.get("utm_medium")   || "";
+    const utm_campaign = params.get("utm_campaign") || "";
+    const utm_term     = params.get("utm_term")     || "";
+    const utm_content  = params.get("utm_content")  || "";
+
+    let utmString = 
+        "utm_source=" + utm_source +
+        "&utm_medium=" + utm_medium +
+        "&utm_campaign=" + utm_campaign +
+        "&utm_term=" + utm_term +
+        "&utm_content=" + utm_content;
+
+    document.getElementById("utm").value = utmString;
+
+});
+</script></body>
 </html>

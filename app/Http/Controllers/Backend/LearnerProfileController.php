@@ -40,8 +40,9 @@ class LearnerProfileController extends Controller
                 'section_heading'     => 'nullable|string|max:255',
                 'section_image'       => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
                 'section_description' => 'nullable|string',
-                'title'               => 'required|string|max:255',
+                'title'               => 'nullable|string|max:255',
                 'description'         => 'required|string',
+                'other_image'         => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
             ], [
                 'banner_heading.string'      => 'Banner heading must be a string.',
                 'image.image'                => 'The banner must be an image file.',
@@ -53,6 +54,10 @@ class LearnerProfileController extends Controller
                 'section_image.max'          => 'Section image size must be less than 2MB.',
                 'title.required'             => 'Title is required.',
                 'description.required'       => 'Description is required.',
+                
+                'other_image.image'         => 'The banner must be an image file.',
+                'other_image.mimes'         => 'Allowed banner formats: jpg, jpeg, png, webp, svg.',
+                'other_image.max'           => 'Banner image size must be less than 2MB.',
             ]);
 
 
@@ -73,6 +78,15 @@ class LearnerProfileController extends Controller
                 $sectionImage->move(public_path('uploads/academics'), $sectionImageName);
                 Log::info('Section image uploaded', ['section_image' => $sectionImageName]);
             }
+            
+            
+            $otherName = null;
+            if ($request->hasFile('other_image')) {
+                $other = $request->file('other_image');
+                $otherName = time() . '_' . rand(10, 999) . '.' . $other->getClientOriginalExtension();
+                $other->move(public_path('uploads/academics'), $otherName);
+                Log::info('Banner image uploaded', ['other' => $otherName]);
+            }
 
             // ✅ Store in Database
             $learnerProfile = new ManageLearnerProfile();
@@ -82,6 +96,7 @@ class LearnerProfileController extends Controller
             $learnerProfile->section_image       = $sectionImageName ?? null;
             $learnerProfile->section_description = $validated['section_description'] ?? null;
             $learnerProfile->title               = $validated['title'];
+            $learnerProfile->image               = $otherName ?? null;
             $learnerProfile->description         = $validated['description'];
             $learnerProfile->inserted_by         = Auth::id();
             $learnerProfile->inserted_at         = Carbon::now();
@@ -118,8 +133,9 @@ class LearnerProfileController extends Controller
                 'section_heading'     => 'nullable|string|max:255',
                 'section_image'       => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
                 'section_description' => 'nullable|string',
-                'title'               => 'required|string|max:255',
+                'title'               => 'nullable|string|max:255',
                 'description'         => 'required|string',
+                'other_image'               => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
             ], [
                 'banner_heading.string'      => 'Banner heading must be a string.',
                 'image.image'                => 'The banner must be an image file.',
@@ -131,6 +147,10 @@ class LearnerProfileController extends Controller
                 'section_image.max'          => 'Section image size must be less than 2MB.',
                 'title.required'             => 'Title is required.',
                 'description.required'       => 'Description is required.',
+                
+                'other_image.image'                => 'The banner must be an image file.',
+                'other_image.mimes'                => 'Allowed banner formats: jpg, jpeg, png, webp, svg.',
+                'other_image.max'                  => 'Banner image size must be less than 2MB.',
             ]);
 
             Log::info('Validation passed', ['validated' => $validated]);
@@ -151,6 +171,15 @@ class LearnerProfileController extends Controller
                 $sectionImage->move(public_path('uploads/academics'), $sectionImageName);
                 $learnerProfile->section_image = $sectionImageName;
                 Log::info('Section image updated', ['section_image' => $sectionImageName]);
+            }
+            
+            
+            if ($request->hasFile('other_image')) {
+                $other = $request->file('other_image');
+                $otherName = time() . '_' . rand(10, 999) . '.' . $other->getClientOriginalExtension();
+                $other->move(public_path('uploads/academics'), $otherName);
+                $learnerProfile->image = $otherName;
+                Log::info('Banner image updated', ['banner' => $otherName]);
             }
 
             // ✅ Update other fields

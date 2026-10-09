@@ -25,9 +25,10 @@ class BulletinDetailsController extends Controller
         $categories = BulletinCategory::whereHas('details')
             ->with(['details' => function($query) {
                 $query->whereNull('deleted_by');
-                $query->orderBy('id'); 
+                $query->orderBy('id','desc'); 
             }])
             ->orderBy('category')
+            ->orderBy('id', 'desc')
             ->get();
 
         return view('backend.bulletin.details.index', compact('categories'));
@@ -55,7 +56,8 @@ class BulletinDetailsController extends Controller
         $validatedData = $request->validate([
             'category' => 'required|exists:bulletin_category,id',
             'article' => 'required|exists:bulletin_listing,id',
-            'thumbnail_image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'thumbnail_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'thumbnail_video' => 'nullable|mimetypes:video/mp4,video/webm,video/ogg|max:3072',
             'location' => 'nullable|string|max:255',
             'article_time_from' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
             'article_time_to' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
@@ -64,15 +66,36 @@ class BulletinDetailsController extends Controller
         ], [
             'article_time_from.regex' => 'Start time must be in 12-hour format (e.g., 9:00 AM).',
             'article_time_to.regex' => 'End time must be in 12-hour format (e.g., 11:30 AM).',
+            'thumbnail_video.mimetypes' => 'Only MP4, WEBM, or OGG video formats are allowed.',
+            'thumbnail_video.max' => 'The video size must be less than 3MB.',
         ]);
+        
+        
+        // Ensure at least one (image or video) is uploaded
+        if (!$request->hasFile('thumbnail_image') && !$request->hasFile('thumbnail_video')) {
+            return back()->withErrors(['thumbnail_image' => 'Please upload either a Thumbnail Image or a Thumbnail Video.'])->withInput();
+        }
 
-        // Handle image upload
+
+        // Initialize variables
+        $thumbnailImage = null;
+        $thumbnailVideo = null;
+    
+        // ✅ Handle image upload
         if ($request->hasFile('thumbnail_image')) {
             $image = $request->file('thumbnail_image');
-            $imageName = time() . rand(10, 999) . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/bulletin'), $imageName);
-            $validatedData['thumbnail_image'] = $imageName;
+            $thumbnailImage = time() . rand(10, 999) . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/bulletin'), $thumbnailImage);
         }
+    
+        // ✅ Handle video upload
+        if ($request->hasFile('thumbnail_video')) {
+            $video = $request->file('thumbnail_video');
+            $thumbnailVideo = time() . rand(1000, 9999) . '.' . $video->getClientOriginalExtension();
+            $video->move(public_path('uploads/bulletin/videos'), $thumbnailVideo);
+        }
+
+        
 
         // Optional: Convert 12-hour times to 24-hour format before saving, only if provided
         $validatedData['article_time_from'] = !empty($validatedData['article_time_from'])
@@ -87,7 +110,8 @@ class BulletinDetailsController extends Controller
         $bulletinDetails = new BulletinDetails();
         $bulletinDetails->category_id = $validatedData['category'];
         $bulletinDetails->article_id = $validatedData['article'];
-        $bulletinDetails->thumbnail_image = $validatedData['thumbnail_image'];
+        $bulletinDetails->thumbnail_image = $thumbnailImage;
+        $bulletinDetails->thumbnail_video = $thumbnailVideo;
         $bulletinDetails->location = $validatedData['location'];
         $bulletinDetails->article_time_from = $validatedData['article_time_from'];
         $bulletinDetails->article_time_to = $validatedData['article_time_to'];
@@ -124,7 +148,8 @@ class BulletinDetailsController extends Controller
         $validatedData = $request->validate([
             'category' => 'required|exists:bulletin_category,id',
             'article' => 'required|exists:bulletin_listing,id',
-            'thumbnail_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'thumbnail_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048', // 3MB
+            'thumbnail_video' => 'nullable|mimetypes:video/mp4,video/webm,video/ogg|max:3072', // 3MB
             'location' => 'nullable|string|max:255',
             'article_time_from' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
             'article_time_to' => ['nullable', 'regex:/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i'],
@@ -133,20 +158,56 @@ class BulletinDetailsController extends Controller
         ], [
             'article_time_from.regex' => 'Start time must be in 12-hour format (e.g., 9:00 AM).',
             'article_time_to.regex' => 'End time must be in 12-hour format (e.g., 11:30 AM).',
+            'thumbnail_video.mimetypes' => 'Only MP4, WEBM, or OGG formats are allowed.',
+            'thumbnail_video.max' => 'The video size must be less than 3MB.',
         ]);
+        
+        
+        // ✅ If both image and video are uploaded -> show validation error
+        if ($request->hasFile('thumbnail_image') && $request->hasFile('thumbnail_video')) {
+            return back()->withErrors(['thumbnail_image' => 'Please upload either an image or a video, not both.'])->withInput();
+        }
+        
 
-        // Handle image upload if a new file is provided
+        // ✅ Handle image upload
         if ($request->hasFile('thumbnail_image')) {
             // Delete old image if exists
             if ($bulletinDetails->thumbnail_image && file_exists(public_path('uploads/bulletin/' . $bulletinDetails->thumbnail_image))) {
                 unlink(public_path('uploads/bulletin/' . $bulletinDetails->thumbnail_image));
             }
-
+    
+            // Delete video if switching from video to image
+            if ($bulletinDetails->thumbnail_video && file_exists(public_path('uploads/bulletin/videos/' . $bulletinDetails->thumbnail_video))) {
+                unlink(public_path('uploads/bulletin/videos/' . $bulletinDetails->thumbnail_video));
+                $bulletinDetails->thumbnail_video = null;
+            }
+    
             $image = $request->file('thumbnail_image');
-            $imageName = time() . rand(10, 999) . '.' . $image->getClientOriginalExtension();
+            $imageName = 'image' . time() . rand(10, 999) . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads/bulletin'), $imageName);
             $bulletinDetails->thumbnail_image = $imageName;
         }
+    
+        // ✅ Handle video upload
+        if ($request->hasFile('thumbnail_video')) {
+            // Delete old video if exists
+            if ($bulletinDetails->thumbnail_video && file_exists(public_path('uploads/bulletin/videos/' . $bulletinDetails->thumbnail_video))) {
+                unlink(public_path('uploads/bulletin/videos/' . $bulletinDetails->thumbnail_video));
+            }
+    
+            // Delete image if switching from image to video
+            if ($bulletinDetails->thumbnail_image && file_exists(public_path('uploads/bulletin/' . $bulletinDetails->thumbnail_image))) {
+                unlink(public_path('uploads/bulletin/' . $bulletinDetails->thumbnail_image));
+                $bulletinDetails->thumbnail_image = null;
+            }
+    
+            $video = $request->file('thumbnail_video');
+            $videoName = 'videos' . time() . rand(10, 999) . '.' . $video->getClientOriginalExtension();
+            $video->move(public_path('uploads/bulletin/videos'), $videoName);
+            $bulletinDetails->thumbnail_video = $videoName;
+        }
+        
+        
 
         // Convert 12-hour times to 24-hour format
         $bulletinDetails->article_time_from = !empty($validatedData['article_time_from']) 

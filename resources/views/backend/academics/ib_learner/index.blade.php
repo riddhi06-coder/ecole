@@ -57,6 +57,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Title</th>
+                                <th>Image</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -65,6 +66,13 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $learner->title }}</td>
+                                        <td>
+                                            @if($learner->image)
+                                                <img src="{{ asset('uploads/academics/' . $learner->image) }}" alt="{{ $learner->title }}" style="width: 100px; height: auto;">
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
                                         <td>
                                             <a href="{{ route('manage-learner-profile.edit', $learner->id) }}" class="btn btn-sm btn-primary">Edit</a>
 

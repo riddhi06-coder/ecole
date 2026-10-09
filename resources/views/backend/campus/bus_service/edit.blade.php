@@ -58,14 +58,14 @@
                                             <label class="form-label" for="banner_heading">Banner Heading <span class="txt-danger">*</span></label>
                                             <input class="form-control" id="banner_heading" type="text" 
                                                 name="banner_heading" placeholder="Enter Banner Heading" 
-                                                value="{{ old('banner_heading', $sports->banner_heading) }}" required>
+                                                value="{{ old('banner_heading', $sports->banner_heading) }}">
                                             <div class="invalid-feedback">Please enter a Banner Heading.</div>
                                         </div>
 
                                         <!-- Banner Image -->
                                         <div class="col-md-6">
                                             <label class="form-label" for="image">Banner Image <span class="txt-danger">*</span></label>
-                                            <input class="form-control" id="image" type="file" name="image" required onchange="previewThumbnail(event)">
+                                            <input class="form-control" id="image" type="file" name="image" onchange="previewThumbnail(event)">
                                             <div class="invalid-feedback">Please upload a Banner image.</div>
                                             <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small><br>
                                             <small class="text-secondary"><b>Allowed formats: .jpg, .jpeg, .png, .webp, .svg</b></small>
@@ -90,14 +90,14 @@
                                             <label class="form-label" for="section_heading">Section Heading <span class="txt-danger">*</span></label>
                                             <input class="form-control" id="section_heading" type="text" 
                                                 name="section_heading" placeholder="Enter Section Heading" 
-                                                value="{{ old('section_heading', $sports->section_heading) }}" required>
+                                                value="{{ old('section_heading', $sports->section_heading) }}">
                                             <div class="invalid-feedback">Please enter a Section Heading.</div>
                                         </div>
 
                                         <!-- Section Image -->
                                         <div class="col-md-6">
                                             <label class="form-label" for="section_image">Section Image <span class="txt-danger">*</span></label>
-                                            <input class="form-control" id="section_image" type="file" name="section_image" onchange="previewSectionImage(event)" required>
+                                            <input class="form-control" id="section_image" type="file" name="section_image" onchange="previewSectionImage(event)">
                                             <div class="invalid-feedback">Please upload a Section image.</div>
                                             <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small><br>
                                             <small class="text-secondary"><b>Allowed formats: .jpg, .jpeg, .png, .webp, .svg</b></small>
@@ -117,7 +117,7 @@
                                         <div class="col-md-12">
                                             <label for="description" class="form-label">Description <span class="txt-danger">*</span></label>
                                             <textarea name="description" id="editor" class="form-control" rows="4" 
-                                                    placeholder="Enter description" required>{{ old('description', $sports->description) }}</textarea>
+                                                    placeholder="Enter description" >{{ old('description', $sports->description) }}</textarea>
                                             <div class="invalid-feedback">Please enter a description.</div>
                                         </div>
 

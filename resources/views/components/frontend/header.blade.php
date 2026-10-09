@@ -1,43 +1,70 @@
+       <style>
+       .top_announcement .announcement-link {
+            color: #ffd700;
+            font-weight: 600;
+            text-decoration: underline;
+            margin-left: 6px;
+        }
+        .top_announcement .announcement-link:hover {
+            color: #fff;
+        }
+       </style>
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T6GJPHTX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+   
+       
     @php
         $contact_us = \App\Models\ContactUs::whereNull('deleted_by')->first();
-        $announcements = $contact_us && $contact_us->announcements ? json_decode($contact_us->announcements, true) : [];
+        $announcements = $contact_us && $contact_us->announcements
+            ? (json_decode($contact_us->announcements, true) ?: [])
+            : [];
         $bulletin_category = \App\Models\BulletinCategory::whereNull('deleted_by')->get();
     @endphp
-   
-   <div class="top_announcement">
-      <div class="container-fluid">
-          <div class="row">
-              <div class="col-md-12">
-                  @if(!empty($contact_us->announcements))
-                      @php
-                          $announcements = json_decode($contact_us->announcements, true);
-                      @endphp
-                      <marquee scrollamount="8" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
-                          @foreach($announcements as $announcement)
-                              {{ $announcement['title'] }} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                          @endforeach
-                      </marquee>
-                  @else
-                      <marquee scrollamount="8" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
-                          No announcements available
-                      </marquee>
-                  @endif
-              </div>
-          </div>
-      </div>
-  </div>
+    
+    <div class="top_announcement">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <marquee scrollamount="8" behavior="scroll" direction="left"
+                             onmouseover="this.stop();" onmouseout="this.start();">
+                        @forelse($announcements as $announcement)
+                            <span class="announcement-item">
+                                {{ $announcement['title'] ?? '' }}
+    
+                                @if(!empty($announcement['file']))
+                                    <a href="{{ asset('uploads/announcements/' . $announcement['file']) }}"
+                                       target="_blank" rel="noopener" class="announcement-link">
+                                        Click here
+                                    </a>
+                                @endif
+                            </span>
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        @empty
+                            No announcements available
+                        @endforelse
+                    </marquee>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
  
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
       <a href="{{ route('frontend.index') }}" class="logo d-flex align-items-center me-auto">
-        <img src="{{ asset('frontend/assets/img/emws-logo.png') }}" alt="">
+        <img src="{{ asset('frontend/assets/img/emws-logo.webp') }}" alt="EMWS Logo" class="img-fluid" width="90" height="90">
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li class="dropdown"><a href="#"><span>About Us</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li class="dropdown"><a href="#"><span>About Us</span> <i class="fa fa-angle-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="{{ route('frontend.what_sets_us_apart') }}">What sets us apart?</a></li>
               <li><a href="{{ route('frontend.vision_mission_and_values') }}">Vision, Mission & Values</a></li>
@@ -54,22 +81,21 @@
           </li>
 
           <li class="dropdown"><a href="#"><span>Admissions</span> <i
-                class="bi bi-chevron-down toggle-dropdown"></i></a>
+                class="fa fa-angle-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="{{ route('frontend.apply_for_admission') }}">Apply for admission</a></li>
               <li><a href="{{ route('frontend.schedule_a_visit_for_admission') }}">Schedule a Visit</a></li>
               <li><a href="{{ route('frontend.enquiry_about_admission') }}">Enquire about admission</a></li>
               <li><a href="{{ route('frontend.admission_criteria_and_process') }}">Admission Criteria & Process</a></li>
               <li><a href="{{ route('frontend.faq') }}">FAQs</a></li>
-              <li><a href="{{ route('frontend.fee_structure') }}">Fee Structure</a></li>
               <li><a href="{{ route('frontend.merit_scholarship') }}">Merit Scholarship</a></li>
             </ul>
           </li>
 
-          <li class="dropdown"><a href="#"><span>Academics</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li class="dropdown"><a href="#"><span>Academics</span> <i class="fa fa-angle-down toggle-dropdown"></i></a>
             <ul>
               <li class="dropdown"><a href="{{ route('frontend.curriculum_overview') }}"><span>Curriculum Overview</span> <i
-                    class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    class="fa fa-angle-down toggle-dropdown"></i></a>
                 <ul>
                   <li><a href="{{ route('frontend.primary_years_programme') }}">Primary Years</a></li>
                   <li><a href="{{ route('frontend.middle_years_programme') }}">Middle Years</a></li>
@@ -88,7 +114,7 @@
           </li>
 
           <li class="dropdown"><a href="#"><span>Campus Life</span> <i
-                class="bi bi-chevron-down toggle-dropdown"></i></a>
+                class="fa fa-angle-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="{{ route('frontend.virtual_tour') }}">Virtual Tour</a></li>
               <li><a href="{{ route('frontend.media_center') }}">Media Centre</a></li>
@@ -106,7 +132,7 @@
           </li>
 
           <li class="dropdown"><a href="{{ route('frontend.bulletin_board') }}"><span>Bulletin Board</span> <i
-                class="bi bi-chevron-down toggle-dropdown"></i></a>
+                class="fa fa-angle-down toggle-dropdown"></i></a>
               <ul>
                   @foreach($bulletin_category as $category)
                       <li>
@@ -118,21 +144,20 @@
               </ul>
           </li>
 
-          <li class="dropdown"><a href="#"><span>Careers</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li class="dropdown"><a href="#"><span>Careers</span> <i class="fa fa-angle-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="{{ route('frontend.career_opportunities') }}">Career Opportunities</a></li>
-              <li><a href="{{ route('frontend.university_of_bath') }}">University of Bath</a></li>
+              <!--<li><a href="{{ route('frontend.university_of_bath') }}">University of Bath</a></li>-->
             </ul>
           </li>
 
         </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        <i class="mobile-nav-toggle d-xl-none fa fa-bars"></i>
       </nav>
       <a class="cus-menu-contact-us-btn" href="{{ route('frontend.contact_us') }}">Contact Us</a>
       <a class="cus-menu-talk-to-us-btn"
         href="https://api.whatsapp.com/send/?phone=9326020914&text=Hello%20%C3%89cole%20Admissions%20Team%2C%0A%0AI%E2%80%99m%20interested%20in%20admissions%202026-27.&utm_source=website&utm_medium=cta&utm"
-        target="_blank">Talk To Us
-      </a>
+        target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
     </div>
   </header> 
 

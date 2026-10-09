@@ -127,10 +127,14 @@
 
                                         <hr class="my-3">
 
-                                        <!-- Year + Document Table -->
+                                           <!-- Year + Document Table -->
                                         <div class="col-md-12 mb-3">
-                                            <h5><strong># Yearly Documents</strong></h5>
-                                            <table class="table table-bordered mt-5" id="yearDocumentTable">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <h5 class="mb-0"><strong># Yearly Documents</strong></h5>
+                                                <button type="button" class="btn btn-success addRow">Add More</button>
+                                            </div>
+                                        
+                                            <table class="table table-bordered" id="yearDocumentTable">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 25%;">Year <span class="txt-danger">*</span></th>
@@ -146,11 +150,11 @@
                                                             <td>
                                                                 <input type="text" name="years[]" class="form-control" value="{{ $doc['year'] }}" required>
                                                             </td>
-
+                                        
                                                             <!-- File Upload + Preview -->
                                                             <td>
                                                                 <input type="file" name="documents[]" class="form-control" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" onchange="previewDocument(this)">
-                                                                
+                                        
                                                                 <!-- Existing document preview -->
                                                                 @if(!empty($doc['document']))
                                                                 <div class="mt-2">
@@ -165,7 +169,7 @@
                                                                     @endif
                                                                 </div>
                                                                 @endif
-
+                                        
                                                                 <small class="text-secondary">
                                                                     <b>Note: The file size should be less than 2MB.</b>
                                                                 </small><br>
@@ -173,14 +177,10 @@
                                                                     <b>Note: Only files in .pdf, .doc, .docx format can be uploaded.</b>
                                                                 </small>
                                                             </td>
-
+                                        
                                                             <!-- Action -->
                                                             <td class="text-center">
-                                                                @if($index == 0)
-                                                                    <button type="button" class="btn btn-success addRow">Add More</button>
-                                                                @else
-                                                                    <button type="button" class="btn btn-danger removeRow">Remove</button>
-                                                                @endif
+                                                                <button type="button" class="btn btn-danger removeRow">Remove</button>
                                                             </td>
                                                         </tr>
                                                         @endforeach
@@ -203,13 +203,11 @@
                                                                 </div>
                                                             </td>
                                                             <td class="text-center">
-                                                                <button type="button" class="btn btn-success addRow">Add More</button>
+                                                                <button type="button" class="btn btn-danger removeRow">Remove</button>
                                                             </td>
                                                         </tr>
                                                     @endif
                                                 </tbody>
-
-
                                             </table>
                                         </div>
 

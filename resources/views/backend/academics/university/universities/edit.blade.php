@@ -73,8 +73,8 @@
                                                 <h5 class="mb-0"><strong># University Details</strong></h5>
                                                 <button type="button" class="btn btn-primary btn-sm" id="addUniversityRow">Add More</button>
                                             </div>
-
-                                            <table class="table table-bordered" id="universitiesTable">
+                                                <div class="table-scroll-wrapper" style="max-height: 400px; overflow-y: auto;">
+                                                    <table class="table table-bordered" id="universitiesTable">
                                                 <thead>
                                                     <tr>
                                                         <th>University Name</th>
@@ -111,6 +111,7 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
+                                                </div>
                                         </div>
 
                                         <!-- Form Actions -->
@@ -166,7 +167,7 @@
                             <button type="button" class="btn btn-danger btn-sm remove-row">Remove</button>
                         </td>
                     `;
-                    tableBody.appendChild(row);
+                    tableBody.prepend(row);
                     index++;
                 });
 

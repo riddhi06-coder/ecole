@@ -56,6 +56,15 @@
                                             <input class="form-control" id="grade" type="text" name="grade" placeholder="Enter Grade" required>
                                             <div class="invalid-feedback">Please enter a Grade.</div>
                                         </div>
+                                        
+                                        
+                                        <!-- Academic Year-->
+                                        <div class="col-md-6 mt-5">
+                                            <label class="form-label" for="academic_year">Academic Year<span class="txt-danger">*</span></label>
+                                            <input class="form-control" id="academic_year" type="text" name="academic_year" placeholder="Enter Academic Year" required>
+                                            <div class="invalid-feedback">Please enter a Academic Year.</div>
+                                        </div>
+                                        
 
                                         <!-- Form Actions -->
                                         <div class="col-12 text-end">

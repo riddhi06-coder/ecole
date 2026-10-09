@@ -57,6 +57,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Grade</th>
+                                <th>Academic Year</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -65,6 +66,7 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $faq->grade }}</td>
+                                        <td>{{ $faq->academic_year ?? '-'}}</td>
                                         <td>
                                             <a href="{{ route('manage-grades.edit', $faq->id) }}" class="btn btn-sm btn-primary">Edit</a>
 

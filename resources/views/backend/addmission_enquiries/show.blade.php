@@ -46,9 +46,82 @@
                             <div class="col-12">
                             <div class="tab-content" id="wizard-tabContent">
 
-                                <div class="tab-pane fade show active" id="wizard-contact" role="tabpanel" aria-labelledby="wizard-contact-tab">
+                                <div class="tab-pane fade show active" id="wizard-contact" role="tabpanel">
 
-                                    <form class="row g-3 custom-input">
+                                @php
+                                    $utmParams = [];
+                                    if (!empty($admission->utm)) {
+                                        parse_str($admission->utm, $utmParams);
+                                    }
+                                @endphp
+                            
+                                <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
+                            
+                                    <!-- LEFT: UTM Badges -->
+                                    <div class="d-flex flex-wrap gap-2">
+                            
+                                        <span class="badge bg-light text-dark border">
+                                            Source: {{ $utmParams['utm_source'] ?? '-' }}
+                                        </span>
+                            
+                                        <span class="badge bg-light text-dark border">
+                                            Medium: {{ $utmParams['utm_medium'] ?? '-' }}
+                                        </span>
+                            
+                                        <span class="badge bg-light text-dark border">
+                                            Campaign: {{ $utmParams['utm_campaign'] ?? '-' }}
+                                        </span>
+                            
+                                        <span class="badge bg-light text-dark border">
+                                            Term: {{ $utmParams['utm_term'] ?? '-' }}
+                                        </span>
+                            
+                                        <span class="badge bg-light text-dark border">
+                                            Content: {{ $utmParams['utm_content'] ?? '-' }}
+                                        </span>
+                            
+                                    </div>
+                            
+                                    <!-- RIGHT: Status + Button -->
+                                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                            
+                                        <!-- Status -->
+                                        <form action="{{ route('admission.updateStatus', $admission->id) }}" method="POST"
+                                            class="d-flex align-items-center px-3 py-2 rounded shadow-sm"
+                                            style="background: #f8f9fa; border-left: 4px solid #0d6efd;">
+                                            
+                                            @csrf
+                                            @method('PUT')
+                            
+                                            <span class="me-2 fw-semibold text-primary">
+                                                Status
+                                            </span>
+                            
+                                            <select name="status"
+                                                    class="form-select form-select-sm border-primary"
+                                                    onchange="this.form.submit()"
+                                                    style="width: 160px;">
+                                                <option value="">Update</option>
+                                                <option value="Viewed" {{ $admission->application_status === 'Viewed' ? 'selected' : '' }}>Viewed</option>
+                                                <option value="Under Review" {{ $admission->application_status === 'Under Review' ? 'selected' : '' }}>Under Review</option>
+                                                <option value="Processed" {{ $admission->application_status === 'Processed' ? 'selected' : '' }}>Processed</option>
+                                            </select>
+                                        </form>
+                            
+                                        <!-- Download Button -->
+                                        <a href="{{ route('admission.pdf', $admission->id) }}"
+                                           class="btn btn-primary btn-sm d-flex align-items-center"
+                                           target="_blank">
+                                            <i class="fa fa-file-pdf me-1"></i> PDF
+                                        </a>
+                            
+                                    </div>
+                            
+                                </div>
+                            </div>
+
+                                                
+                                    <form class="row g-3 custom-input mt-5">
                                         @php
                                             $grades = [
                                                 1 => 'Playschool', 2 => 'Nursery', 3 => 'Kindergarten 1', 4 => 'Kindergarten 2',
@@ -270,10 +343,98 @@
                                             <label class="form-label">Wish to Know</label>
                                             <textarea class="form-control" readonly rows="3">{{ $admission->wish_you_know ?? '-' }}</textarea>
                                         </div>
+                                        
+                                        
+                                        
+                                        
+                                        <!-- Payment Details Section -->
+                                        @if(in_array($admission->payment_status, ['Paid', 'Cancelled']))
+                                            <hr class="mt-5">
+                                            <h3 class="mt-4">Payment Details</h3>
+                                        
+                                            <div class="row g-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Order ID</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->order_id ?? '-' }}">
+                                                </div>
+                                        
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Transaction ID</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->t_id ?? '-' }}">
+                                                </div>
+                                        
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Amount</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->amount ?? '-' }} {{ $admission->currency ?? 'INR' }}">
+                                                </div>
+                                        
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Payment Status</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->payment_status ?? '-' }}">
+                                                </div>
+                                        
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Order Status</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->order_status ?? '-' }}">
+                                                </div>
+                                        
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Payment Mode</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->payment_mode ?? '-' }}">
+                                                </div>
+                                        
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Bank Reference No.</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->bank_ref_no ?? '-' }}">
+                                                </div>
+                                        
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Tracking ID</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->tracking_id ?? '-' }}">
+                                                </div>
+                                        
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Status Message</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->status_message ?? '-' }}">
+                                                </div>
+                                        
+                                                <!-- Billing Info -->
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Billing Name</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->billing_name ?? '-' }}">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Billing Email</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->billing_email ?? '-' }}">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Billing Phone</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->billing_phone ?? '-' }}">
+                                                </div>
+                                        
+                                                <!-- Shipping Info -->
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Shipping Name</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->shipping_name ?? '-' }}">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Shipping Email</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->shipping_email ?? '-' }}">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Shipping Phone</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $admission->shipping_phone ?? '-' }}">
+                                                </div>
+                                            </div>
+                                        @endif
+
+
+                                        
+                                        
 
                                         <!-- Back Button -->
                                         <div class="col-12 text-end mt-4">
-                                            <a href="{{ route('manage-addmission-enquiries.index') }}" class="btn btn-secondary px-4">← Back to List</a>
+                                            <a href="{{ route('manage-addmission-enquiries.index') }}" class="btn btn-secondary px-4">Back to List</a>
                                         </div>
                                     </form>
                                 </div>

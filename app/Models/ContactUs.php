@@ -34,4 +34,23 @@ class ContactUs extends Model
         'deleted_at',
         'deleted_by',
     ];
+
+    /**
+     * Announcements with a ready-to-use file URL.
+     * Usage: $contact->announcement_list
+     */
+    public function getAnnouncementListAttribute(): array
+    {
+        $items = $this->announcements ? (json_decode($this->announcements, true) ?: []) : [];
+
+        return array_map(function ($item) {
+            $file = $item['file'] ?? null;
+
+            return [
+                'title'    => $item['title'] ?? '',
+                'file'     => $file,
+                'file_url' => $file ? asset('uploads/announcements/' . $file) : null,
+            ];
+        }, array_values($items));
+    }
 }

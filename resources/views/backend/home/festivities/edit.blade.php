@@ -84,7 +84,7 @@
                                         <!-- Description -->
                                         <div class="col-md-12">
                                             <label for="description" class="form-label"> Description <span class="txt-danger">*</span></label>
-                                            <textarea name="description" id="description" class="form-control" rows="4" 
+                                            <textarea name="description" id="editor" class="form-control" rows="4" 
                                                     placeholder="Enter Description" required>{{ old('description', $festivities->description) }}</textarea>
                                             <div class="invalid-feedback">Please enter a Description.</div>
                                         </div>

@@ -12,7 +12,7 @@
 
     <main class="main">
 
-        <section class="ecolemon-breadcrumb-sec ecol-faq-breadcrumb-sec" style="background-image: url('{{ asset('uploads/campus-life/'.$gallery_banner->banner_image) }}'); 
+        <section class="ecolemon-breadcrumb-sec ecol-faq-breadcrumb-sec" style="background-image: url('{{ asset('uploads/campus-life/'.$galleryItem->banner_image) }}'); 
                     background-size: cover; 
                     background-position: center">
             <div class="container">

@@ -66,34 +66,107 @@
 
                     <div class="table-responsive custom-scrollbar mt-5">
 
-                        <table class="table table-bordered table-bordered" id="bulletinTable">
+                        <table class="table table-bordered" id="bulletinTable">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Student Name</th>
-                                    <th>Date of Birth</th>
-                                    <th>Present School</th>
                                     <th>Joining Grade</th>
                                     <th>Country</th>
-                                    <th>Nationality</th>
+                                    <th>Enquiry Date</th>
+                                    
+                                    <th>Payment Status</th> 
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody id="admissionTableBody">
-                                @foreach($admission as $key => $item)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item->student_name ?? '-' }}</td>
-                                        <td>{{ $item->dob ? \Carbon\Carbon::parse($item->dob)->format('d M, Y') : '-' }}</td>
-                                        <td>{{ $item->present_school ?? '-' }}</td>
-                                        <td>{{ $item->join_grade_name ?? '-' }}</td>
-                                        <td>{{ $item->country_name ?? '-' }}</td>
-                                        <td>{{ $item->nationality_name ?? '-' }}</td>
-                                        <td><a href="{{ route('manage-addmission-enquiries.show', $item->id) }}" class="btn btn-primary btn-sm">View</a></td>
+                        
+                                @php
+                                    // Group admission records by form_type
+                                    $grouped = $admission->groupBy('form_type');
+                                    $counter = 1;
+                                @endphp
+                        
+                                @foreach($grouped as $formTypeKey => $items)
+                                    @php
+                                        // Determine Form Type name
+                                        $formTypeName = $formTypeKey == 1 ? 'Application for Admission' :
+                                                        ($formTypeKey == 2 ? 'Schedule a Visit' :
+                                                        ($formTypeKey == 3 ? 'Enquiry for Admission' : 'Other'));
+                                    @endphp
+                        
+                                    <!-- Group Header Row -->
+                                    <tr class="table-primary">
+                                        <td colspan="8" class="fw-bold text-center">{{ $formTypeName }}</td>
                                     </tr>
+                        
+                                    @foreach($items as $item)
+                                        <tr>
+                                            <td>{{ $counter++ }}</td>
+                                            <td>{{ $item->student_name ?? '-' }}</td>
+                                            <td>{{ $item->join_grade_name ?? '-' }}</td>
+                                            <td>{{ $item->country_name ?? '-' }}</td>
+                                            <td>
+                                                {{ $item->inserted_at 
+                                                    ? \Carbon\Carbon::parse($item->inserted_at)->format('d M Y, h:i A') 
+                                                    : '-' }}
+                                            </td>
+                                            <td>
+                                                @if($item->payment_status)
+                                                    @if($item->payment_status === 'Paid')
+                                                        <span class="badge bg-success">Paid</span>
+                                                    @elseif($item->payment_status === 'Failed')
+                                                        <span class="badge bg-danger">Failed</span>
+                                                    @elseif($item->payment_status === 'Cancelled')
+                                                        <span class="badge bg-warning">Cancelled</span>
+                                                    @else
+                                                        <span class="badge bg-secondary">{{ $item->payment_status }}</span>
+                                                    @endif
+                                                @else
+                                                    <span class="badge bg-secondary">NA</span>
+                                                @endif
+                                            </td>
+                                            
+                                            
+                                            <td>
+                                              {{-- Application Status --}}
+                                                <div>
+                                                    @if($item->application_status)
+                                                        @php
+                                                            $appClass = match($item->application_status) {
+                                                                'Viewed' => 'bg-info',
+                                                                'Under Review' => 'bg-warning text-dark',
+                                                                'Processed' => 'bg-primary',
+                                                                default => 'bg-secondary'
+                                                            };
+                                                        @endphp
+                                                        <span class="badge {{ $appClass }}">
+                                                            {{ $item->application_status }}
+                                                        </span>
+                                                    @else
+                                                        <span class="badge bg-secondary text-center">NA</span>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            
+                                            <td><a href="{{ route('manage-addmission-enquiries.show', $item->id) }}" class="btn btn-primary btn-sm">View</a>
+                                            
+                                                <!--<a href="{{ route('admission.pdf', $item->id) }}"-->
+                                                <!--   class="btn btn-danger btn-sm"-->
+                                                <!--   target="_blank">-->
+                                                <!--    PDF-->
+                                                <!--</a>-->
+                                            </td>
+                                            
+                                            
+                                        </tr>
+                                    @endforeach
                                 @endforeach
+                        
                             </tbody>
                         </table>
+
                         
                     </div>
                   </div>

@@ -37,21 +37,42 @@
                                 @forelse($bulletin_board as $bulletin)
                                     <div class="col-md-6 bull-bb-card-sec">
                                         <div class="bb-card-inner-sec">
+                                            
+                                     
                                             <div class="bb-img-sec">
                                                 <a href="{{ route('frontend.bulletin_board_details', [
                                                         'category_slug' => $bulletin->category->slug ?? '',
                                                         'article_slug' => $bulletin->slug ?? ''
                                                     ]) }}">
-                                                    <img class="bb-img-main" 
-                                                        src="{{ asset('uploads/bulletin/' . ($bulletin->thumbnail_image ?? 'default.webp')) }}" 
-                                                        alt="{{ $bulletin->article_name }}">
-                                                    <span class="bb-date">{{ \Carbon\Carbon::parse($bulletin->created_at)->format('d M') }}</span>
+                                            
+                                                    @if($bulletin->thumbnail_image)
+                                                        {{-- Show Image --}}
+                                                        <img class="bb-img-main"
+                                                             src="{{ asset('uploads/bulletin/' . $bulletin->thumbnail_image) }}"
+                                                             alt="{{ $bulletin->article_name }}">
+                                                    @elseif($bulletin->thumbnail_video)
+                                                        {{-- Show Video --}}
+                                                        <video class="bb-img-main" autoplay muted loop playsinline
+                                                               style="width: 100%; height: auto; border-radius: 8px; object-fit: cover;">
+                                                            <source src="{{ asset('uploads/bulletin/videos/' . $bulletin->thumbnail_video) }}" type="video/mp4">
+                                                            Your browser does not support the video tag.
+                                                        </video>
+                                                    @else
+                                                        {{-- Fallback Default Image --}}
+                                                        <img class="bb-img-main"
+                                                             src="{{ asset('uploads/bulletin/default.webp') }}"
+                                                             alt="{{ $bulletin->article_name }}">
+                                                    @endif
+                                            
+                                                    <span class="bb-date">{{ \Carbon\Carbon::parse($bulletin->article_date)->format('d M') }}</span>
                                                     <span class="bb-author-sec">
                                                         <img src="{{ asset('frontend/assets/img/icons/user-icon.webp') }}" alt="User Icon">
-                                                        By {{ $bulletin->author ?? 'EMWS' }}
+                                                        By {{ $bulletin->article_author ?? 'EMWS' }}
                                                     </span>
                                                 </a>
                                             </div>
+
+                                            
                                             <div class="bb-content-sec">
                                                 <h4>
                                                     <a href="{{ route('frontend.bulletin_board_details', [
@@ -124,10 +145,21 @@
                             <div class="bb-recent-blog-inner-sec">
                                 @foreach($recent_posts as $post)
                                     <div class="blog-img-content">
-                                        <div class="blog-img">
-                                            <img src="{{ asset('uploads/bulletin/' . $post->thumbnail_image) }}" alt="{{ $post->article_name }}">
+                                       <div class="blog-img">
+                                            @if(!empty($post->thumbnail_image))
+                                                <img src="{{ asset('uploads/bulletin/' . $post->thumbnail_image) }}" alt="{{ $post->article_name }}">
+                                            @elseif(!empty($post->thumbnail_video))
+                                                <video autoplay muted loop playsinline>
+                                                    <source src="{{ asset('uploads/bulletin/videos/' . $post->thumbnail_video) }}" type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            @else
+                                                <img src="{{ asset('uploads/bulletin/default.webp') }}" alt="Default Image">
+                                            @endif
                                         </div>
+
                                         <div class="blog-text headline">
+                                            <p class="dd-ecol-sidebar-date-sec">{{ \Carbon\Carbon::parse($post->article_date)->format('d M') }}</p>
                                             <h3><a href="{{ route('frontend.bulletin_board_details', [
                                                     'category_slug' => $post->category->slug ?? '',
                                                     'article_slug'  => $post->slug ?? ''
@@ -206,6 +238,40 @@
         });
         });
     </script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll('.bb-content-sec p').forEach(p => {
+                if (!p.textContent.trim()) {
+                    p.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const cards = document.querySelectorAll(".bull-bb-card-sec");
+
+    cards.forEach(card => {
+        const img = card.querySelector(".bb-img-main");
+        const content = card.querySelector(".bb-content-sec");
+
+        if (!img || !content) return;
+
+        const pTag = content.querySelector("p");
+
+        // If <p> doesn't exist or is empty
+        if (!pTag || pTag.textContent.trim() === "") {
+            img.style.height = "310px";  // Larger height when no paragraph
+        } else {
+            img.style.height = "250px";  // Normal height when paragraph exists
+        }
+
+        img.style.objectFit = "cover";
+    });
+});
+</script>
 
 
 

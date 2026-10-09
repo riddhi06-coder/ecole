@@ -73,7 +73,7 @@ use App\Models\BulletinCategory;
 use App\Models\JobPosting;
 use App\Models\Grades;
 
-
+use Illuminate\Support\Facades\Http;
 
 
 class HomeController extends Controller
@@ -83,9 +83,11 @@ class HomeController extends Controller
     public function home() {
         $home = Banner::wherenull('deleted_by')->get();
         $programmes = ProgrammeOffered::whereNull('deleted_by')->get();
-        $festivities = HomeFestivities::whereNull('deleted_by')->get();
+        $festivities = HomeFestivities::whereNull('deleted_by')->orderby('id','desc')->get();
         $features = HomeFeatures::whereNull('deleted_by')->get();
-        $bulletin = BulletinBoard::whereNull('deleted_by')->get();
+        // $bulletin = BulletinBoard::whereNull('deleted_by')->orderBy('id', 'desc')->get();
+        $bulletin = BulletinListing::whereNull('deleted_by')->where('is_highlight', 1)->orderBy('id', 'desc')->take(3)->get();
+        // dd($bulletin);
         $testimonials = Testimonial::whereNull('deleted_by')->get();
         $clients = Clients::whereNull('deleted_by')->get();
 
@@ -116,62 +118,181 @@ class HomeController extends Controller
         foreach ($festivities as $festivity) {
 
             if (stripos($festivity->heading, 'IB Continuum School') !== false) {
-                // Direct link for IB Continuum School
+        
                 $festivity->url = route('frontend.accreditation_and_associations');
-            
+        
             } else {
-                // Try to find a related bulletin article by matching heading
-                $article = BulletinListing::where('article_name', 'like', '%' . $festivity->heading . '%')->first();
-
-                if ($article) {
-                
-                    // Get category from related listing or directly from category_id
-                    $category = BulletinCategory::find($article->category_id);
-                    $categorySlug = $category ? $category->slug : 'general';
-                    $articleSlug = $article->slug ?? Str::slug($article->article_name);
-
-                    // Build full route
+        
+                // Get possible matches (limit for performance)
+                $articles = BulletinListing::where('article_name', 'like', '%' . $festivity->heading . '%')
+                                ->take(10)
+                                ->get();
+        
+                $bestMatch = null;
+                $highestScore = 0;
+        
+                foreach ($articles as $article) {
+        
+                    similar_text(
+                        strtolower($festivity->heading),
+                        strtolower($article->article_name),
+                        $percent
+                    );
+        
+                    if ($percent > $highestScore) {
+                        $highestScore = $percent;
+                        $bestMatch = $article;
+                    }
+                }
+        
+                // ✅ Apply threshold (important)
+                if ($bestMatch && $highestScore > 40) {
+        
+                    $category = BulletinCategory::find($bestMatch->category_id);
+                    $categorySlug = $category->slug ?? 'general';
+        
+                    $articleSlug = $bestMatch->slug ?? Str::slug($bestMatch->article_name);
+        
                     $festivity->url = route('frontend.bulletin_board_details', [
                         'category_slug' => $categorySlug,
                         'article_slug' => $articleSlug
                     ]);
-
+        
                 } else {
-          
-                    $festivity->url = 'javascript:void(0)';
+        
+                    // No good match
+                    $festivity->url = null;
                 }
             }
         }
 
 
         // === Attach related bulletin URLs to each bulletin card
-        foreach ($bulletin as $item) {
-            $article = BulletinListing::where('article_name', 'like', '%' . $item->title . '%')->first();
+       foreach ($bulletin as $item) {
 
-            if ($article) {
-                $category = BulletinCategory::find($article->category_id);
-                $categorySlug = $category ? $category->slug : 'general';
-                $articleSlug = $article->slug ?? Str::slug($article->article_name);
-
-                $item->url = route('frontend.bulletin_board_details', [
-                    'category_slug' => $categorySlug,
-                    'article_slug' => $articleSlug
-                ]);
-
-                Log::info('Bulletin card mapped:', [
-                    'title' => $item->title,
-                    'url' => $item->url
-                ]);
-            } else {
-                $item->url = 'javascript:void(0)';
-                Log::warning('No article found for bulletin card:', [
-                    'title' => $item->title
-                ]);
-            }
+            $category = BulletinCategory::find($item->category_id);
+            $categorySlug = $category ? $category->slug : 'general';
+        
+            $articleSlug = $item->slug 
+                ?? Str::slug($item->article_name); // or title if that's your column
+        
+            $item->url = route('frontend.bulletin_board_details', [
+                'category_slug' => $categorySlug,
+                'article_slug'  => $articleSlug
+            ]);
+        
+           
         }
 
 
         return view('frontend.home', compact('home','programmes','festivities','features','bulletin','testimonials','clients','alumniData'));
+    }
+    
+    // ==== Alumni Guidance
+    public function alumni_guidance()
+    {
+        $alumniCount = 0;
+        $alumniList  = [];
+    
+        try {
+            // Insights API (count)
+            $insights = Http::withHeaders([
+                'api-key' => '742rUs9xMOOEiKuC',
+            ])->get('https://ags.univariety.com/common/v1/schoolapi/insights');
+    
+            if ($insights->successful()) {
+                $insightsData = $insights->json();
+                $alumniCount = $insightsData['data']['alumniCount'] ?? 0;
+            }
+    
+            // Alumni profile cards API
+            $alumniResponse = Http::withHeaders([
+                'api-key' => '742rUs9xMOOEiKuC',
+            ])->get('https://ags.univariety.com/common/v1/schoolapi/alumni-profile-card');
+    
+            if ($alumniResponse->successful()) {
+                $alumniData = $alumniResponse->json();
+                $alumniList = $alumniData['data'] ?? [];
+            }
+    
+        } catch (\Exception $e) {
+            // log if needed
+        }
+    
+        return view('frontend.alumni_guidance', compact('alumniCount', 'alumniList'));
+    }
+
+
+    // ==== Success Stories
+    public function success_stories()
+    {
+    $topCareers  = [];
+    $topColleges = [];
+    $alumniList  = [];
+
+    try {
+
+        // Top Careers
+        $careerResponse = Http::withHeaders([
+            'api-key' => '742rUs9xMOOEiKuC',
+        ])->get('https://ags.univariety.com/common/v1/schoolapi/top-career');
+
+        if ($careerResponse->successful()) {
+            $careerData = $careerResponse->json();
+            if (!empty($careerData['success'])) {
+                $topCareers = $careerData['data'] ?? [];
+            }
+        }
+
+        // Top Colleges
+        $collegeResponse = Http::withHeaders([
+            'api-key' => '742rUs9xMOOEiKuC',
+        ])->get('https://ags.univariety.com/common/v1/schoolapi/top-colleges');
+
+        if ($collegeResponse->successful()) {
+            $collegeData = $collegeResponse->json();
+            if (!empty($collegeData['success'])) {
+                $topColleges = $collegeData['data'] ?? [];
+            }
+        }
+
+        // Alumni Success Stories
+        $alumniResponse = Http::withHeaders([
+            'api-key' => '742rUs9xMOOEiKuC',
+        ])->get('https://ags.univariety.com/common/v1/schoolapi/alumni-profile-card');
+
+        if ($alumniResponse->successful()) {
+            $alumniData = $alumniResponse->json();
+            $alumniList = collect($alumniData['data'] ?? [])->map(function($alumni) {
+                return [
+                    'name'            => $alumni['full_name'] ?? '',
+                    'school_name'     => $alumni['campus_name'] ?? '',
+                    'batch_year'      => $alumni['pass_out_year'] ?? '',
+                    'previous_school' => $alumni['campus_name'] ?? '', // fallback
+                    'previous_batch'  => $alumni['pass_out_year'] ?? '',
+                    'career'          => $alumni['department'] ?? '',
+                    'college'         => $alumni['institue_name'] ?? '',
+                    'image'           => $alumni['image_path'] ?? asset('frontend/assets/img/alumni/default.jpg'),
+                ];
+            })->toArray();
+        }
+
+    } catch (\Exception $e) {
+        // optional logging
+    }
+
+    return view('frontend.success_stories', compact(
+        'topCareers',
+        'topColleges',
+        'alumniList'
+    ));
+}
+
+
+    
+    // ==== Sitemap
+    public function sitemap() {
+        return view('frontend.sitemap');
     }
 
     // === What sets us apart?
@@ -262,17 +383,23 @@ class HomeController extends Controller
             ->orderBy('id', 'asc')
             ->get();
 
-        $grades = Grades::orderBy('id', 'asc')->get();
+        $grades = Grades::wherenull('deleted_by')->orderBy('id', 'asc')->get();
 
 
         // ✅ Generate dynamic academic years (previous, current, upcoming)
         $currentYear = date('Y');
-        $nextYear = $currentYear + 1;
-
-        $academicYears = [
-            ($currentYear) . ' - ' . $nextYear,
-            ($nextYear) . ' - ' . ($nextYear + 1),
-        ];
+        
+        if (date('n') <= 5) {   // January to May → still consider previous year as current academic year
+            $currentYear--;
+        }
+        
+        $academicYears = [];
+        
+        for ($i = 0; $i < 3; $i++) {
+            $start = $currentYear + $i;
+            $end   = $start + 1;
+            $academicYears[] = $start . ' - ' . $end;
+        }
 
 
         return view('frontend.apply_for_admission', compact('apply_for_admission','countries','academicYears','nationality','grades'));
@@ -292,16 +419,22 @@ class HomeController extends Controller
             ->get();
 
 
-        $grades = Grades::orderBy('id', 'asc')->get();
+        $grades = Grades::wherenull('deleted_by')->orderBy('id', 'asc')->get();
 
         // ✅ Generate dynamic academic years (previous, current, upcoming)
-        $currentYear = date('Y');
-        $nextYear = $currentYear + 1;
-
-        $academicYears = [
-            ($currentYear) . ' - ' . $nextYear,
-            ($nextYear) . ' - ' . ($nextYear + 1),
-        ];
+       $currentYear = date('Y');
+        
+        if (date('n') <= 5) {   // January to May → still consider previous year as current academic year
+            $currentYear--;
+        }
+        
+        $academicYears = [];
+        
+        for ($i = 0; $i < 3; $i++) {
+            $start = $currentYear + $i;
+            $end   = $start + 1;
+            $academicYears[] = $start . ' - ' . $end;
+        }
 
         return view('frontend.schedule_a_visit_for_admission', compact('schedule_a_visit_for_admission','countries','academicYears','nationality','grades'));
     }
@@ -319,16 +452,23 @@ class HomeController extends Controller
             ->orderBy('id', 'asc')
             ->get();
 
-        $grades = Grades::orderBy('id', 'asc')->get();
+        $grades = Grades::wherenull('deleted_by')->orderBy('id', 'asc')->get();
 
         // ✅ Generate dynamic academic years (previous, current, upcoming)
         $currentYear = date('Y');
-        $nextYear = $currentYear + 1;
+        
+        if (date('n') <= 5) {   // January to May → still consider previous year as current academic year
+            $currentYear--;
+        }
+        
+        $academicYears = [];
+        
+        for ($i = 0; $i < 3; $i++) {
+            $start = $currentYear + $i;
+            $end   = $start + 1;
+            $academicYears[] = $start . ' - ' . $end;
+        }
 
-        $academicYears = [
-            ($currentYear) . ' - ' . $nextYear,
-            ($nextYear) . ' - ' . ($nextYear + 1),
-        ];
 
 
         return view('frontend.enquiry_about_admission', compact('enquiry_about_admission','countries','academicYears','nationality','grades'));
@@ -399,9 +539,10 @@ class HomeController extends Controller
     // ====  Gallery
     public function gallery() {
         $gallery_banner = GalleryImage ::wherenull('deleted_by')->first();
-        $gallery = GalleryImage ::wherenull('deleted_by')->get();
+        $gallery = GalleryImage ::wherenull('deleted_by')->orderby('id', 'desc')->get();
 
-        $gallery_videos = GalleryVideo ::wherenull('deleted_by')->get();
+        $gallery_videos = GalleryVideo ::wherenull('deleted_by')->orderby('id', 'desc')->get();
+        
         return view('frontend.gallery', compact('gallery_banner','gallery','gallery_videos'));
     }
  
@@ -489,6 +630,9 @@ class HomeController extends Controller
         $categorySlug = $request->segment(count($request->segments()));
 
 
+        $nationality = DB::table('countries')
+            ->orderBy('id', 'asc')
+            ->get();
         // ✅ Step 1.1: Remove the last word (e.g., "form" from "teaching-job-opportunities-form")
         $slugParts = explode('-', $categorySlug);
         if (count($slugParts) > 1) {
@@ -527,7 +671,7 @@ class HomeController extends Controller
             Log::warning('⚠️ No matching job category found even after cleanup', ['cleaned_slug' => $cleanedSlug]);
         }
 
-        return view('frontend.teaching_job_opportunities_form', compact(
+        return view('frontend.teaching_job_opportunities_form', compact('nationality',
             'teaching_job_opportunities_form_banner',
             'teaching_job_opportunities_banner'
         ));
@@ -543,7 +687,9 @@ class HomeController extends Controller
     public function non_teaching_job_opportunities_form(Request $request)
     {
         Log::info('🟢 Entered non_teaching_job_opportunities_form method.');
-
+   $nationality = DB::table('countries')
+            ->orderBy('id', 'asc')
+            ->get();
         // ✅ Step 1: Get the last segment of the URL
         $categorySlug = $request->segment(count($request->segments()));
         Log::info('📍 Raw category slug from URL', ['categorySlug' => $categorySlug]);
@@ -630,7 +776,7 @@ class HomeController extends Controller
         Log::info('🚀 Returning non_teaching_job_opportunities_form view');
         return view('frontend.non_teaching_job_opportunities_form', compact(
             'non_teaching_job_opportunities_form_banner',
-            'non_teaching_job_opportunities_banner'
+            'non_teaching_job_opportunities_banner','nationality'
         ));
     }
 
@@ -663,13 +809,29 @@ class HomeController extends Controller
 
 
         // Only include countries that have at least one university
+        // $availableCountries = DB::table('university_college_counselling')
+        //             ->join('countries', 'university_college_counselling.country_id', '=', 'countries.id')
+        //             ->whereNull('university_college_counselling.deleted_by')
+        //             ->select('countries.id', 'countries.name')
+        //             ->distinct()
+        //             ->get();
+
+
+        // Only include countries that have at least one university
         $availableCountries = DB::table('university_college_counselling')
                     ->join('countries', 'university_college_counselling.country_id', '=', 'countries.id')
                     ->whereNull('university_college_counselling.deleted_by')
                     ->select('countries.id', 'countries.name')
                     ->distinct()
+                    ->orderByRaw("CASE 
+                        WHEN countries.name = 'United States' THEN 1 
+                        WHEN countries.name = 'United Kingdom' THEN 2 
+                        ELSE 3 
+                    END")
+                    ->orderBy('countries.name', 'asc')
                     ->get();
-
+        // dd($availableCountries);            
+                    
         return view('frontend.college_counselling', compact('college_counselling_banner','colleges','availableCountries'));
     }
 
@@ -754,16 +916,18 @@ class HomeController extends Controller
                         ->when($tag, function($query, $tag) {
                             $query->whereRaw("FIND_IN_SET(?, special_tags)", [$tag]);
                         })
-                        ->orderBy('inserted_at', 'asc')
+                        ->orderByDesc('is_highlight') 
+                        ->orderBy('id', 'desc')
                         ->get();
         // dd($bulletin_board);
 
         $bulletin_categories = BulletinCategory::withCount(['listings'])->whereNull('deleted_by')->get();
 
         $recent_posts = BulletinListing::whereNull('deleted_by')
-                        ->orderBy('inserted_at', 'desc')
+                        ->orderBy('id', 'desc')
                         ->take(5)
                         ->get();
+                        
         return view('frontend.bulletin_board', compact('bulletin_board','bulletin_categories','recent_posts'));
     }
 
@@ -783,7 +947,7 @@ class HomeController extends Controller
 
         // Get bulletins for this category
         $bulletin_board_category_list = BulletinListing::where('category_id', $category->id)
-                    ->whereNull('deleted_by')
+                    ->wherenull('deleted_by')
                     ->when($search, function($query, $search) {
                         // Apply filter only if search term exists
                         $query->where(function($q) use ($search) {
@@ -794,7 +958,7 @@ class HomeController extends Controller
                     ->when($tag, function($query, $tag) {
                         $query->whereRaw("FIND_IN_SET(?, special_tags)", [$tag]);
                     })
-                    ->orderBy('inserted_at', 'asc')
+                    ->orderBy('id', 'desc')
                     ->get();
 
         // dd($bulletin_board_category_list);
@@ -802,16 +966,36 @@ class HomeController extends Controller
         // Recent posts (latest 5 in this category)
         $recent_posts = BulletinListing::where('category_id', $category->id)
                             ->whereNull('deleted_by')
-                            ->orderBy('inserted_at', 'desc')
+                            ->orderBy('id', 'desc')
                             ->take(5)
                             ->get();
-
+                            
+                            
+        $bulletin_board = BulletinListing::with('category')
+                ->whereNull('deleted_by')
+                ->when($search, function($query, $search) {
+                    $query->where(function($q) use ($search) {
+                        $q->where('article_name', 'like', "%{$search}%")
+                          ->orWhere('short_desc', 'like', "%{$search}%");
+                    });
+                })
+                ->when($tag, function($query, $tag) {
+                    $query->whereRaw("FIND_IN_SET(?, special_tags)", [$tag]);
+                })
+                ->orderBy('id', 'desc')
+                ->get();
+                
+                
+        // dd($bulletin_board);
+        
+        
         // All categories
         $bulletin_categories = BulletinCategory::withCount(['listings'])->whereNull('deleted_by')->get();
 
         return view('frontend.bulletin_board_category_list', compact(
             'category',
             'bulletin_board_category_list',
+            'bulletin_board',
             'bulletin_categories',
             'recent_posts',
             'search'
@@ -843,7 +1027,7 @@ class HomeController extends Controller
         // Optional: fetch recent posts for the sidebar from BulletinDetails
         $recent_posts = BulletinDetails::where('category_id', $category->id)
                             ->whereNull('deleted_by')
-                            ->orderBy('inserted_at', 'desc')
+                            ->orderBy('id', 'desc')
                             ->take(5)
                             ->get();
 
@@ -853,6 +1037,12 @@ class HomeController extends Controller
     // ==== Thankyouu
     public function thank_you() {
         return view('frontend.thank_you');
+    }
+    
+    
+    // ==== Ecole Thankyouu
+    public function ecole_thank_you() {
+        return view('frontend.ecole_thankyou');
     }
 
 

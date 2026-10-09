@@ -88,6 +88,38 @@
                                                 @endif
                                             </div>
                                         </div>
+                                        
+                                        
+                                        
+                                       <!-- Video Upload -->
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="upload_video">Upload Video</label>
+                                            <input class="form-control" id="upload_video" type="file" name="thumbnail_video"
+                                                   accept="video/mp4,video/webm,video/ogg" onchange="previewVideo(event)">
+                                            <div class="invalid-feedback">Please upload a video file.</div>
+                                            <small class="text-secondary d-block"><b>Note: File size should be less than 3 MB.</b></small>
+                                            <small class="text-secondary d-block"><b>Note: Only .mp4, .webm, and .ogg formats allowed.</b></small>
+                                        
+                                            <!-- Video Preview -->
+                                            <div class="mt-2">
+                                                @if($category->thumbnail_video)
+                                                    <video id="videoPreview"
+                                                           autoplay muted loop playsinline controls
+                                                           class="rounded border"
+                                                           style="max-height: 200px; width: 100%;">
+                                                        <source src="{{ asset('uploads/bulletin/videos/' . $category->thumbnail_video) }}" type="video/mp4">
+                                                        Your browser does not support the video tag.
+                                                    </video>
+                                                @else
+                                                    <video id="videoPreview" controls
+                                                           class="rounded border d-none"
+                                                           style="max-height: 200px; width: 100%;"></video>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        
+                                        
 
                                         <hr class="my-3">
 
@@ -176,6 +208,19 @@
                     preview.classList.add('d-none'); // hide if no file
                 }
             }
+            
+            function previewVideo(event) {
+                const file = event.target.files[0];
+                const preview = document.getElementById('videoPreview');
+                if (file) {
+                    const url = URL.createObjectURL(file);
+                    preview.src = url;
+                    preview.classList.remove('d-none');
+                    preview.load();
+                    preview.play();
+                }
+            }
+    
         </script>
 
        

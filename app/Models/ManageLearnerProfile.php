@@ -19,6 +19,7 @@ class ManageLearnerProfile extends Model
         'section_heading',
         'section_description',
         'title',
+        'image',
         'description',
 
         'inserted_at',

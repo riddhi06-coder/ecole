@@ -15,11 +15,13 @@ class BulletinListing extends Model
     protected $fillable = [
         'category_id',
         'thumbnail_image',
+        'thumbnail_video',
         'article_name',
         'article_date',
         'article_author',
         'special_tags',
         'short_desc',
+        'is_highlight',
         'slug',
 
         'inserted_at',

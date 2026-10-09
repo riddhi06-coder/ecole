@@ -16,6 +16,7 @@ class BulletinDetails extends Model
         'category_id',
         'article_id',
         'thumbnail_image',
+        'thumbnail_video',
         'location',
 
         'article_time_from',

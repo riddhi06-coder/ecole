@@ -10,7 +10,7 @@
             <!-- Footer About / Logo -->
             <div class="col-lg-4 col-md-4 footer-about">
                 <a href="{{ route('frontend.index') }}" class="logo d-flex align-items-center">
-                    <img src="{{ asset('frontend/assets/img/emws-logo.png') }}" alt="EMWS Logo">
+                    <img src="{{ asset('frontend/assets/img/logo/logo.webp') }}" alt="EMWS Logo" class="img-fluid" width="91" height="90">
                 </a>
                 <div class="footer-contact pt-3">
                     <p>{{ $contact_us->desc ?? 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, officiis!' }}</p>
@@ -28,7 +28,7 @@
                                 case '6': $icon = 'fa-pinterest'; break;
                             }
                         @endphp
-                        <a href="{{ $link['link'] }}" target="_blank"><i class="fa-brands {{ $icon }}"></i></a>
+                        <a href="{{ $link['link'] }}" target="_blank" aria-label="Visit us on Social Platforms"><i class="fa-brands {{ $icon }}"></i></a>
                     @endforeach
                 </div>
             </div>
@@ -45,7 +45,7 @@
                             <li><a href="{{ route('frontend.contact_us') }}">Contact Us</a></li>
                             <li><a href="{{ route('frontend.faq') }}">FAQs</a></li>
                             <li><a href="{{ route('frontend.career_opportunities') }}">Careers</a></li>
-                            <li><a href="#">Sitemap</a></li>
+                            <li><a href="{{ route('frontend.sitemap') }}">Sitemap</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-8 col-md-8 footer-links">
@@ -71,7 +71,7 @@
                         @endif
                         @if($contact_us->contact_number)
                             <li class="call-foo-phone">
-                                <a href="tel:{{ $contact_us->contact_number }}">{{ $contact_us->contact_number }}</a>
+                               <a href="tel:+91{{ $contact_us->contact_number }}">+91-{{ $contact_us->contact_number }}</a>
                             </li>
                         @endif
                     @endif
@@ -88,25 +88,25 @@
 
 
     <!-- HomePage Popup -->
-    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered home-page-modal-pop-up-wrap">
-        <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
+    <!--<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">-->
+    <!--<div class="modal-dialog modal-lg modal-dialog-centered home-page-modal-pop-up-wrap">-->
+    <!--    <div class="modal-content">-->
+    <!--    <div class="modal-header">-->
+    <!--        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+    <!--    </div>-->
+    <!--    <div class="modal-body text-center">-->
             <!-- Internal Video -->
-            <video id="popupVideo" class="w-100" autoplay muted loop playsinline>
-            <source src="{{ asset('frontend/assets/video/admissions-open.mp4') }}" type="video/mp4">
-            Your browser does not support the video tag.
-            </video>
+    <!--        <video id="popupVideo" class="w-100" autoplay muted loop playsinline>-->
+    <!--        <source src="{{ asset('frontend/assets/video/admissions-open.mp4') }}" type="video/mp4">-->
+    <!--        Your browser does not support the video tag.-->
+    <!--        </video>-->
             
-            <div class="pop-up-btn-sec">
-                <a class="pop-up-btn" target="_blank" href="https://api.whatsapp.com/send/?phone=9326020914&text=Hello%20%C3%89cole%20Admissions%20Team%2C%0A%0AI%E2%80%99m%20interested%20in%20admissions%202026-27.&utm_source=website&utm_medium=cta&utm_campaign=admissions_whatsapp">Enquiry Now</a>
-                </div>
+    <!--        <div class="pop-up-btn-sec">-->
+    <!--            <a class="pop-up-btn" target="_blank" href="https://api.whatsapp.com/send/?phone=9326020914&text=Hello%20%C3%89cole%20Admissions%20Team%2C%0A%0AI%E2%80%99m%20interested%20in%20admissions%202026-27.&utm_source=website&utm_medium=cta&utm_campaign=admissions_whatsapp">Enquiry Now</a>-->
+    <!--            </div>-->
             
             
-        </div>
-        </div>
-    </div>
-    </div>
+    <!--    </div>-->
+    <!--    </div>-->
+    <!--</div>-->
+    <!--</div>-->

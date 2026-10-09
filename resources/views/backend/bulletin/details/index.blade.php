@@ -37,27 +37,35 @@
                 <div class="card">
                   <div class="card-body">
 
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <nav aria-label="breadcrumb" role="navigation">
-                            <ol class="breadcrumb mb-0">
-                                <li class="breadcrumb-item">
-                                    <a href="{{ route('manage-bulletin-details.index') }}">Home</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page"> Bulletin Board Details</li>
-                            </ol>
-                        </nav>
+                    <div class="d-flex flex-column align-items-end gap-2">
 
-                        <!-- Button -->
-                        <div class="d-flex flex-column align-items-end">
-
-                            <a href="{{ route('manage-bulletin-details.create') }}" class="btn btn-primary px-5 radius-30 mb-2">+ Add Details</a>
-
-                            <input type="text" id="searchInput" class="form-control" placeholder="Search articles..." style="max-width: 800px;">
+                        <!-- Category + Add Button -->
+                        <div class="d-flex align-items-center gap-2">
+                            <select id="categoryFilter" class="form-select" style="width: 220px;">
+                                <option value="">All Categories</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ strtolower($category->category) }}">
+                                        {{ $category->category }}
+                                    </option>
+                                @endforeach
+                            </select>
+                    
+                            <a href="{{ route('manage-bulletin-details.create') }}"
+                               class="btn btn-primary px-5 radius-30">
+                                + Add Details
+                            </a>
                         </div>
+                    
+                        <!-- Search -->
+                        <input type="text" id="searchInput"
+                               class="form-control"
+                               placeholder="Search articles..."
+                               style="max-width: 500px; margin-top:30px;">
                     </div>
 
 
-                    <div class="table-responsive custom-scrollbar">
+
+                    <div class="table-responsive custom-scrollbar mt-3">
                         <table class="table table-bordered table-bordered" id="bulletinTable">
                             <thead>
                                 <tr>
@@ -73,7 +81,7 @@
 
                                 @foreach($categories as $category)
                                     <!-- Category row -->
-                                    <tr class="table-secondary category-row">
+                                    <tr class="table-secondary category-row" data-category="{{ strtolower($category->category) }}">
                                         <td colspan="5"><strong>{{ $category->category }}</strong></td>
                                     </tr>
 
@@ -83,14 +91,25 @@
                                             <td class="article-name">{{ $detail->article->article_name ?? 'N/A' }}</td>
                                             <td>
                                                 @if($detail->thumbnail_image)
-                                                    <img src="{{ asset('uploads/bulletin/' . $detail->thumbnail_image) }}" alt="{{ $detail->title ?? $detail->article_name }}" style="width: 120px; height: auto;">
+                                                    {{-- Show Image --}}
+                                                    <img src="{{ asset('uploads/bulletin/' . $detail->thumbnail_image) }}" 
+                                                         alt="{{ $detail->title ?? $detail->article_name }}" 
+                                                         style="width: 120px; height: auto; border-radius: 6px;">
+                                                @elseif($detail->thumbnail_video)
+                                                    {{-- Show Video --}}
+                                                    <video width="160px;" height="100px;" autoplay muted loop playsinline controls 
+                                                           style="border-radius: 6px; display: block;">
+                                                        <source src="{{ asset('uploads/bulletin/videos/' . $detail->thumbnail_video) }}" type="video/mp4">
+                                                        Your browser does not support the video tag.
+                                                    </video>
                                                 @else
                                                     N/A
                                                 @endif
                                             </td>
+
                                             <td>{{ $detail->location ?? 'N/A' }}</td>
                                             <td>
-                                                <a href="{{ route('manage-bulletin-details.edit', $detail->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                                <a href="{{ route('manage-bulletin-details.edit', $detail->id) }}" class="btn btn-sm btn-primary">Edit</a><br><br>
                                                 <form action="{{ route('manage-bulletin-details.destroy', $detail->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Are you sure?');">
                                                     @csrf
                                                     @method('DELETE')
@@ -167,6 +186,60 @@
                 });
             });
         </script>
+        
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+
+    const searchInput    = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const rows = document.querySelectorAll('#bulletinTable tbody tr');
+    const noDataRow = document.querySelector('.no-data');
+
+    function filterTable() {
+        const searchText = searchInput.value.toLowerCase();
+        const selectedCategory = categoryFilter.value;
+
+        let currentCategory = '';
+        let hasVisibleRows = false;
+
+        rows.forEach(row => {
+
+            // Category row
+            if (row.classList.contains('category-row')) {
+                currentCategory = row.dataset.category;
+                const showCategory = !selectedCategory || currentCategory === selectedCategory;
+                row.style.display = showCategory ? '' : 'none';
+                return;
+            }
+
+            // Listing row
+            if (row.classList.contains('listing-row')) {
+                const articleName =
+                    row.querySelector('.article-name')?.textContent.toLowerCase() || '';
+
+                const matchesSearch = articleName.includes(searchText);
+                const matchesCategory =
+                    !selectedCategory || currentCategory === selectedCategory;
+
+                const visible = matchesSearch && matchesCategory;
+                row.style.display = visible ? '' : 'none';
+
+                if (visible) hasVisibleRows = true;
+            }
+        });
+
+        // Show / hide "No data" row
+        if (noDataRow) {
+            noDataRow.style.display = hasVisibleRows ? 'none' : '';
+        }
+    }
+
+    searchInput.addEventListener('keyup', filterTable);
+    categoryFilter.addEventListener('change', filterTable);
+});
+        </script>
+
 
 
 

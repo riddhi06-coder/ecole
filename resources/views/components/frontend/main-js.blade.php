@@ -5,7 +5,7 @@
   
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
+      class="fa-solid fa-arrow-up"></i></a>
     <div class="float-container">
         @if($contact_us && $contact_us->contact_number)
             <a href="tel:{{ $contact_us->contact_number }}" class="icon one">Call Us</a>
@@ -25,42 +25,65 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
   <!-- Main JS File -->
   <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
-
-    <!-- Script to auto-show modal after 10s -->
+  
+  <!-- Script to auto-show modal after 10s -->
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      setTimeout(function () {
-        var myModal = new bootstrap.Modal(document.getElementById('videoModal'));
-        myModal.show();
-      }, 10000);
-      
-      var videoModal = document.getElementById('videoModal');
-      videoModal.addEventListener('hidden.bs.modal', function () {
+document.addEventListener("DOMContentLoaded", function () {
+
+    var videoModalEl = document.getElementById('videoModal');
+
+    // Exit if modal does not exist on this page
+    if (!videoModalEl) return;
+
+    // Show modal once per session
+    if (!sessionStorage.getItem("videoPopupShown")) {
+        setTimeout(function () {
+            var myModal = new bootstrap.Modal(videoModalEl);
+            myModal.show();
+            sessionStorage.setItem("videoPopupShown", "true");
+        }, 10000);
+    }
+
+    // Stop video when modal closes
+    videoModalEl.addEventListener('hidden.bs.modal', function () {
         var video = document.getElementById('popupVideo');
-        video.pause();
-        video.currentTime = 0;
-      });
+        if (video) {
+            video.pause();
+            video.currentTime = 0;
+        }
     });
-  </script>
+});
+</script>
 
-  <script>
-    $(".alumni-carousal-slide").owlCarousel({
-      loop: true,
-      margin: 20,
-      nav: true,
-      dots: false,
-      autoplay: true,
-      autoplayTimeout: 4000,
-      smartSpeed: 800,
-      responsive: {
-        0: { items: 1 },
-        576: { items: 1 },
-        992: { items: 3 },
-        1200: { items: 4 }
-      },
-      navText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
-    });
-  </script>
+
+<script>
+  $(".alumni-carousal-slide").owlCarousel({
+    loop: true,
+    margin: 20,
+    nav: true,
+    dots: false,
+    autoplay: true,
+    autoplayTimeout: 4000,
+    smartSpeed: 800,
+    responsive: {
+      0: { items: 1 },
+      576: { items: 1 },
+      992: { items: 3 },
+      1200: { items: 4 }
+    },
+    navText: [
+      "<i class='fa fa-angle-left' aria-hidden='true'></i>",
+      "<i class='fa fa-angle-right' aria-hidden='true'></i>"
+    ]
+  });
+
+  // accessibility fix
+  $(".alumni-carousal-slide").on("initialized.owl.carousel", function () {
+    $(this).find(".owl-prev").attr("aria-label", "Previous slide");
+    $(this).find(".owl-next").attr("aria-label", "Next slide");
+  });
+</script>
+
 
   <script>
     $(".client-carousel").owlCarousel({
@@ -80,93 +103,100 @@
     });
   </script>
 
-  <script>
-    $(document).ready(function () {
-      $(".emctesti-carousel").owlCarousel({
-        loop: true,
-        margin: 30,
-        nav: true,
-        dots: true,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        smartSpeed: 800,
-        responsiveClass: true,
-        responsive: {
-          0: { items: 1 },
-          576: { items: 1 },
-          768: { items: 1 },
-          992: { items: 2 },
-          1200: { items: 2 }
-        },
-        navText: [
-          "<i class='fa fa-angle-left'></i>",
-          "<i class='fa fa-angle-right'></i>"
-        ]
-      });
-    });
-  </script>
-
-  <script>
-    var swiper = new Swiper(".mySwiper", {
-      slidesPerView: 1,
-      spaceBetween: 20,
+<script>
+  $(document).ready(function () {
+    $(".emctesti-carousel").owlCarousel({
       loop: true,
-      autoplay: {
-        delay: 4000,
-        disableOnInteraction: false,
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      breakpoints: {
-        640: {
-          slidesPerView: 1,
-          spaceBetween: 20,
-        },
-        768: {
-          slidesPerView: 2,
-          spaceBetween: 25,
-        },
-        1024: {
-          slidesPerView: 2,
-          spaceBetween: 30,
-        },
-        1440: {
-          slidesPerView: 2,
-          spaceBetween: 40,
-        }
-      }
-    });
-  </script>
-
-  <script>
-    $('.latest-blog-carousel').owlCarousel({
-      loop: true,
-      margin: 20,
+      margin: 30,
       nav: true,
-      dots: false,
+      dots: true,
       autoplay: true,
-      autoplayTimeout: 4000,
+      autoplayTimeout: 3000,
       smartSpeed: 800,
+      responsiveClass: true,
       responsive: {
-        0: {
-          items: 1
-        },
-        768: {
-          items: 1
-        },
-        992: {
-          items: 1
-        }
+        0: { items: 1 },
+        576: { items: 1 },
+        768: { items: 1 },
+        992: { items: 2 },
+        1200: { items: 2 }
       },
       navText: [
-        "<i class='fa fa-angle-left'></i>",
-        "<i class='fa fa-angle-right'></i>"
+        "<i class='fa fa-angle-left' aria-hidden='true'></i>",
+        "<i class='fa fa-angle-right' aria-hidden='true'></i>"
       ]
     });
-  </script>
+
+    // accessibility fix
+    $(".emctesti-carousel").on("initialized.owl.carousel", function () {
+      $(this).find(".owl-prev").attr("aria-label", "Previous testimonial");
+      $(this).find(".owl-next").attr("aria-label", "Next testimonial");
+    });
+  });
+</script>
+
+
+  <!--<script>-->
+  <!--  var swiper = new Swiper(".mySwiper", {-->
+  <!--    slidesPerView: 1,-->
+  <!--    spaceBetween: 20,-->
+  <!--    loop: true,-->
+  <!--    autoplay: {-->
+  <!--      delay: 4000,-->
+  <!--      disableOnInteraction: false,-->
+  <!--    },-->
+  <!--    pagination: {-->
+  <!--      el: ".swiper-pagination",-->
+  <!--      clickable: true,-->
+  <!--    },-->
+  <!--    navigation: {-->
+  <!--      nextEl: ".swiper-button-next",-->
+  <!--      prevEl: ".swiper-button-prev",-->
+  <!--    },-->
+  <!--    breakpoints: {-->
+  <!--      640: {-->
+  <!--        slidesPerView: 1,-->
+  <!--        spaceBetween: 20,-->
+  <!--      },-->
+  <!--      768: {-->
+  <!--        slidesPerView: 2,-->
+  <!--        spaceBetween: 25,-->
+  <!--      },-->
+  <!--      1024: {-->
+  <!--        slidesPerView: 2,-->
+  <!--        spaceBetween: 30,-->
+  <!--      },-->
+  <!--      1440: {-->
+  <!--        slidesPerView: 2,-->
+  <!--        spaceBetween: 40,-->
+  <!--      }-->
+  <!--    }-->
+  <!--  });-->
+  <!--</script>-->
+
+<script>
+  $('.latest-blog-carousel').owlCarousel({
+    loop: true,
+    margin: 20,
+    nav: true,
+    dots: false,
+    autoplay: true,
+    autoplayTimeout: 4000,
+    smartSpeed: 800,
+    responsive: {
+      0: { items: 1 },
+      768: { items: 1 },
+      992: { items: 1 }
+    },
+    navText: [
+      "<i class='fa fa-angle-left' aria-hidden='true'></i>",
+      "<i class='fa fa-angle-right' aria-hidden='true'></i>"
+    ]
+  });
+
+  // accessibility fix
+  $('.latest-blog-carousel').on('initialized.owl.carousel', function () {
+    $(this).find('.owl-prev').attr('aria-label', 'Previous slide');
+    $(this).find('.owl-next').attr('aria-label', 'Next slide');
+  });
+</script>

@@ -40,6 +40,14 @@
                             @else
                                 <p>No virtual tour video available.</p>
                             @endif
+                            
+                            
+                            <!--<video width="100%" height="500" autoplay loop muted playsinline controls>-->
+                            <!--    <source src="/ecole-mondiale/public/frontend/assets/video/video.mp4" type="video/mp4">-->
+                            <!--    Your browser does not support the video tag.-->
+                            <!--</video>-->
+
+
                         </div>
                     </div>
                 </div>

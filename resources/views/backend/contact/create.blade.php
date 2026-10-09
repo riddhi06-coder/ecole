@@ -44,14 +44,11 @@
                     <div class="card-body">
                         <div class="vertical-main-wizard">
                         <div class="row g-3">    
-                            <!-- Removed empty col div -->
                             <div class="col-12">
                             <div class="tab-content" id="wizard-tabContent">
                                 <div class="tab-pane fade show active" id="wizard-contact" role="tabpanel" aria-labelledby="wizard-contact-tab">
                                     <form class="row g-3 needs-validation custom-input" novalidate action="{{ route('manage-contact-us.store') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
-
-
 
                                         <!-- Banner Heading -->
                                         <div class="col-md-6">
@@ -60,12 +57,11 @@
                                             <div class="invalid-feedback">Please enter a Banner Heading.</div>
                                         </div>
 
-
                                         <!-- Banner Image -->
                                         <div class="col-md-6">
                                             <label class="form-label" for="banner">Banner Image <span class="txt-danger">*</span></label>
                                             <input class="form-control" id="banner" type="file" name="banner" onchange="previewbanner(event)" required>
-                                            <div class="invalid-feedback">Please upload a Banner Image .</div>
+                                            <div class="invalid-feedback">Please upload a Banner Image.</div>
                                             <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small>
                                             <br>
                                             <small class="text-secondary"><b>Note: Only files in .jpg, .jpeg, .png, .webp format can be uploaded.</b></small>
@@ -78,23 +74,20 @@
 
                                         <hr>
 
-                                        <!--Email-->
+                                        <!-- Email -->
                                         <div class="col-md-6">
                                             <label class="form-label" for="email">Email <span class="txt-danger">*</span></label>
                                             <input class="form-control" id="email" type="text" name="email" placeholder="Enter Email" required>
-                                            <div class="invalid-feedback">Please enter aEmail.</div>
+                                            <div class="invalid-feedback">Please enter an Email.</div>
                                         </div>
 
-
-                                        
-                                        <!--Email-->
+                                        <!-- Other Email -->
                                         <div class="col-md-6">
                                             <label class="form-label" for="other_email">Other Email <span class="txt-danger">*</span></label>
                                             <input class="form-control" id="other_email" type="text" name="other_email" placeholder="Enter Other Email" required>
-                                            <div class="invalid-feedback">Please enter a Other Email.</div>
+                                            <div class="invalid-feedback">Please enter an Other Email.</div>
                                         </div>
 
-            
                                         <!-- Contact Number -->
                                         <div class="col-md-6">
                                             <label class="form-label" for="contact_number">Contact Number <span class="txt-danger">*</span></label>
@@ -102,74 +95,78 @@
                                             <div class="invalid-feedback">Please enter a valid Contact Number.</div>
                                         </div>
 
-
                                         <!-- Other Contact Number -->
                                         <div class="col-md-6">
-                                            <label class="form-label" for="other_contact_number">Other Contact Number <span class="txt-danger">*</span></label>
-                                            <input class="form-control" id="other_contact_number" type="text" name="other_contact_number" placeholder="Enter Contact Number" required>
+                                            <label class="form-label" for="other_contact_number">Other Contact Number </label>
+                                            <input class="form-control" id="other_contact_number" type="text" name="other_contact_number" placeholder="Enter Contact Number">
                                             <div class="invalid-feedback">Please enter a valid Contact Number.</div>
                                         </div>
 
-
-                                            
-                                        <!-- Gmap URL-->
+                                        <!-- Gmap URL -->
                                         <div class="col-md-12">
                                             <label class="form-label" for="url">Gmap URL <span class="txt-danger">*</span></label>
                                             <input class="form-control" id="url" type="text" name="url" placeholder="Enter Gmap URL" required>
                                             <div class="invalid-feedback">Please enter a Gmap URL.</div>
                                         </div>
 
-
-                                        <!-- I Frame URl-->
+                                        <!-- IFrame URL -->
                                         <div class="col-md-12">
                                             <label class="form-label" for="i_frame">IFrame URL <span class="txt-danger">*</span></label>
                                             <input class="form-control" id="i_frame" type="text" name="i_frame" placeholder="Enter I Frame URL" required>
-                                            <div class="invalid-feedback">Please enter a I Frame URL.</div>
+                                            <div class="invalid-feedback">Please enter an IFrame URL.</div>
                                         </div>
 
-
-                                        <!-- Short Description-->
+                                        <!-- Short Description -->
                                         <div class="col-md-12 mb-5">
-                                            <label class="form-label" for="about">Short Description<span class="txt-danger">*</span></label>
+                                            <label class="form-label" for="desc">Short Description <span class="txt-danger">*</span></label>
                                             <textarea class="form-control" id="desc" name="desc" placeholder="Enter Short Description" required></textarea>
-                                            <div class="invalid-feedback">Please enter an Short Description.</div>
+                                            <div class="invalid-feedback">Please enter a Short Description.</div>
                                         </div>
 
-                                        <!-- Address-->
+                                        <!-- Address -->
                                         <div class="col-md-12 mb-5">
-                                            <label class="form-label" for="about">Address <span class="txt-danger">*</span></label>
+                                            <label class="form-label" for="address">Address <span class="txt-danger">*</span></label>
                                             <textarea class="form-control" id="address" name="address" placeholder="Enter Address" required></textarea>
                                             <div class="invalid-feedback">Please enter an Address.</div>
                                         </div>
 
-
                                         <!-- Announcements Table -->
                                         <div class="col-12">
                                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <label class="form-label" for="announcements"><strong>Announcements</strong></label>
+                                                <label class="form-label"><strong>Announcements</strong></label>
                                                 <button type="button" id="add-announcement-row" class="btn btn-success">Add Announcement</button>
                                             </div>
                                             <table class="table table-bordered p-3" id="announcementTable" style="border: 2px solid #dee2e6;">
                                                 <thead>
                                                     <tr>
-                                                        <th>Announcement <span class="txt-danger">*</span></th>
+                                                        <th style="width: 50%;">Announcement <span class="txt-danger">*</span></th>
+                                                        <th>
+                                                            Attachment (Document / Image)
+                                                            <br><small class="text-secondary">Optional. pdf, doc, docx, jpg, jpeg, png, webp — max 2MB. Shows a "Click here" link on the website.</small>
+                                                        </th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="announcement-table-body">
                                                     <tr>
-                                                        <td><input type="text" name="announcements[0][title]" class="form-control" placeholder="Enter Announcement" required></td>
+                                                        <td>
+                                                            <input type="text" name="announcements[0][title]" class="form-control" placeholder="Enter Announcement" required>
+                                                        </td>
+                                                        <td>
+                                                            <input type="file" name="announcements[0][file]" class="form-control announcement-file"
+                                                                   accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp">
+                                                            <div class="announcement-preview mt-2"></div>
+                                                        </td>
                                                         <td><button type="button" class="btn btn-danger remove-announcement-row">Remove</button></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
 
-
                                         <!-- Social Media Links Table -->
                                         <div class="col-12 mt-5">
                                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <label class="form-label" for="social_media_links"><strong>Social Media Links </strong></label>
+                                                <label class="form-label"><strong>Social Media Links</strong></label>
                                                 <button type="button" id="add-social-media-row" class="btn btn-success">Add Link</button>
                                             </div>
                                             <table class="table table-bordered p-3" id="dynamicTable" style="border: 2px solid #dee2e6;">
@@ -200,7 +197,6 @@
                                             </table>
                                         </div>
 
-
                                         <!-- Form Actions -->
                                         <div class="col-12 text-end">
                                             <a href="{{ route('manage-contact-us.index') }}" class="btn btn-danger px-4">Cancel</a>
@@ -225,76 +221,46 @@
         </div>
         </div>
 
-
-       
        @include('components.backend.main-js')
 
-=
-    <!-- JavaScript to dynamically add/remove rows -->
+<!-- Social media rows -->
 <script>
+    let socialIndex = 1;
+
     document.getElementById('add-social-media-row').addEventListener('click', function () {
-        var tableBody = document.getElementById('social-media-table-body');
-        var rowCount = tableBody.rows.length;
-        var row = tableBody.insertRow();
-
-        // Platform Dropdown
-        var cell1 = row.insertCell(0);
-        var platformSelect = document.createElement('select');
-        platformSelect.name = `social_media[${rowCount}][platform]`;
-        platformSelect.classList.add('form-control');
-        platformSelect.required = true;
-
-        // Add options to the dropdown with numerical values
-        var platforms = [
+        const tableBody = document.getElementById('social-media-table-body');
+        const platforms = [
             { id: 1, name: 'Facebook' },
             { id: 2, name: 'Twitter' },
             { id: 3, name: 'Instagram' },
-            { id: 4, name: 'Linkedin' },
-            { id: 5, name: 'Youtube' },
+            { id: 4, name: 'LinkedIn' },
+            { id: 5, name: 'YouTube' },
             { id: 6, name: 'Pintrest' }
         ];
-        platformSelect.innerHTML = '<option value="">Select Platform</option>';
-        platforms.forEach(function (platform) {
-            var option = document.createElement('option');
-            option.value = platform.id; // Numerical value
-            option.textContent = platform.name.charAt(0).toUpperCase() + platform.name.slice(1); // Capitalized name
-            platformSelect.appendChild(option);
-        });
+        const options = platforms.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
 
-        cell1.appendChild(platformSelect);
-
-        // URL Input
-        var cell2 = row.insertCell(1);
-        var urlInput = document.createElement('input');
-        urlInput.type = 'url';
-        urlInput.name = `social_media[${rowCount}][link]`;
-        urlInput.classList.add('form-control');
-        urlInput.placeholder = 'Enter Social Media URL';
-        urlInput.required = true;
-        cell2.appendChild(urlInput);
-
-        // Remove Button
-        var cell3 = row.insertCell(2);
-        var removeBtn = document.createElement('button');
-        removeBtn.type = 'button';
-        removeBtn.classList.add('btn', 'btn-danger', 'remove-social-media-row');
-        removeBtn.textContent = 'Remove';
-        removeBtn.addEventListener('click', function () {
-            tableBody.deleteRow(row.rowIndex);
-        });
-        cell3.appendChild(removeBtn);
+        tableBody.insertAdjacentHTML('beforeend', `
+            <tr>
+                <td>
+                    <select name="social_media[${socialIndex}][platform]" class="form-control" required>
+                        <option value="">Select Platform</option>${options}
+                    </select>
+                </td>
+                <td><input type="url" name="social_media[${socialIndex}][link]" class="form-control" placeholder="Enter Social Media URL" required></td>
+                <td><button type="button" class="btn btn-danger remove-social-media-row">Remove</button></td>
+            </tr>
+        `);
+        socialIndex++;
     });
 
-
-    // Event delegation to remove rows
-    document.getElementById('social-media-table-body').addEventListener('click', function(e) {
-        if (e.target && e.target.classList.contains('remove-social-media-row')) {
-            var row = e.target.closest('tr');
-            row.remove();
+    document.getElementById('social-media-table-body').addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-social-media-row')) {
+            e.target.closest('tr').remove();
         }
     });
 </script>
 
+<!-- Banner preview -->
 <script>
     function previewbanner(event) {
         const input = event.target;
@@ -302,48 +268,121 @@
 
         if (input.files && input.files[0]) {
             const reader = new FileReader();
-
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 preview.src = e.target.result;
-                preview.classList.remove('d-none'); // show preview
-            }
-
+                preview.classList.remove('d-none');
+            };
             reader.readAsDataURL(input.files[0]);
         } else {
             preview.src = "#";
-            preview.classList.add('d-none'); // hide if no file
+            preview.classList.add('d-none');
         }
     }
 </script>
 
-
-
+<!-- Announcement rows -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         let announcementIndex = 1;
+        const allowed = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'webp'];
+        const maxSize = 2 * 1024 * 1024; // 2MB
 
         // Add row
         document.getElementById("add-announcement-row").addEventListener("click", function () {
-            let tableBody = document.getElementById("announcement-table-body");
-            let newRow = `
+            const tableBody = document.getElementById("announcement-table-body");
+            tableBody.insertAdjacentHTML("beforeend", `
                 <tr>
-                    <td><input type="text" name="announcements[${announcementIndex}][title]" class="form-control" placeholder="Enter Announcement" required></td>
+                    <td>
+                        <input type="text" name="announcements[${announcementIndex}][title]" class="form-control" placeholder="Enter Announcement" required>
+                    </td>
+                    <td>
+                        <input type="file" name="announcements[${announcementIndex}][file]" class="form-control announcement-file"
+                               accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp">
+                        <div class="announcement-preview mt-2"></div>
+                    </td>
                     <td><button type="button" class="btn btn-danger remove-announcement-row">Remove</button></td>
                 </tr>
-            `;
-            tableBody.insertAdjacentHTML("beforeend", newRow);
+            `);
             announcementIndex++;
         });
 
         // Remove row
-        document.addEventListener("click", function (e) {
-            if (e.target && e.target.classList.contains("remove-announcement-row")) {
+        document.getElementById("announcement-table-body").addEventListener("click", function (e) {
+            if (e.target.classList.contains("remove-announcement-row")) {
                 e.target.closest("tr").remove();
             }
         });
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+
+        function renderPreview(input, file) {
+            const box = input.closest("td").querySelector(".announcement-preview");
+            if (!box) return;
+
+            if (box.dataset.blobUrl) {
+                URL.revokeObjectURL(box.dataset.blobUrl);
+                delete box.dataset.blobUrl;
+            }
+            if (!file) {
+                box.innerHTML = "";
+                return;
+            }
+
+            const ext = file.name.split('.').pop().toLowerCase();
+            const url = URL.createObjectURL(file);
+            box.dataset.blobUrl = url;
+            const name = escapeHtml(file.name);
+
+            let html = '';
+            if (['jpg', 'jpeg', 'png', 'webp'].includes(ext)) {
+                html += `<a href="${url}" target="_blank" rel="noopener">
+                            <img src="${url}" alt="Preview" class="img-thumbnail" style="max-height: 90px;">
+                         </a>`;
+            } else if (ext === 'pdf') {
+                html += `<a href="${url}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary">Preview PDF</a>
+                         <small class="d-block text-muted mt-1">${name}</small>`;
+            } else {
+                html += `<span class="badge bg-secondary">${ext.toUpperCase()}</span>
+                         <small class="text-muted ms-1">${name}</small>`;
+            }
+            html += `<button type="button" class="btn btn-sm btn-link text-danger clear-announcement-file p-0 d-block mt-1">Clear selected file</button>`;
+            box.innerHTML = html;
+        }
+
+        // Validate + preview on file select
+        document.getElementById("announcement-table-body").addEventListener("change", function (e) {
+            if (!e.target.classList.contains("announcement-file")) return;
+            const file = e.target.files[0];
+
+            if (file) {
+                const ext = file.name.split('.').pop().toLowerCase();
+                if (!allowed.includes(ext)) {
+                    alert("Only pdf, doc, docx, jpg, jpeg, png, webp files are allowed.");
+                    e.target.value = "";
+                    renderPreview(e.target, null);
+                    return;
+                }
+                if (file.size > maxSize) {
+                    alert("File size should be less than 2MB.");
+                    e.target.value = "";
+                    renderPreview(e.target, null);
+                    return;
+                }
+            }
+            renderPreview(e.target, file || null);
+        });
+
+        // Clear selected file
+        document.getElementById("announcement-table-body").addEventListener("click", function (e) {
+            if (!e.target.classList.contains("clear-announcement-file")) return;
+            const input = e.target.closest("td").querySelector(".announcement-file");
+            input.value = "";
+            renderPreview(input, null);
+        });
     });
 </script>
-
 
 </body>
 

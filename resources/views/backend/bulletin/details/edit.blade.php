@@ -90,7 +90,7 @@
 
                                         <!-- Image -->
                                         <div class="col-md-6">
-                                            <label class="form-label" for="thumbnail_image">Image <span class="txt-danger">*</span></label>
+                                            <label class="form-label" for="thumbnail_image">Image </label>
                                             <input class="form-control" id="thumbnail_image" type="file" name="thumbnail_image"
                                                 onchange="previewThumbnail(event)">
                                             <div class="invalid-feedback">Please upload an image.</div>
@@ -112,6 +112,33 @@
                                             </div>
                                         </div>
 
+
+                                        <!-- Video Upload -->
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="upload_video">Upload Video</label>
+                                            <input class="form-control" id="upload_video" type="file" name="thumbnail_video"
+                                                   accept="video/mp4,video/webm,video/ogg" onchange="previewVideo(event)">
+                                            <div class="invalid-feedback">Please upload a video file.</div>
+                                            <small class="text-secondary d-block"><b>Note: File size should be less than 3 MB.</b></small>
+                                            <small class="text-secondary d-block"><b>Note: Only .mp4, .webm, and .ogg formats allowed.</b></small>
+                                        
+                                            <!-- Video Preview -->
+                                            <div class="mt-2">
+                                                @if($detail->thumbnail_video)
+                                                    <video id="videoPreview"
+                                                           autoplay muted loop playsinline controls
+                                                           class="rounded border"
+                                                           style="max-height: 200px; width: 100%;">
+                                                        <source src="{{ asset('uploads/bulletin/videos/' . $detail->thumbnail_video) }}" type="video/mp4">
+                                                        Your browser does not support the video tag.
+                                                    </video>
+                                                @else
+                                                    <video id="videoPreview" controls
+                                                           class="rounded border d-none"
+                                                           style="max-height: 200px; width: 100%;"></video>
+                                                @endif
+                                            </div>
+                                        </div>
                                         <!-- Location -->
                                         <div class="col-md-6">
                                             <label class="form-label" for="location">Location </label>
@@ -143,7 +170,7 @@
 
 
                                         <!-- Title -->
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <label class="form-label" for="title">Title </label>
                                             <input class="form-control" id="title" type="text" name="title"
                                                 value="{{ $detail->title }}" placeholder="Enter Title">
@@ -254,6 +281,18 @@
                     preview.classList.add('d-none'); // hide if no file
                 }
             }
+            
+            function previewVideo(event) {
+                const file = event.target.files[0];
+                const preview = document.getElementById('videoPreview');
+                if (file) {
+                    const url = URL.createObjectURL(file);
+                    preview.src = url;
+                    preview.classList.remove('d-none');
+                    preview.load();
+                    preview.play();
+                }
+            }
         </script>
 
         <script>
@@ -262,7 +301,7 @@
                 let articleSelect = document.getElementById('article');
                 articleSelect.innerHTML = '<option value="">Loading...</option>';
 
-                fetch(`/ecole-mondiale/bulletin/articles/${categoryId}`)
+                fetch(`/bulletin/articles/${categoryId}`)
                     .then(res => res.json())
                     .then(data => {
                         articleSelect.innerHTML = '<option value="">--- Select Article ---</option>';

@@ -1,0 +1,117 @@
+ErrorDocument 404 https://www.ecolemondiale.org/
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    # Redirect to HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    RewriteCond %{REQUEST_FILENAME} -d [OR]
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ ^$1 [N]
+
+    RewriteCond %{REQUEST_URI} (\.\w+$) [NC]
+    RewriteCond %{REQUEST_URI} !(\.txt)$ [NC]
+    RewriteRule ^(.*)$ public/$1
+
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ server.php
+
+    RewriteCond %{REQUEST_METHOD} !^(GET|POST|DELETE|PATCH)
+    RewriteRule .* - [R=405,L]
+
+    # Redirect empty request to /
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ / [R=301,L]
+
+    # Remove trailing slash
+    RewriteCond %{REQUEST_URI} !/$
+    RewriteRule ^(.*)/$ $1 [R=301,L]
+
+
+
+    # Remove trailing index.php/html/htm/index
+    RewriteCond %{REQUEST_URI} !/index\.php
+    RewriteRule ^(.*)/index\.php$ $1 [R=301,L]
+
+    RewriteCond %{REQUEST_URI} !/index\.html
+    RewriteRule ^(.*)/index\.html$ $1 [R=301,L]
+
+    RewriteCond %{REQUEST_URI} !/index\.htm
+    RewriteRule ^(.*)/index\.htm$ $1 [R=301,L]
+
+    RewriteCond %{REQUEST_URI} !/index
+    RewriteRule ^(.*)/index$ $1 [R=301,L]
+
+    # SEO redirects
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/sitemap.xml$ $1/sitemap.xml [R=301,L]
+    RewriteRule ^(.*)/robots\.txt$ $1/robots.txt [R=301,L]
+    RewriteRule ^(.*)/favicon\.ico$ $1/favicon.ico [R=301,L]
+    RewriteRule ^(.*)/humans\.txt$ $1/humans.txt [R=301,L]
+    RewriteRule ^(.*)/ads\.txt$ $1/ads.txt [R=301,L]
+
+    # Custom redirects
+    Redirect 301 /alumni-guidance https://www.ecolemondiale.org/
+    Redirect 301 /success-stories https://www.ecolemondiale.org/
+    Redirect 301 /academic.html https://www.ecolemondiale.org/
+    Redirect 301 /curriculum-overview.html https://www.ecolemondiale.org/
+    Redirect 301 /academics/ https://www.ecolemondiale.org/
+</IfModule>
+
+
+
+# ============ Compression =============
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
+</IfModule>
+
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css application/json application/javascript
+</IfModule>
+
+# ============ PHP Settings =============
+<IfModule php8_module>
+   php_flag display_errors Off
+   php_value max_execution_time 10000
+   php_value max_input_time 120
+   php_value max_input_vars 2000
+   php_value memory_limit 256M
+   php_value post_max_size 1000M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
+   php_value upload_max_filesize 400M
+   php_flag zlib.output_compression On
+</IfModule>
+
+<IfModule lsapi_module>
+   php_flag display_errors Off
+   php_value max_execution_time 10000
+   php_value max_input_time 500
+   php_value max_input_vars 2000
+   php_value memory_limit 256M
+   php_value post_max_size 1000M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
+   php_value upload_max_filesize 8M
+   php_flag zlib.output_compression On
+</IfModule>
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php83” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php83___lsphp .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

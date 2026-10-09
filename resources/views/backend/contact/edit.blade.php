@@ -44,7 +44,6 @@
                     <div class="card-body">
                         <div class="vertical-main-wizard">
                         <div class="row g-3">    
-                            <!-- Removed empty col div -->
                             <div class="col-12">
                             <div class="tab-content" id="wizard-tabContent">
                                 <div class="tab-pane fade show active" id="wizard-contact" role="tabpanel" aria-labelledby="wizard-contact-tab">
@@ -112,10 +111,10 @@
 
                                         <!-- Other Contact Number -->
                                         <div class="col-md-6">
-                                            <label class="form-label" for="other_contact_number">Other Contact Number <span class="txt-danger">*</span></label>
+                                            <label class="form-label" for="other_contact_number">Other Contact Number </label>
                                             <input class="form-control" id="other_contact_number" type="text" name="other_contact_number" 
                                                 value="{{ old('other_contact_number', $contact->other_contact_number) }}" 
-                                                placeholder="Enter Contact Number" required maxlength="12">
+                                                placeholder="Enter Contact Number" maxlength="12">
                                             <div class="invalid-feedback">Please enter a valid Contact Number.</div>
                                         </div>
 
@@ -137,7 +136,7 @@
 
                                         <!-- Short Description -->
                                         <div class="col-md-12 mb-5">
-                                            <label class="form-label" for="desc">Short Description<span class="txt-danger">*</span></label>
+                                            <label class="form-label" for="desc">Short Description <span class="txt-danger">*</span></label>
                                             <textarea class="form-control" id="desc" name="desc" placeholder="Enter Short Description" required>{{ old('desc', $contact->desc) }}</textarea>
                                             <div class="invalid-feedback">Please enter a Short Description.</div>
                                         </div>
@@ -158,19 +157,67 @@
                                             <table class="table table-bordered p-3" id="announcementTable" style="border: 2px solid #dee2e6;">
                                                 <thead>
                                                     <tr>
-                                                        <th>Announcement <span class="txt-danger">*</span></th>
+                                                        <th style="width: 50%;">Announcement <span class="txt-danger">*</span></th>
+                                                        <th>
+                                                            Attachment (Document / Image)
+                                                            <br><small class="text-secondary">Optional. pdf, doc, docx, jpg, jpeg, png, webp — max 2MB. Shows a "Click here" link on the website.</small>
+                                                        </th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="announcement-table-body">
                                                     @forelse($announcements as $index => $announcement)
                                                         <tr>
-                                                            <td><input type="text" name="announcements[{{ $index }}][title]" class="form-control" value="{{ $announcement['title'] }}" required></td>
+                                                            <td>
+                                                                <input type="text" name="announcements[{{ $index }}][title]" class="form-control"
+                                                                       value="{{ $announcement['title'] ?? '' }}" placeholder="Enter Announcement" required>
+                                                            </td>
+                                                            <td>
+                                                                <input type="file" name="announcements[{{ $index }}][file]" class="form-control announcement-file"
+                                                                       accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp">
+
+                                                                <!-- Preview (existing file, replaced live when a new file is chosen) -->
+                                                                <div class="announcement-preview mt-2">
+                                                                    @if(!empty($announcement['file']))
+                                                                        @php
+                                                                            $fileUrl = asset('uploads/announcements/'.$announcement['file']);
+                                                                            $ext = strtolower(pathinfo($announcement['file'], PATHINFO_EXTENSION));
+                                                                        @endphp
+                                                                        <small class="text-secondary d-block mb-1">Current file:</small>
+                                                                        @if(in_array($ext, ['jpg','jpeg','png','webp']))
+                                                                            <a href="{{ $fileUrl }}" target="_blank" rel="noopener">
+                                                                                <img src="{{ $fileUrl }}" alt="Attachment" class="img-thumbnail" style="max-height: 90px;">
+                                                                            </a>
+                                                                        @else
+                                                                            <a href="{{ $fileUrl }}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary">
+                                                                                View {{ strtoupper($ext) }} file
+                                                                            </a>
+                                                                        @endif
+                                                                    @endif
+                                                                </div>
+
+                                                                @if(!empty($announcement['file']))
+                                                                    <input type="hidden" name="announcements[{{ $index }}][existing_file]" value="{{ $announcement['file'] }}">
+                                                                    <div class="mt-2 small">
+                                                                        <label class="mb-0">
+                                                                            <input type="checkbox" name="announcements[{{ $index }}][remove_file]" value="1"> Remove file
+                                                                        </label>
+                                                                        <br><span class="text-secondary">Uploading a new file will replace the current one.</span>
+                                                                    </div>
+                                                                @endif
+                                                            </td>
                                                             <td><button type="button" class="btn btn-danger remove-announcement-row">Remove</button></td>
                                                         </tr>
                                                     @empty
                                                         <tr>
-                                                            <td><input type="text" name="announcements[0][title]" class="form-control" placeholder="Enter Announcement" required></td>
+                                                            <td>
+                                                                <input type="text" name="announcements[0][title]" class="form-control" placeholder="Enter Announcement" required>
+                                                            </td>
+                                                            <td>
+                                                                <input type="file" name="announcements[0][file]" class="form-control announcement-file"
+                                                                       accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp">
+                                                                <div class="announcement-preview mt-2"></div>
+                                                            </td>
                                                             <td><button type="button" class="btn btn-danger remove-announcement-row">Remove</button></td>
                                                         </tr>
                                                     @endforelse
@@ -237,7 +284,6 @@
                                         </div>
                                     </form>
 
-
                                 </div>
                             </div>
                             </div>
@@ -255,76 +301,47 @@
         </div>
         </div>
 
-
-       
        @include('components.backend.main-js')
 
-
-    <!-- JavaScript to dynamically add/remove rows -->
+<!-- Social media rows -->
 <script>
+    // Start after the highest existing index so new rows never overwrite old ones
+    let socialIndex = {{ count($contact_details) ? max(array_map('intval', array_keys($contact_details))) + 1 : 1 }};
+
     document.getElementById('add-social-media-row').addEventListener('click', function () {
-        var tableBody = document.getElementById('social-media-table-body');
-        var rowCount = tableBody.rows.length;
-        var row = tableBody.insertRow();
-
-        // Platform Dropdown
-        var cell1 = row.insertCell(0);
-        var platformSelect = document.createElement('select');
-        platformSelect.name = `social_media[${rowCount}][platform]`;
-        platformSelect.classList.add('form-control');
-        platformSelect.required = true;
-
-        // Add options to the dropdown with numerical values
-        var platforms = [
+        const tableBody = document.getElementById('social-media-table-body');
+        const platforms = [
             { id: 1, name: 'Facebook' },
             { id: 2, name: 'Twitter' },
             { id: 3, name: 'Instagram' },
-            { id: 4, name: 'Linkedin' },
-            { id: 5, name: 'Youtube' },
-            { id: 6, name: 'Pintrest' }
+            { id: 4, name: 'LinkedIn' },
+            { id: 5, name: 'YouTube' },
+            { id: 6, name: 'Pinterest' }
         ];
-        platformSelect.innerHTML = '<option value="">Select Platform</option>';
-        platforms.forEach(function (platform) {
-            var option = document.createElement('option');
-            option.value = platform.id; // Numerical value
-            option.textContent = platform.name.charAt(0).toUpperCase() + platform.name.slice(1); // Capitalized name
-            platformSelect.appendChild(option);
-        });
+        const options = platforms.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
 
-        cell1.appendChild(platformSelect);
-
-        // URL Input
-        var cell2 = row.insertCell(1);
-        var urlInput = document.createElement('input');
-        urlInput.type = 'url';
-        urlInput.name = `social_media[${rowCount}][link]`;
-        urlInput.classList.add('form-control');
-        urlInput.placeholder = 'Enter Social Media URL';
-        urlInput.required = true;
-        cell2.appendChild(urlInput);
-
-        // Remove Button
-        var cell3 = row.insertCell(2);
-        var removeBtn = document.createElement('button');
-        removeBtn.type = 'button';
-        removeBtn.classList.add('btn', 'btn-danger', 'remove-social-media-row');
-        removeBtn.textContent = 'Remove';
-        removeBtn.addEventListener('click', function () {
-            tableBody.deleteRow(row.rowIndex);
-        });
-        cell3.appendChild(removeBtn);
+        tableBody.insertAdjacentHTML('beforeend', `
+            <tr>
+                <td>
+                    <select name="social_media[${socialIndex}][platform]" class="form-control" required>
+                        <option value="">Select Platform</option>${options}
+                    </select>
+                </td>
+                <td><input type="url" name="social_media[${socialIndex}][link]" class="form-control" placeholder="Enter Social Media URL" required></td>
+                <td><button type="button" class="btn btn-danger remove-social-media-row">Remove</button></td>
+            </tr>
+        `);
+        socialIndex++;
     });
 
-
-    // Event delegation to remove rows
-    document.getElementById('social-media-table-body').addEventListener('click', function(e) {
-        if (e.target && e.target.classList.contains('remove-social-media-row')) {
-            var row = e.target.closest('tr');
-            row.remove();
+    document.getElementById('social-media-table-body').addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-social-media-row')) {
+            e.target.closest('tr').remove();
         }
     });
 </script>
 
+<!-- Banner preview -->
 <script>
     function previewbanner(event) {
         const input = event.target;
@@ -332,50 +349,128 @@
 
         if (input.files && input.files[0]) {
             const reader = new FileReader();
-
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 preview.src = e.target.result;
-                preview.classList.remove('d-none'); // show preview
-            }
-
+                preview.classList.remove('d-none');
+            };
             reader.readAsDataURL(input.files[0]);
-        } else {
-            preview.src = "#";
-            preview.classList.add('d-none'); // hide if no file
         }
     }
 </script>
 
-
-
+<!-- Announcement rows -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Get the last index from existing rows
-        let lastIndex = document.querySelectorAll("#announcement-table-body tr").length;
-        let announcementIndex = lastIndex > 0 ? lastIndex : 1;
+        // Start after the highest existing index so new rows never overwrite old ones
+        let announcementIndex = {{ count($announcements) ? max(array_map('intval', array_keys($announcements))) + 1 : 1 }};
+        const allowed = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'webp'];
+        const maxSize = 2 * 1024 * 1024; // 2MB
 
         // Add row
         document.getElementById("add-announcement-row").addEventListener("click", function () {
-            let tableBody = document.getElementById("announcement-table-body");
-            let newRow = `
+            const tableBody = document.getElementById("announcement-table-body");
+            tableBody.insertAdjacentHTML("beforeend", `
                 <tr>
-                    <td><input type="text" name="announcements[${announcementIndex}][title]" class="form-control" placeholder="Enter Announcement" required></td>
+                    <td>
+                        <input type="text" name="announcements[${announcementIndex}][title]" class="form-control" placeholder="Enter Announcement" required>
+                    </td>
+                    <td>
+                        <input type="file" name="announcements[${announcementIndex}][file]" class="form-control announcement-file"
+                               accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp">
+                        <div class="announcement-preview mt-2"></div>
+                    </td>
                     <td><button type="button" class="btn btn-danger remove-announcement-row">Remove</button></td>
                 </tr>
-            `;
-            tableBody.insertAdjacentHTML("beforeend", newRow);
+            `);
             announcementIndex++;
         });
 
         // Remove row
-        document.addEventListener("click", function (e) {
-            if (e.target && e.target.classList.contains("remove-announcement-row")) {
+        document.getElementById("announcement-table-body").addEventListener("click", function (e) {
+            if (e.target.classList.contains("remove-announcement-row")) {
                 e.target.closest("tr").remove();
             }
         });
+
+        // Remember the original (existing file) preview of each row so it can be restored
+        document.querySelectorAll("#announcement-table-body .announcement-preview").forEach(function (box) {
+            box.dataset.original = box.innerHTML;
+        });
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+
+        function renderPreview(input, file) {
+            const box = input.closest("td").querySelector(".announcement-preview");
+            if (!box) return;
+
+            // Free the previous temporary URL
+            if (box.dataset.blobUrl) {
+                URL.revokeObjectURL(box.dataset.blobUrl);
+                delete box.dataset.blobUrl;
+            }
+
+            // No file chosen → go back to the existing file preview (if any)
+            if (!file) {
+                box.innerHTML = box.dataset.original || "";
+                return;
+            }
+
+            const ext = file.name.split('.').pop().toLowerCase();
+            const url = URL.createObjectURL(file);
+            box.dataset.blobUrl = url;
+            const name = escapeHtml(file.name);
+
+            let html = '<small class="text-secondary d-block mb-1">New file (preview):</small>';
+            if (['jpg', 'jpeg', 'png', 'webp'].includes(ext)) {
+                html += `<a href="${url}" target="_blank" rel="noopener">
+                            <img src="${url}" alt="Preview" class="img-thumbnail" style="max-height: 90px;">
+                         </a>`;
+            } else if (ext === 'pdf') {
+                html += `<a href="${url}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary">Preview PDF</a>
+                         <small class="d-block text-muted mt-1">${name}</small>`;
+            } else {
+                // Browsers can't preview Word files — just show the name
+                html += `<span class="badge bg-secondary">${ext.toUpperCase()}</span>
+                         <small class="text-muted ms-1">${name}</small>`;
+            }
+            html += `<button type="button" class="btn btn-sm btn-link text-danger clear-announcement-file p-0 d-block mt-1">Clear selected file</button>`;
+            box.innerHTML = html;
+        }
+
+        // Validate + preview on file select
+        document.getElementById("announcement-table-body").addEventListener("change", function (e) {
+            if (!e.target.classList.contains("announcement-file")) return;
+            const file = e.target.files[0];
+
+            if (file) {
+                const ext = file.name.split('.').pop().toLowerCase();
+                if (!allowed.includes(ext)) {
+                    alert("Only pdf, doc, docx, jpg, jpeg, png, webp files are allowed.");
+                    e.target.value = "";
+                    renderPreview(e.target, null);
+                    return;
+                }
+                if (file.size > maxSize) {
+                    alert("File size should be less than 2MB.");
+                    e.target.value = "";
+                    renderPreview(e.target, null);
+                    return;
+                }
+            }
+            renderPreview(e.target, file || null);
+        });
+
+        // Clear selected (new) file
+        document.getElementById("announcement-table-body").addEventListener("click", function (e) {
+            if (!e.target.classList.contains("clear-announcement-file")) return;
+            const input = e.target.closest("td").querySelector(".announcement-file");
+            input.value = "";
+            renderPreview(input, null);
+        });
     });
 </script>
-
 
 </body>
 

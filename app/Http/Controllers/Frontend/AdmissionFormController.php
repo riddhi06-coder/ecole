@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\AdmissionDetails;
@@ -24,25 +26,43 @@ class AdmissionFormController extends Controller
         // dd($request);
 
 
-        // ✅ Step 0: Verify Google reCAPTCHA
-        // $captcha = $request->input('g-recaptcha-response');
-        // if (!$captcha) {
-        //     return redirect()->back()->with('admission_captcha', 'Please verify that you are not a robot.')->withInput();
-        // }
-
-        // $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-        //     'secret' => env('RECAPTCHA_SECRET_KEY'),
-        //     'response' => $captcha,
-        //     'remoteip' => $request->ip(),
-        // ]);
-        
-
-        // $result = $response->json();
-        // if (empty($result['success']) || $result['success'] !== true) {
-        //     return redirect()->back()->with('admission_captcha', 'Captcha verification failed. Please try again.')->withInput();
-        // }
-
-
+            /* ---------------- CAPTCHA VALIDATION ---------------- */
+            $request->validate([
+                'g-recaptcha-response' => 'required'
+            ], [
+                'g-recaptcha-response.required' => 'Please verify that you are not a robot.'
+            ]);
+            
+            $captcha   = $request->input('g-recaptcha-response');
+            $secretKey = config('services.recaptcha.secret_key');
+            $ip        = $request->ip();
+            
+            $verifyResponse = Http::asForm()->post(
+                'https://www.google.com/recaptcha/api/siteverify',
+                [
+                    'secret'   => $secretKey,
+                    'response' => $captcha,
+                    'remoteip' => $ip
+                ]
+            );
+            
+            $captchaResult = $verifyResponse->json();
+            
+            if (empty($captchaResult['success'])) {
+                Log::warning('Captcha verification failed', [
+                    'ip' => $ip,
+                    'response' => $captchaResult
+                ]);
+            
+                return back()
+                    ->withErrors(['captcha' => 'Captcha verification failed. Please try again.'])
+                    ->withInput();
+            }
+            
+            Log::info('Captcha verified successfully');
+            /* ---------------------------------------------------- */
+            
+            
         try {
             // ✅ Step 0: Convert form_type text to numeric value
             $formTypeMap = [
@@ -60,6 +80,7 @@ class AdmissionFormController extends Controller
                 'dob' => 'required|date',
                 'address' => 'required|string|max:500',
                 'country' => 'required|integer|exists:countries,id',
+                'utm'=> 'nullable|string|max:2000',
                 'city' => 'required|string|max:255',
                 'pincode' => 'required|integer',
                 'present_school' => 'required|string|max:255',
@@ -115,6 +136,7 @@ class AdmissionFormController extends Controller
             $admission->join_grade = $validated['join_grade'];
             $admission->year = $validated['year'];
             $admission->nationality_id = $validated['nationality'];
+            $admission->utm = $validated['utm'];       
 
             // ✅ Father details
             $admission->father_details = json_encode([
@@ -124,6 +146,7 @@ class AdmissionFormController extends Controller
                 'occupation' => $validated['f_occupation'],
                 'designation' => $validated['f_designation'],
                 'organization' => $validated['f_organization'],
+                
                 'email' => $validated['f_email'],
                 'offtel_code' => $validated['f_offtel_code'] ?? '',
                 'offtel' => $validated['f_offtel'],
@@ -167,6 +190,9 @@ class AdmissionFormController extends Controller
                 'mother_name' => $validated['m_name'],
                 'grade'        => $gradeName ?? 'N/A',
                 'form_type' => $request->input('form_type'),
+                 // ADD THESE
+                'f_email'      => $validated['f_email'],
+                'f_phone'      => $validated['f_mobile'],
             ];
 
             // 💡 Define dynamic headings and subjects
@@ -180,11 +206,30 @@ class AdmissionFormController extends Controller
             $subject = $subjectMap[$formType] ?? 'New Admission Enquiry';
             $data['subject'] = $subject; 
 
-            Mail::send('frontend.admission_mail', $data, function ($message) use ($validated, $subject) {
-                $message->to('riddhi@matrixbricks.com')
-                        ->from($validated['f_email'], $validated['f_name'])
-                        ->subject('Thank you for your ' . $subject . '!');
-            });
+            try {
+
+                Mail::send('frontend.admission_mail', $data, function ($message) use ($validated, $subject) {
+                    $message->to($validated['f_email'], $validated['f_name']) 
+                            ->from('no-reply@ecolemondiale.org', 'Ecole Mondiale')
+                            ->replyTo($validated['f_email'], $validated['f_name'])
+                            ->subject('Thank you for your ' . $subject . '!');
+                });
+                
+                
+                Mail::send('frontend.admission_admin_mail', $data, function ($message) use ($validated, $subject) {
+
+                    $message->to(['admission@ecolemondiale.org'])
+                            ->from('no-reply@ecolemondiale.org', 'Ecole Mondiale')
+                            ->replyTo($validated['f_email'], $validated['f_name'])
+                            ->subject('New ' . $subject . ' Received');
+                });
+            
+                Log::info('Admission email sent successfully.');
+            
+            } catch (\Exception $e) {
+            
+                Log::error('Admission email failed: '.$e->getMessage());
+            }
 
             // ✅ Step 4: Redirect
             return redirect()->route('thank.you')->with('success', 'Admission form submitted successfully!');
@@ -259,6 +304,7 @@ class AdmissionFormController extends Controller
                 'specific_learning' => 'nullable|string|max:500',
                 'heard_from' => 'required|string|max:255',
                 'wish_you_know' => 'nullable|string|max:500',
+                'utm' => 'nullable|string|max:255',
             ]);
 
             // ✅ Save admission
@@ -275,6 +321,7 @@ class AdmissionFormController extends Controller
             $admission->join_grade = $validated['join_grade'];
             $admission->year = $validated['year'];
             $admission->nationality_id = $validated['nationality'];
+            $admission->utm = $validated['utm'] ?? null;
 
             $admission->father_details = json_encode([
                 'name' => $validated['f_name'],
@@ -339,7 +386,7 @@ class AdmissionFormController extends Controller
     {
         $admission = AdmissionDetails::findOrFail($id);
 
-        $order_id = '#EWMS_' . rand(100000, 999999);
+        $order_id = 'EWMS_' . rand(100000, 999999);
         $t_id = rand(10000000, 99999999);
 
         $countries = DB::table('countries')
@@ -367,57 +414,298 @@ class AdmissionFormController extends Controller
         return view('frontend.proceed_to_payment', compact('order_id', 't_id', 'admission', 'amount','countries'));
     }
 
+    
     public function redirectToCCAvenue(Request $request)
     {
-        $data = $request->all();
-
-        $merchant_id = env('CCAV_MERCHANT_ID');      // LIVE Merchant ID
-        $access_code = env('CCAV_ACCESS_CODE');      // LIVE Access Code
-        $working_key = env('CCAV_WORKING_KEY');      // LIVE Working Key
-
+      // Hardcoded credentials for testing
+        $merchant_id = '11278';
+        $access_code = '6J2BHM5KCK1HU8JN';
+        $working_key = 'BC45FF1DD75AA750EAA5F43C74B96244';
+    
+        Log::info('🌐 Step 1: Received request to redirect to CCAvenue', [
+            'incoming_request' => $request->all(),
+            'env' => [
+                'merchant_id' => $merchant_id,
+                'access_code' => $access_code,
+                'working_key_present' => !empty($working_key),
+                'working_key_length' => strlen($working_key)
+            ]
+        ]);
+    
+        // ✅ 1. Update billing & shipping info
+        AdmissionDetails::where('id', $request->admission_id)->update([
+            'billing_name'     => $request->billing_name,
+            'billing_address'  => $request->billing_address,
+            'billing_city'     => $request->billing_city,
+            'billing_state'    => $request->billing_state,
+            'billing_zip'      => $request->billing_zip,
+            'billing_country'  => $request->billing_country, // DB can stay 99
+            'billing_phone'    => $request->billing_phone,
+            'billing_email'    => $request->billing_email,
+            'shipping_name'    => $request->shipping_name,
+            'shipping_address' => $request->shipping_address,
+            'shipping_city'    => $request->shipping_city,
+            'shipping_state'   => $request->shipping_state,
+            'shipping_zip'     => $request->shipping_zip,
+            'shipping_country' => $request->shipping_country, // DB can stay 99
+            'shipping_phone'   => $request->shipping_phone,
+            'shipping_email'   => $request->shipping_email,
+            'amount'   => $request->amount,
+        ]);
+    
+        // ✅ 2. Prepare CCAvenue parameters (COUNTRY MUST BE ISO CODE)
         $parameters = [
-            'merchant_id' => $merchant_id,
-            'order_id' => $data['order_id'],
-            'currency' => 'INR',
-            'amount' => $data['amount'],
-            'redirect_url' => route('ccavenue.response'),
-            'cancel_url' => route('ccavenue.response'),
-            'billing_name' => $data['billing_name'],
-            'billing_address' => $data['billing_address'],
-            'billing_city' => $data['billing_city'],
-            'billing_state' => $data['billing_state'],
-            'billing_zip' => $data['billing_zip'],
-            'billing_country' => $data['billing_country'],
-            'billing_tel' => $data['billing_phone'],
-            'billing_email' => $data['billing_email'],
-            // shipping fields if needed
+            'merchant_id'      => (string) $merchant_id,  // ensure string
+            'order_id'         => $request->order_id,
+            'currency'         => 'INR',
+            'amount'           => number_format((float) $request->amount, 2, '.', ''),
+            // 'amount'           => '1',
+            'redirect_url' =>   'https://www.ecolemondiale.org/ccavenue/response',
+            'cancel_url'   =>   'https://www.ecolemondiale.org/ccavenue/cancel',
+            'language'         => 'en',  // ← lowercase 'en' is safer
+            'billing_name'     => trim($request->billing_name ?? ''),
+            'billing_address'  => trim($request->billing_address ?? ''),
+            'billing_city'     => trim($request->billing_city ?? ''),
+            'billing_state'    => trim($request->billing_state ?? 'Maharashtra'),  // fallback
+            'billing_zip'      => trim($request->billing_zip ?? ''),
+            'billing_country'  => 'IN',
+            'billing_tel'      => trim($request->billing_phone ?? ''),
+            'billing_email'    => trim($request->billing_email ?? ''),
+            'shipping_name'    => trim($request->shipping_name ?? $request->billing_name ?? ''),
+            'shipping_address' => trim($request->shipping_address ?? $request->billing_address ?? ''),
+            'shipping_city'    => trim($request->shipping_city ?? $request->billing_city ?? ''),
+            'shipping_state'   => trim($request->shipping_state ?? $request->billing_state ?? 'Maharashtra'),
+            'shipping_zip'     => trim($request->shipping_zip ?? $request->billing_zip ?? ''),
+            'shipping_country' => 'IN',
+            'shipping_tel'     => trim($request->shipping_phone ?? $request->billing_phone ?? ''),
+            'shipping_email'   => trim($request->shipping_email ?? $request->billing_email ?? ''),
         ];
-
-        $encrypted_data = $this->encryptCCAvenueData($parameters, $working_key);
-
-        $ccavenue_url = 'https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction';
-
-        return view('frontend.ccavenue-redirect', compact('encrypted_data', 'access_code', 'ccavenue_url'));
-    }
-
-    // Encryption function
-    private function encryptCCAvenueData($data, $working_key) {
+        
+        // Build merchant_data – safer version
         $merchant_data = '';
-        foreach ($data as $key => $value) {
-            $merchant_data .= $key . '=' . $value . '&';
+        foreach ($parameters as $key => $value) {
+            if ($value !== '' && $value !== null) {  // ← skip empty values
+                $merchant_data .= $key . '=' . $value . '&';
+            }
         }
-        $merchant_data = rtrim($merchant_data, '&');
-
-        $encrypted_data = openssl_encrypt(
-            $merchant_data,
-            'AES-128-CBC',
-            pack("a16", $working_key),
-            OPENSSL_RAW_DATA,
-            pack("a16", $working_key)
-        );
-
-        return bin2hex($encrypted_data);
+        $merchant_data = rtrim($merchant_data, '&');  // remove last &
+        $merchant_data = trim($merchant_data);        // remove any leading/trailing spaces
+        
+        //dd($parameters, $merchant_data);
+    
+        Log::info('🧱 Step 3: Merchant data string', [
+            'merchant_data' => $merchant_data
+        ]);
+    
+        // ✅ 4. Encrypt
+        $encrypted_data = $this->encryptCCAvenueData($merchant_data, $working_key);
+    
+        Log::info('🔐 Step 4: Encrypted data generated', [
+            'encrypted_sample' => substr($encrypted_data, 0, 120) . '...',
+            'length' => strlen($encrypted_data)
+        ]);
+    
+        // ✅ 5. Redirect
+        $ccavenue_url = 'https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction';
+    
+    
+        Log::info('🚀 Step 5: Redirecting to CCAvenue', [
+            'ccavenue_url' => $ccavenue_url,
+            'access_code'  => $access_code
+        ]);
+    
+        return view('frontend.ccavenue-redirect', compact(
+            'encrypted_data',
+            'access_code',
+            'ccavenue_url'
+        ));
     }
+    
+    
+    public function handleResponse(Request $request)
+    {
+        file_put_contents(
+            storage_path('logs/ccavenue_raw.txt'),
+            json_encode($_POST, JSON_PRETTY_PRINT),
+            FILE_APPEND
+        );
+        
+        
+        Log::info('📩 Step 0: Entered handleResponse method', [
+            'request_all' => $request->all()
+        ]);
+    
+        $working_key = 'BC45FF1DD75AA750EAA5F43C74B96244';
+    
+        $encResponse = $request->encResp;
+        Log::info('📩 Step 1: Received encResp', [
+            'encResponse_present' => !empty($encResponse),
+            'encResponse_length' => strlen($encResponse ?? '')
+        ]);
+    
+        if (!$encResponse) {
+            Log::error('❌ Step 2: No encResp found in request');
+            return response()->view('frontend.payment-failed', [
+                'message' => 'Invalid response from payment gateway'
+            ]);
+        }
+    
+        $decryptedResponse = $this->decryptCCAvenueData($encResponse, $working_key);
+        Log::info('🔐 Step 3: Decrypted response', [
+            'decrypted_preview' => substr($decryptedResponse, 0, 200) . '...'
+        ]);
+    
+        parse_str($decryptedResponse, $responseArray);
+        Log::info('📄 Step 4: Parsed response array', ['responseArray' => $responseArray]);
+    
+        $orderId = $responseArray['order_id'] ?? 'failed_' . time();
+        $orderStatus = $responseArray['order_status'] ?? 'Failure';
+    
+        Log::info('📊 Step 5: Extracted order info', [
+            'order_id' => $orderId,
+            'order_status' => $orderStatus
+        ]);
+    
+        if (!$orderId) {
+            Log::error('❌ Step 6: Order ID missing in response');
+            return response()->view('frontend.payment-failed', [
+                'message' => 'Order ID missing in response'
+            ]);
+        }
+    
+        $admission = AdmissionDetails::where('order_id', $orderId)->first();
+        Log::info('🗂 Step 7: Fetched admission record', [
+            'admission_found' => $admission ? true : false,
+            'admission_id' => $admission->id ?? null
+        ]);
+    
+        if ($admission) {
+            $admission->update([
+                'payment_status' => $orderStatus === 'Success' ? 'Paid' : 'Failed',
+                'tracking_id'    => $responseArray['tracking_id'] ?? null,
+                'bank_ref_no'    => $responseArray['bank_ref_no'] ?? null,
+                'payment_mode'   => $responseArray['payment_mode'] ?? null,
+                'order_status'   => $orderStatus,
+                'currency'       => $responseArray['currency'] ?? 'INR',
+                'status_message' => $responseArray['status_message'] ?? $responseArray['failure_message'] ?? 'Payment failed',
+                'modified_at'    => now()
+            ]);
+        } else {
+            Log::warning('⚠️ Admission not found — logging failed transaction', [
+                'order_id' => $orderId,
+                'status'   => $orderStatus
+            ]);
+        }
+
+    
+        if ($orderStatus === 'Success') {
+            Log::info('🎉 Step 9: Payment successful', ['order_id' => $orderId]);
+            return response()->view('frontend.payment-success', compact('responseArray'));
+        } elseif ($orderStatus === 'Aborted') {
+            Log::warning('⚠️ Step 10: Payment aborted', ['order_id' => $orderId]);
+            return response()->view('frontend.payment-failed', compact('responseArray'));
+        } else {
+            Log::error('❌ Step 11: Payment failed', ['order_id' => $orderId, 'status' => $orderStatus]);
+            return response()->view('frontend.payment-failed', compact('responseArray'));
+        }
+    }
+
+    private function decryptCCAvenueData($encryptedText, $workingKey)
+    {
+        Log::info('🧩 Step DEC1: Starting decryption', ['encryptedText_length' => strlen($encryptedText)]);
+
+        $key = $this->hextobin(md5($workingKey));
+        $iv = pack("C*", 0x00, 0x01, 0x02, 0x03,
+                        0x04, 0x05, 0x06, 0x07,
+                        0x08, 0x09, 0x0a, 0x0b,
+                        0x0c, 0x0d, 0x0e, 0x0f);
+        
+        $encryptedBinary = $this->hextobin($encryptedText);
+        $decryptedText = openssl_decrypt($encryptedBinary, "AES-128-CBC", $key, OPENSSL_RAW_DATA, $iv);
+
+        Log::info('✅ Step DEC2: Decryption done', ['preview' => substr($decryptedText, 0, 120) . '...']);
+        return $decryptedText;
+    }
+    
+    
+    private function encryptCCAvenueData($plainText, $workingKey)
+    {
+        $key = pack('H*', md5($workingKey));
+        $iv  = pack(
+            "C*",
+            0x00,0x01,0x02,0x03,
+            0x04,0x05,0x06,0x07,
+            0x08,0x09,0x0a,0x0b,
+            0x0c,0x0d,0x0e,0x0f
+        );
+    
+        $encrypted = openssl_encrypt(
+            $plainText,
+            'AES-128-CBC',
+            $key,
+            OPENSSL_RAW_DATA,
+            $iv
+        );
+    
+        return strtoupper(bin2hex($encrypted));
+    }
+
+    
+    private function hextobin($hexString)
+    {
+        $length = strlen($hexString);
+        $binString = "";
+        $count = 0;
+        while ($count < $length) {
+            $subString = substr($hexString, $count, 2);
+            $packedString = pack("H*", $subString);
+            $binString .= $packedString;
+            $count += 2;
+        }
+        return $binString;
+    }
+
+
+    public function handleCancel(Request $request)
+    {
+        // dd($request);
+    $orderId = $request->orderNo ?? 'cancelled_' . time();
+    
+    $admission = AdmissionDetails::where('order_id', $orderId)->first();
+
+    if ($admission) {
+        // Update existing record instead of creating a new one
+        $admission->update([
+            'payment_status' => 'Cancelled',
+            'order_status'   => 'Aborted',
+            'status_message' => 'User cancelled the payment',
+            'modified_at'    => now()
+        ]);
+
+        Log::warning('⚠️ Payment cancelled by user (admission updated)', [
+            'order_id' => $orderId
+        ]);
+    } else {
+        // Optional: create a placeholder if no record exists
+        AdmissionDetails::create([
+            'order_id'        => $orderId,
+            'payment_status'  => 'Cancelled',
+            'order_status'    => 'Aborted',
+            'status_message'  => 'User cancelled the payment',
+            'currency'        => 'INR',
+            'inserted_at'     => now(),
+            'modified_at'     => now()
+        ]);
+
+        Log::warning('⚠️ Payment cancelled by user (placeholder created)', [
+            'order_id' => $orderId
+        ]);
+    }
+
+    return response()->view('frontend.payment-failed', [
+        'message' => 'Payment was cancelled by user.'
+    ]);
+}
 
 
 

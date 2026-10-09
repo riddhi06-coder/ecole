@@ -37,15 +37,18 @@ class VirtualController extends Controller
             $validated = $request->validate([
                 'banner_heading' => 'required|string|max:255',
                 'banner'         => 'required|image|mimes:jpg,jpeg,png,webp|max:2048', 
-                'video_url'      => 'required|url|max:500',
+                'video_url' => 'nullable|url|max:500',
+                'video_upload' => 'nullable|mimetypes:video/mp4,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/x-matroska,video/webm|max:307200', // 300MB
             ], [
                 'banner_heading.required' => 'Banner Heading is required.',
                 'banner.required'         => 'Banner Image is required.',
                 'banner.image'            => 'Please upload a valid image file.',
                 'banner.mimes'            => 'Only jpg, jpeg, png, webp files are allowed.',
                 'banner.max'              => 'Banner Image must not exceed 2MB.',
-                'video_url.required'      => 'Video URL is required.',
                 'video_url.url'           => 'Please enter a valid Video URL.',
+                'video_upload.mimetypes'  => 'Allowed formats: mp4, mov, avi, wmv, mkv, webm.',
+                'video_upload.max'        => 'Video must not exceed 300MB.',
+                
             ]);
 
             // ✅ Handle banner image upload
@@ -56,11 +59,21 @@ class VirtualController extends Controller
                 $banner->move(public_path('uploads/campus-life'), $bannerName);
             }
 
+
+            // ✅ Handle video upload (if provided)
+            $videoName = null;
+            if ($request->hasFile('video_upload')) {
+                $videoFile = $request->file('video_upload');
+                $videoName = time() . '_' . rand(10, 999) . '.' . $videoFile->getClientOriginalExtension();
+                $videoFile->move(public_path('uploads/campus-life/videos'), $videoName);
+            }
+            
             // ✅ Save to database
             $virtualTour = new VirtualTour();
             $virtualTour->banner_heading = $request->banner_heading;
             $virtualTour->banner_image   = $bannerName;
             $virtualTour->video_url      = $request->video_url;
+            $virtualTour->video_upload   = $videoName;      
             $virtualTour->inserted_by    = Auth::id();
             $virtualTour->inserted_at    = Carbon::now();
             $virtualTour->save();
@@ -94,14 +107,21 @@ class VirtualController extends Controller
             $validated = $request->validate([
                 'banner_heading' => 'required|string|max:255',
                 'banner'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-                'video_url'      => 'required|url|max:500',
+                'video_url' => 'nullable|url|max:500',
+
+                'video_upload' => 'nullable|mimetypes:video/mp4,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/x-matroska,video/webm|max:307200',
             ], [
                 'banner_heading.required' => 'Banner Heading is required.',
                 'banner.image'            => 'Please upload a valid image file.',
                 'banner.mimes'            => 'Only jpg, jpeg, png, webp files are allowed.',
                 'banner.max'              => 'Banner Image must not exceed 2MB.',
-                'video_url.required'      => 'Video URL is required.',
+                // URL message
                 'video_url.url'           => 'Please enter a valid Video URL.',
+    
+                // Video upload messages
+                'video_upload.mimetypes'  => 'Allowed formats: mp4, mov, avi, wmv, mkv, webm.',
+                'video_upload.max'        => 'Video must not exceed 300MB.',
+                
             ]);
 
             // ✅ Handle banner image upload (replace if new one is uploaded)
@@ -116,6 +136,22 @@ class VirtualController extends Controller
                 }
 
                 $virtualTour->banner_image = $bannerName;
+            }
+            
+            
+            
+            // ✅ Handle video upload (replace only if new uploaded)
+            if ($request->hasFile('video_upload')) {
+                $video = $request->file('video_upload');
+                $videoName = time() . '_' . rand(10, 999) . '.' . $video->getClientOriginalExtension();
+                $video->move(public_path('uploads/campus-life/videos'), $videoName);
+    
+                // Delete old video if exists
+                if ($virtualTour->video_upload && file_exists(public_path('uploads/campus-life/videos/' . $virtualTour->video_upload))) {
+                    unlink(public_path('uploads/campus-life/videos/' . $virtualTour->video_upload));
+                }
+    
+                $virtualTour->video_upload = $videoName;
             }
 
             // ✅ Update fields

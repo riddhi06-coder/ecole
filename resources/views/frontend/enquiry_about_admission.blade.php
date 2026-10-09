@@ -29,285 +29,297 @@
             </div>
         </section>
 
-        <form action="{{ route('admission.store') }}" method="POST" id="enquiryadmissionForm">
-            @csrf
+        
+        
+         <form action="{{ route('admission.store') }}" method="POST" id="enquiryadmissionForm">
+                @csrf
+  
+                  <section class="apply-for-admission-one-sec">
+                        <div class="container">
+                            <div class="row">
+        
+                                <div class="col-12 col-md-12">
+                                    <div class="apply-for-admission-content-sec">
+                                    <p> {!! $enquiry_about_admission->description !!}</p>
+                                    <p>Fill up the application form below. The mandatory fields are marked with an *</p>
+                                    </div>
+                                </div>
+        
+                                <div class="col-12 col-md-4">
+                                    <div class="apply-for-admission-choose-sec">
+                                        <div class="form-check applyforad-choose-form-check">
+                                        <input class="form-check-input" type="radio" name="radioDefault" id="apply_for_admission" data-type="1">
+                                        <label class="form-check-label" for="apply_for_admission">
+                                            Apply for admission
+                                        </label>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="col-12 col-md-4">
+                                    <div class="apply-for-admission-choose-sec">
+                                        <div class="form-check applyforad-choose-form-check">
+                                        <input class="form-check-input" type="radio" name="radioDefault" id="schedule_a_visit" data-type="2">
+                                        <label class="form-check-label" for="schedule_a_visit">
+                                            Schedule a visit for admission
+                                        </label>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="col-12 col-md-4">
+                                    <div class="apply-for-admission-choose-sec">
+                                        <div class="form-check applyforad-choose-form-check">
+                                        <input class="form-check-input" type="radio" name="radioDefault" id="enquiry_for_admission" data-type="3" checked>
+                                        <label class="form-check-label" for="enquiry_for_admission">
+                                            Enquiry about admission
+                                        </label>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <!-- Hidden input to store numeric form_type -->
+                                <input type="hidden" id="form_type" name="form_type" value="3">
+                                            <input type="hidden" id="utm" name="utm">
 
-            <section class="apply-for-admission-one-sec">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-12 col-md-12">
-                            <div class="apply-for-admission-content-sec">
-                            <p> {!! $enquiry_about_admission->description !!}</p>
-                            <p>Fill up the application form below. The mandatory fields are marked with an *</p>
                             </div>
                         </div>
+                    </section>
 
-                        <div class="col-12 col-md-4">
-                            <div class="apply-for-admission-choose-sec">
-                                <div class="form-check applyforad-choose-form-check">
-                                <input class="form-check-input" type="radio" name="radioDefault" id="apply_for_admission" data-type="1">
-                                <label class="form-check-label" for="apply_for_admission">
-                                    Apply for admission
-                                </label>
+                <section class="apply-for-admission-form-sec">
+                    <div class="container">
+
+                            <div class="apply-for-admission-student-details-sec">
+                                <h4 class="afas-details-title">Student Details</h4>
+                                <div class="row g-3">
+
+                                    <!-- Student Name & DOB -->
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="Student Name *" id="name" name="name" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <input type="date" class="form-control" placeholder="Date of birth *" id="dob" name="dob" required>
+                                    </div>
+
+                                    <!-- Address -->
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" placeholder="Residential Address *" id="address" name="address" required>
+                                    </div>
+
+                                    <!-- Country & City -->
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="country" name="country" required>
+                                            <option value="" selected disabled>Select Country *</option>
+                                            @foreach($countries as $country)
+                                                <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="City *" id="city" name="city" required>
+                                    </div>
+
+                                    <!-- Pincode & Present School -->
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="Pincode *" id="pincode" name="pincode" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="Name of Present school *" id="present_school" name="present_school" required>
+                                    </div>
+
+                                    <!-- Present Grade & Grade to join -->
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="grade" name="grade" required>
+                                            <option value="" selected disabled>Present Grade *</option>
+                                            <option value="1">Playschool</option>
+                                            <option value="2">Nursery</option>
+                                            <option value="3">Kindergarten 1</option>
+                                            <option value="4">Kindergarten 2</option>
+                                            <option value="5">Grade 1</option>
+                                            <option value="6">Grade 2</option>
+                                            <option value="7">Grade 3</option>
+                                            <option value="8">Grade 4</option>
+                                            <option value="9">Grade 5</option>
+                                            <option value="10">Grade 6</option>
+                                            <option value="11">Grade 7</option>
+                                            <option value="12">Grade 8</option>
+                                            <option value="13">Grade 9</option>
+                                            <option value="14">Grade 10</option>
+                                            <option value="15">Grade 11</option>
+                                            <option value="16">Grade 12</option>
+                                            <option value="17">Not Applicable</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="join_grade" name="join_grade" required>
+                                            <option value="" selected disabled>Grade to join *</option>
+                                            @foreach($grades as $grade)
+                                                <option value="{{ $grade->id }}">{{ $grade->grade }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <!-- Academic Year & Nationality -->
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="year" name="year" required>
+                                            <option value="" selected disabled>Seeking Admission for Academic Year*</option>
+                                            @foreach($academicYears as $year)
+                                                <option value="{{ $year }}">{{ $year }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="nationality" name="nationality" required>
+                                            <option value="" selected disabled>Nationality*</option>
+                                            @foreach($nationality as $item)
+                                                <option value="{{ $item->id }}">{{ $item->nationality }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-12 col-md-4">
-                            <div class="apply-for-admission-choose-sec">
-                                <div class="form-check applyforad-choose-form-check">
-                                <input class="form-check-input" type="radio" name="radioDefault" id="schedule_a_visit" data-type="2">
-                                <label class="form-check-label" for="schedule_a_visit">
-                                    Schedule a visit for admission
-                                </label>
+                            <div class="apply-for-admission-parent-details-sec">
+                                <h4 class="afas-details-title">Parent/Guardian Details</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="father-details-sec">
+                                            <div class="row g-3">
+                                                <div class="col-md-12">
+                                                    <input type="text" class="form-control" placeholder="Father's/Guardian Name *" id="f.name" name="f.name" required>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <input id="fatherMobile" type="tel" class="form-control" placeholder="Father's Mobile No *" id="f.mobile" name="f.mobile"  maxlength="10" minlength="16" required>
+                                                    <input type="hidden" id="fatherMobileCode" name="f.mobile_code">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" placeholder="Father's Occupation *" id="f.occupation" name="f.occupation" required>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" placeholder="Father's Designation *" id="f.designation" name="f.designation" required>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <input type="text" class="form-control" placeholder="Father's Organisation *" id="f.organization" name="f.organization" required>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <input type="email" class="form-control" placeholder="Father's Email *" id="f.email" name="f.email" required>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <input id="fatherResidence" type="tel" class="form-control"
+                                                    placeholder="Father's Residence/Office No *" id="f.offtel" name="f.offtel" maxlength="10" minlength="6"  required>
+                                                    <input type="hidden" id="fatherResidenceCode" name="f.offtel_code">
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <input type="text" class="form-control" placeholder="Father's Office Address *" id="f.offadd" name="f.offadd" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mother-details-sec">
+                                            <div class="row g-3">
+                                                <div class="col-md-12">
+                                                    <input type="text" class="form-control" placeholder="Mother's/Guardian Name *" id="m.name" name="m.name" required>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <input id="motherMobile" type="tel" class="form-control" placeholder="Mother's Mobile No *" id="m.mobile" name="m.mobile"  maxlength="10" minlength="16"
+                                                    required>
+                                                    <input type="hidden" id="motherMobileCode" name="m.mobile_code">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" placeholder="Mother's Occupation *" id="m.occupation" name="m.occupation" required>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" placeholder="Mother's Designation *" id="m.designation" name="m.designation" required>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <input type="text" class="form-control" placeholder="Mother's Organisation *" id="m.organization" name="m.organization" required>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <input type="email" class="form-control" placeholder="Mother's Email *" id="m.email" name="m.email" required>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <input id="motherResidence" type="tel" class="form-control"
+                                                    placeholder="Mother's Residence/Office No *" id="m.offtel" name="m.offtel"  maxlength="10" minlength="6" required>
+                                                    <input type="hidden" id="motherResidenceCode" name="m.offtel_code">
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <input type="text" class="form-control" placeholder="Mother's Office Address *" id="m.offadd" name="m.offadd" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-12 col-md-4">
-                            <div class="apply-for-admission-choose-sec">
-                                <div class="form-check applyforad-choose-form-check">
-                                <input class="form-check-input" type="radio" name="radioDefault" id="enquiry_for_admission" data-type="3" checked>
-                                <label class="form-check-label" for="enquiry_for_admission">
-                                    Enquiry about admission
-                                </label>
+                            <div class="other-information-sec">
+                                <h4 class="afas-details-title">Other Information</h4>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="passport_type" name="passport_type" required>
+                                            <option value="" selected disabled>Student's Passport Type *</option>
+                                            <option value="1">Indian Passport</option>
+                                            <option value="2">Foreign Passport</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="foregin_passport_type" name="foregin_passport_type" required>
+                                            <option value="" selected disabled>Foreign Passport Type *</option>
+                                            <option value="1">OCI (Overseas Citizenship of India)</option>
+                                            <option value="2">PIO (Person of Indian Origin)</option>
+                                            <option value="3">Not Applicable</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" placeholder="Please share if your child has any specific learning needs / development considerations:*" id="specific_learning" name="specific_learning" required>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" placeholder="How did you hear about our School? *" id="heard_from" name="heard_from" required>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" rows="3" placeholder="What do you wish to know?" id="wish_you_know" name="wish_you_know"></textarea>
+                                    </div>
+
+                                    <!--<div class="col-md-12">-->
+                                    <!--    <img src="{{ asset('frontend/assets/img/logo/cc-avenue.webp') }}" alt="CC Avenue" class="img-fluid">-->
+                                    <!--</div>-->
+
+                                    <div class="row">
+                                        <div class="col-12 mt-3 text-left" style="margin-bottom: 10px;">
+                                            <div class="d-inline-block">
+                                                <div class="g-recaptcha"
+                                                     data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="col-12 text-left">
+                                            <span id="captchaError" class="error-text" style="color:red;"></span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12 apply-other-info-btn">
+                                        <button type="submit" class="btn" id="heyy">Submit as Enquiry</button>
+                                     
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Hidden input to store numeric form_type -->
-                        <input type="hidden" id="form_type" name="form_type" value="3">
+                        </form>
 
                     </div>
-                </div>
-            </section>
-
-            <section class="apply-for-admission-form-sec">
-                <div class="container">
-                        <div class="apply-for-admission-student-details-sec">
-                            <h4 class="afas-details-title">Student Details</h4>
-                            <div class="row g-3">
-
-                                <!-- Student Name & DOB -->
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="Student Name *" id="name" name="name" required>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <input type="date" class="form-control" placeholder="Date of birth *" id="dob" name="dob" required>
-                                </div>
-
-                                <!-- Address -->
-                                <div class="col-12">
-                                    <input type="text" class="form-control" placeholder="Residential Address *" id="address" name="address" required>
-                                </div>
-
-                                <!-- Country & City -->
-                                <div class="col-md-6">
-                                    <select class="form-select" id="country" name="country" required>
-                                        <option value="" selected disabled>Select Country *</option>
-                                        @foreach($countries as $country)
-                                            <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="City *" id="city" name="city" required>
-                                </div>
-
-                                <!-- Pincode & Present School -->
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="Pincode *" id="pincode" name="pincode" required>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="Name of Present school *" id="present_school" name="present_school" required>
-                                </div>
-
-                                <!-- Present Grade & Grade to join -->
-                                <div class="col-md-6">
-                                    <select class="form-select" id="grade" name="grade" required>
-                                        <option value="" selected disabled>Present Grade *</option>
-                                        <option value="1">Playschool</option>
-                                        <option value="2">Nursery</option>
-                                        <option value="3">Kindergarten 1</option>
-                                        <option value="4">Kindergarten 2</option>
-                                        <option value="5">Grade 1</option>
-                                        <option value="6">Grade 2</option>
-                                        <option value="7">Grade 3</option>
-                                        <option value="8">Grade 4</option>
-                                        <option value="9">Grade 5</option>
-                                        <option value="10">Grade 6</option>
-                                        <option value="11">Grade 7</option>
-                                        <option value="12">Grade 8</option>
-                                        <option value="13">Grade 9</option>
-                                        <option value="14">Grade 10</option>
-                                        <option value="15">Grade 11</option>
-                                        <option value="16">Grade 12</option>
-                                        <option value="17">Not Applicable</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <select class="form-select" id="join_grade" name="join_grade" required>
-                                        <option value="" selected disabled>Grade to join *</option>
-                                        @foreach($grades as $grade)
-                                            <option value="{{ $grade->id }}">{{ $grade->grade }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <!-- Academic Year & Nationality -->
-                                <div class="col-md-6">
-                                    <select class="form-select" id="year" name="year" required>
-                                        <option value="" selected disabled>Seeking Admission for Academic Year</option>
-                                        @foreach($academicYears as $year)
-                                            <option value="{{ $year }}">{{ $year }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <select class="form-select" id="nationality" name="nationality" required>
-                                        <option value="" selected disabled>Nationality</option>
-                                        @foreach($nationality as $item)
-                                            <option value="{{ $item->id }}">{{ $item->nationality }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="apply-for-admission-parent-details-sec">
-                            <h4 class="afas-details-title">Parent/Guardian Details</h4>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="father-details-sec">
-                                        <div class="row g-3">
-
-                                            <div class="col-md-12">
-                                                <input type="text" class="form-control" placeholder="Father's/Guardian Name *" id="f.name" name="f.name" required>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <input id="fatherMobile" type="tel" class="form-control" placeholder="Father's Mobile No *" id="f.mobile" name="f.mobile"  maxlength="10" minlength="16" required>
-                                                <input type="hidden" id="fatherMobileCode" name="f.mobile_code">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <input type="text" class="form-control" placeholder="Father's Occupation *" id="f.occupation" name="f.occupation" required>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <input type="text" class="form-control" placeholder="Father's Designation *" id="f.designation" name="f.designation" required>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <input type="text" class="form-control" placeholder="Father's Organisation *" id="f.organization" name="f.organization" required>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <input type="email" class="form-control" placeholder="Father's Email *" id="f.email" name="f.email" required>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <input id="fatherResidence" type="tel" class="form-control"
-                                                placeholder="Father's Residence/Office No *" id="f.offtel" name="f.offtel" maxlength="10" minlength="6"  required>
-                                                <input type="hidden" id="fatherResidenceCode" name="f.offtel_code">
-                                            </div>
-                                            <div class="col-md-12">
-                                                <input type="text" class="form-control" placeholder="Father's Office Address *" id="f.offadd" name="f.offadd" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mother-details-sec">
-                                        <div class="row g-3">
-                                            <div class="col-md-12">
-                                                <input type="text" class="form-control" placeholder="Mother's/Guardian Name *" id="m.name" name="m.name" required>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <input id="motherMobile" type="tel" class="form-control" placeholder="Mother's Mobile No *" id="m.mobile" name="m.mobile"  maxlength="10" minlength="16"
-                                                required>
-                                                <input type="hidden" id="motherMobileCode" name="m.mobile_code">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <input type="text" class="form-control" placeholder="Mother's Occupation *" id="m.occupation" name="m.occupation" required>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <input type="text" class="form-control" placeholder="Mother's Designation *" id="m.designation" name="m.designation" required>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <input type="text" class="form-control" placeholder="Mother's Organisation *" id="m.organization" name="m.organization" required>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <input type="email" class="form-control" placeholder="Mother's Email *" id="m.email" name="m.email" required>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <input id="motherResidence" type="tel" class="form-control"
-                                                placeholder="Mother's Residence/Office No *" id="m.offtel" name="m.offtel"  maxlength="10" minlength="6" required>
-                                                <input type="hidden" id="motherResidenceCode" name="m.offtel_code">
-                                            </div>
-                                            <div class="col-md-12">
-                                                <input type="text" class="form-control" placeholder="Mother's Office Address *" id="m.offadd" name="m.offadd" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="other-information-sec">
-                            <h4 class="afas-details-title">Other Information</h4>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <select class="form-select" id="passport_type" name="passport_type" required>
-                                        <option value="" selected disabled>Student's Passport Type *</option>
-                                        <option value="1">Indian Passport</option>
-                                        <option value="2">Foreign Passport</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <select class="form-select" id="foregin_passport_type" name="foregin_passport_type" required>
-                                        <option value="" selected disabled>Foreign Passport Type *</option>
-                                        <option value="1">OCI (Overseas Citizenship of India)</option>
-                                        <option value="2">PIO (Person of Indian Origin)</option>
-                                        <option value="3">Not Applicable</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control" placeholder="Please share if your child has any specific learning needs / development considerations:" id="specific_learning" name="specific_learning" required>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control" placeholder="How did you hear about our School? *" id="heard_from" name="heard_from" required>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <textarea class="form-control" rows="3" placeholder="What do you wish to know?" id="wish_you_know" name="wish_you_know"></textarea>
-                                </div>
-
-                                <!-- <div class="col-md-12">
-                                    <img src="{{ asset('frontend/assets/img/logo/cc-avenue.webp') }}" alt="CC Avenue" class="img-fluid">
-                                </div> -->
-
-                                <!-- 🧩 Add reCAPTCHA Section -->
-                                <!-- <div class="form-group col-12">
-                                    <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
-                                </div> -->
-
-                                <div class="col-md-12 apply-other-info-btn">
-                                    <button type="submit" class="btn">Submit as Enquiry</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-
-                </div>
-            </section>
+                </section>
             
-        </form>
+            </form>
 
     </main>
 
@@ -322,7 +334,9 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    
     <!----- Fetching Country code for mobile nos---->
     <script>
         // Father's Mobile
@@ -385,169 +399,169 @@
                 $(this).removeClass("is-invalid");
                 $(this).next(".error-message").remove();
             });
-
+        
             // 🧍 Allow only alphabets & spaces for name fields
             $(document).on("input", "input[name*='name']", function () {
                 this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
             });
-
+        
             // ☎️ Allow only digits for phone and pincode fields
             $(document).on("input", "input[type='tel'], #pincode", function () {
                 this.value = this.value.replace(/\D/g, '');
             });
-
-            // 🧾 Validate on both buttons
+        
+            // 🧾 Validate on button click
             $(".apply-other-info-btn button").on("click", function (e) {
-                e.preventDefault(); // temporarily prevent submission for validation
+                e.preventDefault();
+        
                 let isValid = true;
-                const clickedButton = $(this).text().trim(); // Detect which button was clicked
-
+        
+                // ✅ IMPORTANT: must reset every click
+                let errorList = [];
+                let emptyCount = 0;
+        
                 $(".error-message").remove();
                 $("input, select, textarea").removeClass("is-invalid");
-
-                $("input[required], select[required], textarea[required]").each(function () {
+        
+                const requiredFields = $("input[required], select[required], textarea[required]");
+        
+                requiredFields.each(function () {
                     const field = $(this);
                     const value = field.val()?.trim();
                     const type = field.attr("type");
                     const nameAttr = field.attr("name");
                     const placeholder = field.attr("placeholder") || field.find("option:selected").text();
                     const fieldName = placeholder.replace("*", "").replace(":", "").trim();
-
-                    // ✅ Required field check
+        
                     if (!value) {
                         showError(field, fieldName + " is required");
+                        errorList.push(fieldName + " is required");
+                        emptyCount++;
                         isValid = false;
                     }
-                    // ✅ Email validation
                     else if (type === "email" && !validateEmail(value)) {
                         showError(field, "Please enter a valid " + fieldName);
+                        errorList.push("Invalid " + fieldName);
                         isValid = false;
                     }
-                    // ✅ Mobile number validation
                     else if (type === "tel" && nameAttr !== "pincode") {
                         if (value.length < 10 || value.length > 15 || !/^\d+$/.test(value)) {
-                            showError(field, "Please enter a valid " + fieldName + " (10–15 digits only)");
+                            showError(field, "Please enter a valid " + fieldName);
+                            errorList.push("Invalid " + fieldName);
                             isValid = false;
                         }
                     }
-                    // ✅ Pincode validation (only integers)
                     else if (nameAttr === "pincode" || field.attr("id") === "pincode") {
                         if (!/^\d+$/.test(value)) {
                             showError(field, fieldName + " must contain only numbers");
+                            errorList.push(fieldName + " must be numeric");
                             isValid = false;
                         }
                     }
-                    // ✅ Name validation
                     else if (nameAttr?.includes("name") && !/^[A-Za-z\s]+$/.test(value)) {
                         showError(field, fieldName + " must contain only letters");
+                        errorList.push("Invalid " + fieldName);
                         isValid = false;
                     }
                 });
-
-
-                // ✅ Grade comparison: Present Grade must be less than Grade to Join
+        
+                // ✅ Grade validation
                 const presentGradeText = $("#grade option:selected").text().trim();
                 const joinGradeText = $("#join_grade option:selected").text().trim();
-
-                // Static order list (includes all grades in logical order)
+        
                 const gradeOrder = [
-                    "Playschool",
-                    "Nursery",
-                    "Kindergarten 1",
-                    "Kindergarten 2",
-                    "Grade 1",
-                    "Grade 2",
-                    "Grade 3",
-                    "Grade 4",
-                    "Grade 5",
-                    "Grade 6",
-                    "Grade 7",
-                    "Grade 8",
-                    "Grade 9",
-                    "Grade 10",
-                    "Grade 11",
-                    "Grade 12",
-                    "Not Applicable"
+                    "Playschool","Nursery","Kindergarten 1","Kindergarten 2",
+                    "Grade 1","Grade 2","Grade 3","Grade 4","Grade 5",
+                    "Grade 6","Grade 7","Grade 8","Grade 9","Grade 10",
+                    "Grade 11","Grade 12","Not Applicable"
                 ];
-
-                // Dynamic grade list from DB (Blade-injected)
+        
                 const dynamicGradeOrder = @json($grades->pluck('grade')->toArray());
-
-                // Combine both (ensuring order from static list but allowing DB data)
                 const fullGradeOrder = gradeOrder.filter(g => dynamicGradeOrder.includes(g) || gradeOrder.includes(g));
-
+        
                 const presentIndex = fullGradeOrder.indexOf(presentGradeText);
                 const joinIndex = fullGradeOrder.indexOf(joinGradeText);
-
-                // Compare based on grade sequence, not IDs
-                if (presentIndex !== -1 && joinIndex !== -1 && presentIndex >= joinIndex) {
-                    showError($("#join_grade"), "Grade to join must be higher than Present Grade");
+        
+                
+                if (presentIndex !== -1 && joinIndex !== -1 && presentIndex > joinIndex) {
+                    showError($("#join_grade"), "Grade to join must be same or higher than Present Grade");
+                    errorList.push("Grade to join must be same or higher than Present Grade");
                     isValid = false;
                 }
-
-
-                
-                // ✅ reCAPTCHA validation
-                // const captchaResponse = grecaptcha.getResponse();
-                // if (!captchaResponse) {
-                //     const captchaContainer = $(".g-recaptcha");
-                //     captchaContainer.after('<div class="error-message text-danger small mt-1">Please verify that you are not a robot</div>');
-                //     isValid = false;
-                // }
-
-
-
-                if (isValid) {
-
-
-                    const form = document.getElementById("enquiryadmissionForm");
-
-                    if (form) {
-                        // Target only the "Submit as Enquiry" button
-                        const enquiryButton = form.querySelector("button[type='submit']");
-
-                        if (enquiryButton && enquiryButton.textContent.trim().toLowerCase().includes("submit as enquiry")) {
-                            enquiryButton.disabled = true;
-                            enquiryButton.classList.add("disabled");
-                            enquiryButton.style.opacity = "0.6";
-                            enquiryButton.textContent = "Submitting...";
-                        }
-                    }
-
-                    // Before submission, set hidden fields for country codes
-                    const fatherMobile = window.intlTelInputGlobals.getInstance(document.querySelector("#fatherMobile"));
-                    const motherMobile = window.intlTelInputGlobals.getInstance(document.querySelector("#motherMobile"));
-                    const fatherResidence = window.intlTelInputGlobals.getInstance(document.querySelector("#fatherResidence"));
-                    const motherResidence = window.intlTelInputGlobals.getInstance(document.querySelector("#motherResidence"));
-
-                    $("#fatherMobileCode").val(fatherMobile.getSelectedCountryData().dialCode);
-                    $("#motherMobileCode").val(motherMobile.getSelectedCountryData().dialCode);
-                    $("#fatherResidenceCode").val(fatherResidence.getSelectedCountryData().dialCode);
-                    $("#motherResidenceCode").val(motherResidence.getSelectedCountryData().dialCode);
-
-                    // 🧭 Detect which button clicked and set hidden input for form type
-                    const selectedRadio = $("input[name='radioDefault']:checked");
-                    const formType = selectedRadio.data("type") || 1;
-                    $("#form_type").val(formType);
-
-                    // ✅ Now submit form normally
-                    $("form")[0].submit();
+        
+                // ---------- CAPTCHA ----------
+                let captchaResponse = grecaptcha.getResponse();
+                if (captchaResponse.length === 0) {
+                    errorList.push("Please verify captcha");
+                    isValid = false;
                 }
+        
+                // ❌ SHOW POPUP IF INVALID
+                if (!isValid) {
+        
+                    let messageHTML = `
+                        <div style="text-align:left; font-size:14px;">
+                            <p style="margin-bottom:8px; font-weight:600; color:#d33;">
+                                Please fix the following errors:
+                            </p>
+                            <ul style="padding-left:18px; margin:0;">
+                                ${errorList.map(err => `<li style="margin-bottom:4px;">${err}</li>`).join("")}
+                            </ul>
+                        </div>
+                    `;
+        
+                    Swal.fire({
+                        icon: "error",
+                        title: '<span style="color:#d33;">Form Errors</span>',
+                        html: messageHTML,
+                        showCloseButton: true,
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#d33"
+                    });
+        
+                    return;
+                }
+        
+                // ✅ SUBMIT FLOW (UNCHANGED)
+                $("form")[0].submit();
             });
-
-            // 🧩 Helper functions
+        
+            // 🧩 Helper
             function showError(field, message) {
                 field.addClass("is-invalid");
                 field.after('<div class="error-message text-danger small mt-1">' + message + '</div>');
             }
-
+        
             function validateEmail(email) {
-                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return regex.test(email);
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
             }
+        
         });
     </script>
 
+    <!----- Form Google UTM ---->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    
+        const params = new URLSearchParams(window.location.search);
+    
+        const utm_source   = params.get("utm_source")   || "";
+        const utm_medium   = params.get("utm_medium")   || "";
+        const utm_campaign = params.get("utm_campaign") || "";
+        const utm_term     = params.get("utm_term")     || "";
+        const utm_content  = params.get("utm_content")  || "";
+    
+        let utmString = 
+            "utm_source=" + utm_source +
+            "&utm_medium=" + utm_medium +
+            "&utm_campaign=" + utm_campaign +
+            "&utm_term=" + utm_term +
+            "&utm_content=" + utm_content;
+    
+        document.getElementById("utm").value = utmString;
+    
+    });
+    </script>
 
 </body>
 </html>

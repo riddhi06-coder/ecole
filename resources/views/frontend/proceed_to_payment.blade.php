@@ -27,6 +27,7 @@
             
         </section>
 
+
         <section class="apply-for-admission-one-sec">
             <div class="container">
                 <div class="row">
@@ -119,9 +120,9 @@
                                         <input type="email" id="shipping_email" name="shipping_email" class="form-control" placeholder="Shipping Email" required>
                                     </div>
 
-                                    <!-- <div class="form-group col-12">
-                                        <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
-                                    </div> -->
+                                    <!--<div class="form-group col-12">-->
+                                    <!--    <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>-->
+                                    <!--</div> -->
 
                                     <div class="col-md-12 apply-other-info-btn">
                                         <button type="submit" class="btn">Proceed To Payment</button>

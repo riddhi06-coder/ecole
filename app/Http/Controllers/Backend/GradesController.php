@@ -35,14 +35,17 @@ class GradesController extends Controller
             // ✅ Validate inputs
             $validated = $request->validate([
                 'grade'        => 'required|string|max:500',
+                'academic_year'        => 'required|string|max:500',
             ], [
-                'grade.required' => 'FAQ Question is required.',
+                'grade.required' => 'Grade is required.',
+                'academic_year.required' => 'Academic Year is required.',
             ]);
 
             // ✅ Save FAQ to database
             $grade = new Grades(); 
 
             $grade->grade        = $request->grade;
+            $grade->academic_year        = $request->academic_year;
             $grade->inserted_by    = Auth::id();
             $grade->inserted_at    = Carbon::now();
             $grade->save();
@@ -70,8 +73,10 @@ class GradesController extends Controller
             // ✅ Validate inputs
             $validated = $request->validate([
                 'grade'        => 'required|string|max:500',
+                'academic_year'        => 'required|string|max:500',
             ], [
                 'grade.required' => 'Grade is required.',
+                'academic_year.required' => 'Academic Year is required.',
             ]);
 
             // ✅ Find existing FAQ
@@ -80,6 +85,7 @@ class GradesController extends Controller
 
             // ✅ Update other fields
             $grade->grade        = $request->grade;
+            $grade->academic_year  = $request->academic_year;
             $grade->modified_by     = Auth::id();
             $grade->modified_at     = Carbon::now();
             $grade->save();

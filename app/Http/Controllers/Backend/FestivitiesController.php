@@ -20,7 +20,7 @@ class FestivitiesController extends Controller
 
     public function index()
     {
-        $festivities = HomeFestivities::orderBy('inserted_at', 'asc')->wherenull('deleted_by')->get();
+        $festivities = HomeFestivities::orderBy('inserted_at', 'desc')->wherenull('deleted_by')->get();
         return view('backend.home.festivities.index', compact('festivities'));
     }
 

@@ -21,7 +21,7 @@ class GalleryImagesController extends Controller
 
     public function index()
     {
-        $galleryImages = GalleryImage::wherenull('deleted_by')->get();
+        $galleryImages = GalleryImage::wherenull('deleted_by')->orderby('id', 'desc')->get();
         return view('backend.campus.gallery_images.index', compact('galleryImages'));
     }
 

@@ -16,6 +16,7 @@ class VirtualTour extends Model
         'banner_heading',
         'banner_image',
         'video_url',
+        'video_upload',
 
         'inserted_at',
         'inserted_by',

@@ -67,8 +67,8 @@
 
                                         <!-- Thumbnail Image -->
                                         <div class="col-md-6">
-                                            <label class="form-label" for="thumbnail_image">Thumbnail Image <span class="txt-danger">*</span></label>
-                                            <input class="form-control" id="thumbnail_image" type="file" name="thumbnail_image" required onchange="previewThumbnail(event)" required>
+                                            <label class="form-label" for="thumbnail_image">Thumbnail Image </label>
+                                            <input class="form-control" id="thumbnail_image" type="file" name="thumbnail_image" required onchange="previewThumbnail(event)">
                                             <div class="invalid-feedback">Please upload a Thumbnail image.</div>
                                             <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small>
                                             <br>
@@ -77,6 +77,26 @@
                                             <!-- Image Preview -->
                                             <div class="mt-2">
                                                 <img id="thumbnailPreview" src="#" alt="Preview" class="img-fluid rounded border d-none" style="max-height: 150px;">
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <!-- Video Upload -->
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="upload_video">
+                                                Upload Video
+                                            </label>
+                                            <input class="form-control" id="upload_video" type="file" name="thumbnail_video"
+                                                accept="video/mp4,video/webm,video/ogg"
+                                                onchange="previewVideo(event)">
+                                            <div class="invalid-feedback">Please upload a video file.</div>
+                                            <small class="text-secondary d-block"><b>Note: File size should be less than 3 MB.</b></small>
+                                            <small class="text-secondary d-block"><b>Note: Only .mp4, .webm, and .ogg formats allowed.</b></small>
+                                        
+                                            <!-- Video Preview -->
+                                            <div class="mt-2">
+                                                <video id="videoPreview" controls class="rounded border d-none"
+                                                       style="max-height: 200px; width: 100%;"></video>
                                             </div>
                                         </div>
 
@@ -119,7 +139,7 @@
 
                                         <!-- Short Description -->
                                         <div class="col-md-12 mb-3">
-                                            <label class="form-label" for="short_desc">Short Description ></label>
+                                            <label class="form-label" for="short_desc">Short Description</label>
                                             <textarea class="form-control" id="short_desc" name="short_desc" rows="5" placeholder="Enter Short Description"></textarea>
                                         </div>
                 
@@ -169,6 +189,25 @@
                     preview.classList.add('d-none'); // hide if no file
                 }
             }
+            
+            // ✅ Video preview
+            function previewVideo(event) {
+        const input = event.target;
+        const preview = document.getElementById('videoPreview');
+
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            if (file.size > 3 * 1024 * 1024) { // 3 MB limit
+                alert('Video file must be less than 3 MB!');
+                input.value = ''; // clear file
+                preview.classList.add('d-none');
+                return;
+            }
+            preview.src = URL.createObjectURL(file);
+            preview.classList.remove('d-none');
+        }
+    }
+    
         </script>
 
        

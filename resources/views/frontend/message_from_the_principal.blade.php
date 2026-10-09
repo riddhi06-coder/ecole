@@ -51,7 +51,7 @@
                                 $paragraphs = explode('</p>', $message_from_the_principal->section_description);
                                 // Remove empty strings and add </p> back
                                 $paragraphs = array_filter(array_map(fn($p) => $p ? $p.'</p>' : '', $paragraphs));
-                                $mainParagraphs = array_slice($paragraphs, 0, 4); // first 4 paragraphs
+                                $mainParagraphs = array_slice($paragraphs, 0, 3); // first 4 paragraphs
                             @endphp
 
                             {!! implode('', $mainParagraphs) !!}
@@ -61,9 +61,9 @@
                     {{-- Text below image (full width) --}}
                     <div class="col-lg-12">
                         <div class="message-from-content-sec">
-                                <br>
+                                
                             @php
-                                $remainingParagraphs = array_slice($paragraphs, 4); // everything else
+                                $remainingParagraphs = array_slice($paragraphs, 3); // everything else
                             @endphp
                             {!! implode('', $remainingParagraphs) !!}
                         </div>

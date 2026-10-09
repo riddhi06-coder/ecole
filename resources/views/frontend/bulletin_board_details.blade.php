@@ -34,19 +34,31 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-12">
-                        <div class="event-detail-img-sec">
-                            <img src="{{ asset('uploads/bulletin/' . ($bulletin_details->thumbnail_image ?? 'default.webp')) }}" 
-                                class="img-fluid" 
-                                alt="{{ $bulletin_details->title ?? 'Event Image' }}">
+                        <div class="event-detail-img-sec" style="text-align:center;">
+                            @if(!empty($bulletin_details->thumbnail_image))
+                                <img src="{{ asset('uploads/bulletin/' . $bulletin_details->thumbnail_image) }}" 
+                                     class="img-fluid" 
+                                     alt="{{ $bulletin_details->title ?? 'Event Image' }}">
+                            @elseif(!empty($bulletin_details->thumbnail_video))
+                                <video controls class="img-fluid" style="width: 100%; height: auto; object-fit: cover;">
+                                    <source src="{{ asset('uploads/bulletin/videos/' . $bulletin_details->thumbnail_video) }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            @else
+                                <img src="{{ asset('uploads/bulletin/default.webp') }}" 
+                                     class="img-fluid" 
+                                     alt="{{ $bulletin_details->title ?? 'Event Image' }}">
+                            @endif
                         </div>
                     </div>
+
                 </div>
                 
                 <div class="event-details-one-sec">
                     <div class="row">
-                        <div class="col-12 col-md-8">
+                        <div class="col-12 col-md-12">
                             <div class="event-detail-content-sec">
-                                <h4 class="event-detail-title">{{ $article->article_name ?? 'Event Title' }}</h4>
+                                <h4 class="event-detail-title text-center">{{ $article->article_name ?? 'Event Title' }}</h4>
                             </div>
                             @if($bulletin_details && ($bulletin_details->article_time_from || $bulletin_details->article_time_to || $bulletin_details->location))
                                 <div class="event-detail-icon-sec">
@@ -69,9 +81,9 @@
                             @endif
 
                         </div>
-                        <div class="col-12 col-md-4">
-                            <a class="progress-offers-btn" target="_blank" href="#"><i class="fa-regular fa-calendar"></i> Add To Calendar</a>
-                        </div>
+                        <!--<div class="col-12 col-md-4">-->
+                        <!--    <a class="progress-offers-btn" target="_blank" href="#"><i class="fa-regular fa-calendar"></i> Add To Calendar</a>-->
+                        <!--</div>-->
                     </div>
                 </div>
                 
@@ -89,27 +101,30 @@
                 @endphp
 
                 <div class="row">
-                    @if($bulletin_details->title || $bulletin_details->desc)
+                    @if($bulletin_details && ($bulletin_details->title || $bulletin_details->desc))
                         <div class="col-12 col-md-12">
                             <div class="event-detail-content-sec">
-                                @if($bulletin_details->title)
+                    
+                                @if(!empty($bulletin_details->title))
                                     <h4 class="event-detail-title">{{ $bulletin_details->title }}</h4>
                                 @endif
-
+                    
                                 @php
-                                    // Clean and replace <figure><table> with your Bootstrap table structure
-                                    $desc = $bulletin_details->desc;
+                                    $desc = $bulletin_details->desc ?? '';
+                    
                                     $desc = str_replace(
                                         ['<figure class="table"><table>', '</table></figure>'],
                                         ['<table class="table table-bordered table-hover"><tbody>', '</tbody></table>'],
                                         $desc
                                     );
                                 @endphp
-
-                                {!! $desc ?? '<p>No details available for this event.</p>' !!}
+                    
+                                {!! $desc ?: '<p>No details available for this event.</p>' !!}
+                    
                             </div>
                         </div>
                     @endif
+
                 </div>
 
             </div>

@@ -117,9 +117,25 @@
                                         
                                         <!-- Title -->
                                         <div class="col-md-6 mt-5">
-                                            <label class="form-label" for="title"> Title<span class="txt-danger">*</span></label>
-                                            <input class="form-control" id="title" type="text" name="title" placeholder="Enter Title" required>
+                                            <label class="form-label" for="title"> Title </label>
+                                            <input class="form-control" id="title" type="text" name="title" placeholder="Enter Title">
                                             <div class="invalid-feedback">Please enter a Title.</div>
+                                        </div>
+                                        
+                                        
+                                        <!-- Thumbnail Image -->
+                                        <div class="col-md-6 mt-5">
+                                            <label class="form-label" for="other_image"> Image <span class="txt-danger">*</span></label>
+                                            <input class="form-control" id="other_image" type="file" name="other_image" onchange="previewimage(event)" required>
+                                            <div class="invalid-feedback">Please upload a image.</div>
+                                            <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small>
+                                            <br>
+                                            <small class="text-secondary"><b>Note: Only files in .jpg, .jpeg, .png, .webp, .svg format can be uploaded.</b></small>
+                                            
+                                            <!-- Image Preview -->
+                                            <div class="mt-2">
+                                                <img id="imagePreview" src="#" alt="Preview" class="img-fluid rounded border d-none" style="max-height: 150px; background:black;">
+                                            </div>
                                         </div>
                                     
 
@@ -187,6 +203,26 @@
                         preview.classList.remove('d-none');
                     };
                     reader.readAsDataURL(input.files[0]);
+                }
+            }
+            
+            
+            function previewimage(event) {
+                const input = event.target;
+                const preview = document.getElementById('imagePreview');
+
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.classList.remove('d-none'); // show preview
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    preview.src = "#";
+                    preview.classList.add('d-none'); // hide if no file
                 }
             }
         </script>

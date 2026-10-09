@@ -122,10 +122,29 @@
 
                                         <!-- Title -->
                                         <div class="col-md-6 mt-5">
-                                            <label class="form-label" for="title"> Title<span class="txt-danger">*</span></label>
+                                            <label class="form-label" for="title"> Title </label>
                                             <input class="form-control" id="title" type="text" name="title" 
-                                                value="{{ old('title', $ib_learner->title) }}" placeholder="Enter Title" required>
+                                                value="{{ old('title', $ib_learner->title) }}" placeholder="Enter Title">
                                             <div class="invalid-feedback">Please enter a Title.</div>
+                                        </div>
+                                        
+                                        
+                                        <!-- Banner Image -->
+                                        <div class="col-md-6 mt-5">
+                                            <label class="form-label" for="other_image"> Image <span class="txt-danger">*</span> </label>
+                                            <input class="form-control" id="other_image" type="file" name="other_image" onchange="previewimage(event)" required>
+                                            <div class="invalid-feedback">Please upload a Banner image.</div>
+                                            <small class="text-secondary"><b>Note: The file size should be less than 2MB.</b></small>
+                                            <br>
+                                            <small class="text-secondary"><b>Note: Only files in .jpg, .jpeg, .png, .webp, .svg format can be uploaded.</b></small>
+
+                                            {{-- Image Preview --}}
+                                            @if($ib_learner->image)
+                                                <div class="mt-2">
+                                                    <img id="imagePreview" src="{{ asset('uploads/academics/'.$ib_learner->image) }}" 
+                                                        alt="Banner Preview" class="img-fluid rounded border" style="max-height:150px;">
+                                                </div>
+                                            @endif
                                         </div>
 
                                         <!-- Description -->
@@ -240,6 +259,25 @@
                         preview.classList.remove('d-none');
                     };
                     reader.readAsDataURL(input.files[0]);
+                }
+            }
+            
+            function previewimage(event) {
+                const input = event.target;
+                const preview = document.getElementById('imagePreview');
+
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.classList.remove('d-none'); // show preview
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    preview.src = "#";
+                    preview.classList.add('d-none'); // hide if no file
                 }
             }
         </script>

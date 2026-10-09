@@ -6,7 +6,7 @@
 <body>
 
     @include('components.frontend.header')
-
+ 
 
     <main class="main">
 
